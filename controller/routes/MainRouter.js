@@ -43,7 +43,7 @@ class MainRouter {
          * Get And Render Data
          * ==================================
          ***********************************************/
-        router.get("/questions", (incoming, outgoing) => {
+        router.get("/question", (incoming, outgoing) => {
             outgoing.render("question")
         })
         router.get("/profile", (incoming, outgoing) => {
