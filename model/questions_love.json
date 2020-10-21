@@ -1,0 +1,23 @@
+{
+    "questions_love": [{
+            "id": 1,
+            "question": "A moment when I felt especially connected to you was when...",
+            "favorite": false
+        },
+        {
+            "id": 2,
+            "question": "How might you like to keep growing emotionally?",
+            "favorite": false
+        },
+        {
+            "id": 3,
+            "question": "How do you think we could make our relationship more surprising?",
+            "favorite": false
+        },
+        {
+            "id": 4,
+            "question": "It makes me rather vulnerable to tell you this, but here goes...",
+            "favorite": false
+        }
+    ]
+}

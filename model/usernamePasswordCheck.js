@@ -17,8 +17,6 @@ function usernamePasswordCheck(username, password, callback) {
         }
     );
 
-    // It first parses the data, then filters for the 
-    // 
     let parsed = JSON.parse(users);
     let user = parsed.users.filter((user) => user.username == username);
     if (user[0].username === username && user[0].password === password) {

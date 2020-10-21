@@ -9,7 +9,7 @@ const fs = require("fs");
 
 class ReadAndWriteJSON {
     /**********************************************
-     * #TODO: Create the file of data that will be passed in 
+     * Will pass in an instance of a file 
      * ==================================
      ***********************************************/
     constructor(file) {
@@ -17,7 +17,9 @@ class ReadAndWriteJSON {
     }
 
     /**********************************************
-     * #TODO: Create a write and read method to process the data 
+     * Writes the data onto the file; and will tell you if it's successful or not 
+     * 
+     * boolean write(data)
      * ==================================
      ***********************************************/
     write(data) {
@@ -31,6 +33,12 @@ class ReadAndWriteJSON {
         });
     }
 
+    /**********************************************
+     * Reads the data - will tell you if it's successful or not 
+     * 
+     * boolean read() 
+     * ==================================
+     ***********************************************/
     read() {
         return new Promise((resolve, reject) => {
             fs.readFile(this.file, "utf8", (err, data) => {

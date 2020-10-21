@@ -1,0 +1,23 @@
+{
+    "questions_family": [{
+            "id": 1,
+            "question": "What are the good things you learnt from your mother? And your father?",
+            "favorite": false
+        },
+        {
+            "id": 2,
+            "question": "What are the ideal conditions for a family get-together?",
+            "favorite": false
+        },
+        {
+            "id": 3,
+            "question": "In what ways do you feel grateful to your family?",
+            "favorite": false
+        },
+        {
+            "id": 4,
+            "question": "Thank someone in the family for something they did for you.",
+            "favorite": false
+        }
+    ]
+}

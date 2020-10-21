@@ -1,0 +1,19 @@
+{
+    "questions_work": [{
+        "id": 1,
+        "question": "What is your team rather good at?",
+        "favorite": false
+    }, {
+        "id": 2,
+        "question": "What is the world far too judgmental about? Draw the discussion back to yourself, too.",
+        "favorite": false
+    }, {
+        "id": 3,
+        "question": "What would you like more regularly to be appreciated for?",
+        "favorite": false
+    }, {
+        "id": 4,
+        "question": "What makes you particularly happy?",
+        "favorite": false
+    }]
+}

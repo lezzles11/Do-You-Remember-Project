@@ -1,0 +1,26 @@
+{
+    "questions_friends": [{
+            "id": 1,
+            "question": "What causes your anxieties? How do you overcome them?",
+            "favorite": false
+        },
+        {
+            "id": 2,
+            "question": "What do you worry that others might think?",
+            "favorite": false
+        },
+        {
+            "id": 3,
+            "question": "What kinds of mature qualities do you particularly admire in other people?",
+            "favorite": false
+        },
+        {
+            "id": 4,
+            "question": "What matters to you when choosing friends?",
+            "favorite": false
+        }
+
+
+
+    ]
+}
