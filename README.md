@@ -40,17 +40,19 @@ node app.js
 
 | Done? | Component              | Priority | Estimated Time | Actual Time |
 | ----- | ---------------------- | :------: | :------------: | :---------: |
-| x     | This checklist         |    H     |       |             |
-|       | Look     |    M     |    30 mins     |             |
-|       | Look at three examples | 30 mins  |                |
-|       |   |    M     |    30 mins     |     15      |
+| x     | Complete JSON Files (Data)         |    H     |       |             |
+|       | Create frontend and implement event handlers     |    M     |    30 mins     |             |
+|       | Create app.js | 30 mins  |                |
+|       | Install all needed packages  |    M     |    30 mins     |     15      |
+
+Documentation: 
 
 ### Daily Stand Up :hourglass:
 
 | Date | What I did yesterday              | Today | Obstacles | Comments |
 | ----- | ---------------------- | :------: | :------------: | :---------: |
-| Oct 21   | Finished marking student exercises        |    Work on building this checklist    |       |             |
-|    Oct 22   | Look     |    M     |    30 mins     |             |
+| Oct 21   | Finished marking student exercises        |    Work on implementing the checklist for this assignment, continue commenting through the application and playing around with it - Zuckerberg said to break things    |       |             |
+|    Oct 22   |      |    M     |    30 mins     |             |
 |  Oct 23     | Look at three examples | 30 mins  |                |
 |  Oct 24     |   |    M     |    30 mins     |     15      |
 |  Oct 25     |   |    M     |    30 mins     |     15      |
