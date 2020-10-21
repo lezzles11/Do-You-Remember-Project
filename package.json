@@ -1,0 +1,11 @@
+{
+  "name": "pitterpatter",
+  "version": "1.0.0",
+  "description": "pitterpatter at work because work is fucking awesome",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lesley cheung",
+  "license": "ISC"
+}
