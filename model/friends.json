@@ -1,19 +1,21 @@
 {
     "friends": [{
-            "id": 1,
-            "name": "andre",
-            "emoji": "",
-            "wishfulCity": "chile",
-            "favoriteMemory": "everything, really",
-            "questions": []
-        },
-        {
-            "id": 2,
-            "name": "sam",
-            "emoji": "",
-            "wishfulCity": "england",
-            "favoriteMemory": "doing yoga during the fire alarm",
-            "questions": []
-        }
-    ]
+        "id": 1,
+        "name": "andre",
+        "emoji": "",
+        "wishfulCity": "chile",
+        "favoriteMemory": "everything, really",
+        "questions": []
+    }, {
+        "id": 2,
+        "name": "sam",
+        "emoji": "",
+        "wishfulCity": "england",
+        "favoriteMemory": "doing yoga during the fire alarm",
+        "questions": []
+    }, {
+        "name": "hello",
+        "emoji": "emoji",
+        "wishfulCity": "barcelona"
+    }]
 }

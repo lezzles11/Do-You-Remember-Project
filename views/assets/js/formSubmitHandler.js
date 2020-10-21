@@ -28,7 +28,7 @@ $("#addFriendForm").on("submit", function(event) {
 
     $.ajax({
         type: "POST",
-        url: "/api/friends/addFriend",
+        url: "/api/friends/addfriend",
         data: sendToServer,
         success: function() {
             console.log("data sent!")

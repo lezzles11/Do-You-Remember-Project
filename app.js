@@ -12,7 +12,15 @@ const usernamePasswordCheck = require("./model/usernamePasswordCheck")
 const ReadAndWriteJSON = require("./model/ReadAndWriteJSON")
 const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
 const MainRouter = require("./controller/routes/MainRouter")
+/**********************************************
+ * Controllers are used to define how the user interacts with your routes
+ ***********************************************/
+const FriendController = require("./controller/apis/FriendController")
 const newMainRouter = new MainRouter().router()
+
+const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);
+
+const friendController = new FriendController(readAndWriteFriends)
 
 app.engine("handlebars", handlebars({
     defaultLayout: "main"
@@ -40,6 +48,8 @@ app.use(
  * ==================================
  ***********************************************/
 app.use("/", newMainRouter)
+
+app.use("/api/friends", friendController.router())
 
 app.listen(3000, () => {
     console.log("Application listening to port 3000!!");
