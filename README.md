@@ -4,6 +4,19 @@
 
 The purpose of this repository is to follow along with the current cohort's weekly assignment - to be explicit about the steps in creating a fullstack web application, and to model the potential difficulties one could run into. 
 
+## End Goal
+
+ Now "success" is a relative term and may vary from person to person.
+
+I determined that a "successful" application to mean the following:
+
+- I would have become a more competent software engineer. 
+  - Good coding practices: comments
+  - Setting sprints 
+  - Debug well 
+  - Really understand the fullstack web application process
+- It would have to be engaging, interesting, and meaningful for at least 1 person.
+
 ### How to run this package
 
 ```

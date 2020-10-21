@@ -17,5 +17,15 @@
         "name": "hello",
         "emoji": "emoji",
         "wishfulCity": "barcelona"
+    }, {
+        "name": "Sam ",
+        "emoji": "Hello",
+        "wishfulCity": "Britain",
+        "questions": []
+    }, {
+        "name": "hi",
+        "emoji": "adfsd",
+        "wishfulCity": "asdfas",
+        "questions": []
     }]
 }

@@ -25,7 +25,8 @@ class FriendController {
             name: name,
             emoji: emoji,
             wishfulCity: wishfulCity,
-            favoriteMemory: favoriteMemory
+            favoriteMemory: favoriteMemory,
+            questions: []
         }
         let getAllFriends = this.readAndWriteJSONService.read()
         getAllFriends.then((friend) => {

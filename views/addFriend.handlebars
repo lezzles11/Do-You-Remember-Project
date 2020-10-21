@@ -85,31 +85,28 @@
                 {{!-- Label Stare --}}
                 <div class="md-form">
                   <i class="fas fa-user prefix grey-text"></i>
-                  <input type="text" id="name" name="name" class="form-control">
-                  <label for="name">Name</label>
+                  <input placeholder="Name" type="text" id="name" name="name" class="form-control">
                 </div>
                 {{!-- Label  End --}}
                  <div class="md-form">
                   <i class="fas fa-user prefix grey-text"></i>
-                  <input type="text" id="emoji" name="emoji" class="form-control">
-                  <label for="emoji">Emoji</label>
+                  <input type="text" id="emoji" placeholder="Emoji" name="emoji" class="form-control">
                 </div>
                 {{!-- Label Start --}}
                 <div class="md-form">
                   <i class="fas fa-envelope prefix grey-text"></i>
-                  <input type="text" id="wishfulCity" name="wishfulCity" class="form-control">
-                  <label for="wishfulCity">The city you wish you guys met in</label>
+                  <input type="text" id="wishfulCity" name="wishfulCity" class="form-control" placeholder="The city you wish you guys met in">
                 </div>
                 {{!-- Label End --}}
                 <!--Textarea with icon prefix-->
                 <div class="md-form">
                   <i class="fas fa-pencil-alt prefix grey-text"></i>
-                  <textarea type="text" id="favoriteMemory" class="md-textarea form-control" rows="3"></textarea>
-                  <label for="favoriteMemory">Your favorite memory</label>
+                  <textarea type="text" id="favoriteMemory" class="md-textarea form-control" placeholder="Your favorite memory" rows="3"></textarea>
                 </div>
                 <div class="text-center mt-3">
                   <button class="btn btn-indigo btn-rounded" id="addFriendButton">Add Friend</button>
                   <hr>
+                  {{!-- #TODO: Make sure that the favoriteMemory goes through --}}
                   <fieldset class="form-check">
                     <input class="form-check-input" type="checkbox" id="checkbox1">
                     <label class="form-check-label" for="checkbox1" class="dark-grey-text">cute emojis here/label>
