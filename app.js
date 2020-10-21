@@ -8,13 +8,10 @@ const USERS_DATA_ROUTE = "./model/users.json"
 const QUESTIONS_DATA_ROUTE = "./model/questions.json"
 const ORDERS_DATA_ROUTE = "./model/orders.json"
 
-const usernamePasswordCheck = require("./controller/auth/usernamePasswordCheck")
+const usernamePasswordCheck = require("./model/usernamePasswordCheck")
 const ReadAndWriteJSON = require("./model/ReadAndWriteJSON")
-const MainRouter = require("./controller/routes/MainRouter")
-
-
-
 const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
+const MainRouter = require("./controller/routes/MainRouter")
 const newMainRouter = new MainRouter().router()
 
 app.engine("handlebars", handlebars({
@@ -22,9 +19,12 @@ app.engine("handlebars", handlebars({
 }))
 app.set("view engine", "handlebars")
 app.use(express.static("views"))
+
+
 app.use(bodyParser.urlencoded({
     extended: false
 }))
+
 
 app.use(
     basicAuth({
@@ -42,5 +42,5 @@ app.use(
 app.use("/", newMainRouter)
 
 app.listen(3000, () => {
-    console.log("Application listening to port 8000");
+    console.log("Application listening to port 3000!!");
 });

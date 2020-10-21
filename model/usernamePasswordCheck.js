@@ -7,7 +7,7 @@ const path = require("path");
  ***********************************************/
 function usernamePasswordCheck(username, password, callback) {
     const users = fs.readFileSync(
-        path.join(__dirname, "../../model/users.json"),
+        path.join(__dirname, "./users.json"),
         "utf-8",
         async (err, data) => {
             if (err) {

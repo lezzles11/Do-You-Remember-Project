@@ -12,7 +12,12 @@ const ordersData = new ReadAndWriteJSON(directoryPath.join(__dirname), "../../mo
 class MainRouter {
     router() {
         const router = express.Router()
+        /**********************************************
+         * Home page - checks user 
+         * ==================================
+         ***********************************************/
         router.get("/", (incoming, outgoing) => {
+            console.log("GETTING INDEX PAGE")
             if (incoming.auth) {
                 let checkUser = incoming.auth.user
                 console.log("User to authorize: ", checkUser)
@@ -23,6 +28,23 @@ class MainRouter {
                 outgoing.render("index")
             }
         })
+        /**********************************************
+         * About Page
+         * ==================================
+         ***********************************************/
+        router.get("/about", (incoming, outgoing) => {
+            outgoing.render("about")
+        })
+
+        /**********************************************
+         * Get And Render Data
+         * ==================================
+         ***********************************************/
+
+
+
+
+
         return router;
     }
 }
