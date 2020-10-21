@@ -1,0 +1,136 @@
+<style>
+
+  html,
+  body,
+  header,
+  .view {
+    height: 100%;
+  }
+
+  @media (max-width: 740px) {
+    html,
+    body,
+    header,
+    .view {
+      height: 1100px;
+    }
+  }
+  @media (min-width: 800px) and (max-width: 850px) {
+    html,
+    body,
+    header,
+    .view {
+      height: 700px;
+    }
+  }
+
+  .top-nav-collapse {
+    background-color: #39448c !important;
+  }
+
+  .navbar:not(.top-nav-collapse) {
+    background: transparent !important;
+  }
+
+  @media (max-width: 991px) {
+   .navbar:not(.top-nav-collapse) {
+    background: #39448c !important;
+   }
+  }
+
+  h6 {
+    line-height: 1.7;
+  }
+
+</style>
+
+<!-- Main navigation -->
+<header>
+  <!-- Full Page Intro -->
+  <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/89.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+    <!-- Mask & flexbox options-->
+    <div class="mask rgba-indigo-strong d-flex justify-content-center align-items-center">
+      <!-- Content -->
+      <div class="container">
+        <!--Grid row-->
+        <div class="row pt-lg-5 mt-lg-5">
+          <!--Grid column-->
+          <div class="col-md-6 mb-5 mt-md-0 mt-5 white-text text-center text-md-left wow fadeInLeft"
+            data-wow-delay="0.3s">
+            <h1 class="display-4 font-weight-bold">Priority: add and be able to submit profile here </h1>
+            <hr class="hr-light">
+            <h6 class="mb-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem repellendus quasi
+              fuga
+              nesciunt dolorum nulla magnam veniam sapiente! Commodi sequi non animi ea
+              dolor quisquam iste.</h6>
+            <a class="btn btn-outline-white btn-rounded">Learn more</a>
+          </div>
+          <!--Grid column-->
+          <!--Grid column-->
+          <div class="col-md-6 col-xl-5 mb-4">
+
+                {{!-- Beginning of form --}}
+                <form action="/" method="POST" id="addFriendForm">
+            <!--Form-->
+            <div class="card wow fadeInRight" data-wow-delay="0.3s">
+              <div class="card-body z-depth-2">
+                <!--Header-->
+                <div class="text-center">
+                  <h3 class="dark-grey-text">
+                    <strong>Add Friend:</strong>
+                  </h3>
+                  <hr>
+                </div>
+                <!--Body-->
+                {{!-- Label Stare --}}
+                <div class="md-form">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input type="text" id="name" name="name" class="form-control">
+                  <label for="name">Name</label>
+                </div>
+                {{!-- Label  End --}}
+                 <div class="md-form">
+                  <i class="fas fa-user prefix grey-text"></i>
+                  <input type="text" id="emoji" name="emoji" class="form-control">
+                  <label for="emoji">Emoji</label>
+                </div>
+                {{!-- Label Start --}}
+                <div class="md-form">
+                  <i class="fas fa-envelope prefix grey-text"></i>
+                  <input type="text" id="wishfulCity" name="wishfulCity" class="form-control">
+                  <label for="wishfulCity">The city you wish you guys met in</label>
+                </div>
+                {{!-- Label End --}}
+                <!--Textarea with icon prefix-->
+                <div class="md-form">
+                  <i class="fas fa-pencil-alt prefix grey-text"></i>
+                  <textarea type="text" id="favoriteMemory" class="md-textarea form-control" rows="3"></textarea>
+                  <label for="favoriteMemory">Your favorite memory</label>
+                </div>
+                <div class="text-center mt-3">
+                  <button class="btn btn-indigo btn-rounded" id="addFriendButton">Add Friend</button>
+                  <hr>
+                  <fieldset class="form-check">
+                    <input class="form-check-input" type="checkbox" id="checkbox1">
+                    <label class="form-check-label" for="checkbox1" class="dark-grey-text">cute emojis here/label>
+                  </fieldset>
+                </div>
+
+
+              </div>
+            </div>
+            <!--/.Form-->
+</form>
+            {{!-- end of form --}}
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </div>
+      <!-- Content -->
+    </div>
+    <!-- Mask & flexbox options-->
+  </div>
+  <!-- Full Page Intro -->
+</header>
+<!-- Main navigation -->

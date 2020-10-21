@@ -16,6 +16,12 @@ node app.js
 
 ### How it works :open_book:
 
+- [ ] Handlebars 
+  - [ ] Categories
+  - [ ] Profile
+  - [ ] Question 
+  - [ ] About
+  - [ ] 
 - [ ] Controller: 
   - [ ] Router 
 

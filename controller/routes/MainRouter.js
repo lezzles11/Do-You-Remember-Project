@@ -52,6 +52,9 @@ class MainRouter {
         router.get("/categories", (incoming, outgoing) => {
             outgoing.render("categories")
         })
+        router.get("/addFriend", (incoming, outgoing) => {
+            outgoing.render("addFriend")
+        })
 
 
 

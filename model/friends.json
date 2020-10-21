@@ -2,16 +2,18 @@
     "friends": [{
             "id": 1,
             "name": "andre",
-            "story": "we met in chile",
-            "questions": [1],
-            "photo": "link1"
+            "emoji": "",
+            "wishfulCity": "chile",
+            "favoriteMemory": "everything, really",
+            "questions": []
         },
         {
             "id": 2,
             "name": "sam",
-            "story": "we met in england",
-            "questions": [1],
-            "photo": "link2"
+            "emoji": "",
+            "wishfulCity": "england",
+            "favoriteMemory": "doing yoga during the fire alarm",
+            "questions": []
         }
     ]
 }
