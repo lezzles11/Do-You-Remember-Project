@@ -20,5 +20,12 @@
         "wishfulCity": "hong kong",
         "favoriteMemory": "growing up",
         "questions": []
+    }, {
+        "id": 4,
+        "name": "",
+        "emoji": "homie",
+        "wishfulCity": "",
+        "favoriteMemory": "",
+        "questions": []
     }]
 }
