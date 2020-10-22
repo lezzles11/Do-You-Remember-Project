@@ -39,12 +39,12 @@ node app.js
   - [ ] Router 
 
 - [ ] Model 
-  - [ ] friends.json 
-  - [ ] orders.json
-  - [ ] questions_family.json
-  - [ ] questions_friends.json
-  - [ ] questions_love.json
-  - [ ] questions_work.json 
+  - [x ] friends.json 
+  - [ x] orders.json
+  - [ x] questions_family.json
+  - [x ] questions_friends.json
+  - [x ] questions_love.json
+  - [ x] questions_work.json 
     - The question 
     - [ ] Grab modal from the MDBootstrap 
     - [ ] See if you can have an arrow that just clicks through a bunch of data points, like a modal sort of thing? 
