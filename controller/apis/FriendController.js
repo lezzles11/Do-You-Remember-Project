@@ -34,12 +34,9 @@ class FriendController {
             let beforeAddingFriend = JSON.parse(friend);
             beforeAddingFriend.friends.push(friendObject)
             console.log("After adding friend: ", beforeAddingFriend)
-
             this.readAndWriteJSONService.write(JSON.stringify(beforeAddingFriend)).then(() => {
                 console.log("Finished writing data")
             })
-
-
         })
         output.end("done!")
     }
