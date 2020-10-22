@@ -14,29 +14,11 @@
         "favoriteMemory": "doing yoga during the fire alarm",
         "questions": []
     }, {
-        "name": "hello",
-        "emoji": "emoji",
-        "wishfulCity": "barcelona"
-    }, {
-        "name": "Sam ",
-        "emoji": "Hello",
-        "wishfulCity": "Britain",
-        "questions": []
-    }, {
-        "name": "hi",
-        "emoji": "adfsd",
-        "wishfulCity": "asdfas",
-        "questions": []
-    }, {
-        "name": "lesley",
-        "emoji": "emoji",
+        "id": 3,
+        "name": "robert",
+        "emoji": "happy",
         "wishfulCity": "hong kong",
-        "questions": []
-    }, {
-        "name": "asdf",
-        "emoji": "asdfasdf",
-        "wishfulCity": "asdfasdf",
-        "favoriteMemory": "asdfasdf",
+        "favoriteMemory": "growing up",
         "questions": []
     }]
 }

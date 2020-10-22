@@ -45,10 +45,14 @@ class ReadAndWriteJSON {
                 if (err) {
                     console.log(err);
                 } else {
+                    this.length = JSON.parse(data).length
                     resolve(data);
                 }
             });
         });
+    }
+    length() {
+        return this.length;
     }
 }
 
