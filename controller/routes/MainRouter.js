@@ -4,10 +4,9 @@ const ReadAndWriteJSON = require("../../model/ReadAndWriteJSON.js")
 
 const directoryPath = require("path")
 
-const friendsData = new ReadAndWriteJSON(directoryPath.join(__dirname), "../../model/friends.json")
-
-
-const ordersData = new ReadAndWriteJSON(directoryPath.join(__dirname), "../../model/orders.json")
+const friendsData = new ReadAndWriteJSON(
+    directoryPath.join(__dirname, "../../model/friends.json")
+);
 
 class MainRouter {
     router() {
@@ -43,6 +42,7 @@ class MainRouter {
          * Get And Render Data
          * ==================================
          ***********************************************/
+
         router.get("/question", (incoming, outgoing) => {
             outgoing.render("question")
         })
@@ -55,7 +55,21 @@ class MainRouter {
         router.get("/addFriend", (incoming, outgoing) => {
             outgoing.render("addFriend")
         })
+        router.get("/home", async (incoming, outgoing) => {
+            //outgoing.render("home")
 
+            let getFriendsData = friendsData.read();
+            let outgoingData;
+            getFriendsData.then(async (friendList) => {
+                try {
+                    outgoingData = await JSON.parse(friendList);
+                    console.log(friendList);
+                    outgoing.render("home", outgoingData);
+                } catch (error) {
+                    console.log("error", error)
+                }
+            });
+        });
 
 
 
