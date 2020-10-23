@@ -1,7 +1,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("questions", (table) => {
         table.increments()
-        table.integer("question_id")
+        table.integer("category_id").unsigned()
+        table.foreign("category_id").references("categories.id")
         table.string("question")
     })
 };
