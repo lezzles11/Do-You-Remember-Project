@@ -1,11 +1,15 @@
 {
     "users": [{
+            "id": 1,
             "username": "sam",
-            "password": "12345"
+            "password": "12345",
+            "email": "sam.o@xccelerate.co"
         },
         {
+            "id": 2,
             "username": "lesley",
-            "password": "12345"
+            "password": "12345",
+            "email": "lesley.c@xccelerate.co"
         }
     ]
 }

@@ -8,20 +8,6 @@ const USERS_DATA_ROUTE = "./model/users.json"
 const QUESTIONS_DATA_ROUTE = "./model/questions.json"
 const ORDERS_DATA_ROUTE = "./model/orders.json"
 
-const usernamePasswordCheck = require("./model/usernamePasswordCheck")
-const ReadAndWriteJSON = require("./model/ReadAndWriteJSON")
-const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
-const MainRouter = require("./controller/routes/MainRouter")
-/**********************************************
- * Controllers are used to define how the user interacts with your routes
- ***********************************************/
-const FriendController = require("./controller/apis/FriendController")
-const newMainRouter = new MainRouter().router()
-
-const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);
-
-const friendController = new FriendController(readAndWriteFriends)
-
 app.engine("handlebars", handlebars({
     defaultLayout: "main"
 }))
@@ -33,6 +19,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
+const usernamePasswordCheck = require("./model/usernamePasswordCheck")
 
 app.use(
     basicAuth({
@@ -43,14 +30,40 @@ app.use(
     })
 );
 
+
 /**********************************************
- *  Connecting the route to the router class 
+ * * Controllers are used to define how the user interacts with your routes - connecting routes to database here ** 
  * ==================================
+ * 1. Declare routers 
+ * 2. Declare the database 
+ * 3. Pass the database into the router 
+ * 4. Explicitly connect the route to the router 
  ***********************************************/
+// 1: Declare routers 
+const MainRouter = require("./controller/routes/MainRouter")
+const FriendController = require("./controller/apis/FriendController")
+const UserController = require("./controller/apis/UserController")
+
+// 2. Declare database 
+const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);
+const readAndWriteUsers = new ReadAndWriteJSON(USERS_DATA_ROUTE)
+const ReadAndWriteJSON = require("./model/ReadAndWriteJSON")
+const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
+
+// 3. Pass database into router 
+const friendController = new FriendController(readAndWriteFriends).router()
+const userController = new UserController(readAndWriteUsers).router()
+const newMainRouter = new MainRouter().router()
+
+// 4. Explicitly connect the route to the router 
 app.use("/", newMainRouter)
+app.use("/api/friends", friendController)
+app.use("/api/users", userController)
 
-app.use("/api/friends", friendController.router())
 
+/**********************************************
+ * Start server
+ ***********************************************/
 app.listen(3000, () => {
     console.log("Application listening to port 3000!!");
 });
