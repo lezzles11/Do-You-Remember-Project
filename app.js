@@ -9,6 +9,7 @@ const FRIENDS_DATA_ROUTE = "./model/friends.json"
 const USERS_DATA_ROUTE = "./model/users.json"
 const QUESTIONS_DATA_ROUTE = "./model/questions.json"
 const ORDERS_DATA_ROUTE = "./model/orders.json"
+require('dotenv').config()
 app.engine("handlebars", handlebars({
     defaultLayout: "main"
 }))
@@ -21,14 +22,14 @@ app.use(bodyParser.urlencoded({
 }))
 
 
-// app.use(
-//     basicAuth({
-//         authorizer: usernamePasswordCheck,
-//         challenge: true,
-//         authorizeAsync: true,
-//         realm: "My Application",
-//     })
-// );
+app.use(
+    basicAuth({
+        authorizer: usernamePasswordCheck,
+        challenge: true,
+        authorizeAsync: true,
+        realm: "My Application",
+    })
+);
 
 
 /**********************************************

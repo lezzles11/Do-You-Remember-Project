@@ -1,6 +1,7 @@
 {
     "friends": [{
         "id": 1,
+        "username": "sam.o@xccelerate.co",
         "name": "andre",
         "emoji": "",
         "wishfulCity": "chile",

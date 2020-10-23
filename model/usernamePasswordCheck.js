@@ -6,6 +6,8 @@ const path = require("path");
  * ==================================
  ***********************************************/
 function usernamePasswordCheck(username, password, callback) {
+    console.log("Username: ", username)
+    console.log("Password: ", password)
     const users = fs.readFileSync(
         path.join(__dirname, "./users.json"),
         "utf-8",
@@ -20,7 +22,7 @@ function usernamePasswordCheck(username, password, callback) {
     let parsed = JSON.parse(users);
     console.log(parsed)
     let user = parsed.users.filter((user) => user.username == username);
-    console.log(user)
+    console.log("In username photo check", user)
     if (user[0].username === username && user[0].password === password) {
         return callback(null, true);
     } else {

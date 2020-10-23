@@ -20,6 +20,34 @@ class FriendController {
         router.post("/addfriend", this.addFriend.bind(this))
         return router;
     }
+    /**********************************************
+     * getFriend(incoming, outgoing)
+     * ==================================
+     * The purpose of this method is to get the friend's information and render it onto the profile page 
+     ***********************************************/
+    getFriend(incoming, outgoing) {
+        // First, get the parameter of the friend
+        // Then, render that parameter into the route 
+        // the parameter should correspond to /friend/:id
+
+    }
+
+    /**********************************************
+     * editFriend(incoming, outgoing)
+     * ==================================
+     ***********************************************/
+    editFriend(incoming, outgoing) {
+
+    }
+
+    /**********************************************
+     * 
+     * ==================================
+     ***********************************************/
+    deleteFriend(incoming, outgoing) {
+        // able to delete friend 
+    }
+
     addFriend(input, output) {
         let {
             name,
