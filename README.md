@@ -59,6 +59,7 @@ node app.js
 - [ ] Fullstack Application Web Development
 - [ ] Model-View-Controller
 - [ ] Data Manipulation  
+- [ ] ![SQL Diagram](./sql.png)
 - [ ] Postgres
 
 ## Important Vocabulary
@@ -90,7 +91,7 @@ Documentation:
 | ----- | ---------------------- | :------: | :------------: | :---------: |
 | Oct 21   | Finished marking student exercises        |    Work on implementing the checklist for this assignment, continue commenting through the application and playing around with it - Zuckerberg said to break things    |       |             |
 |    Oct 22   |      |    M     |    30 mins     |             |
-|  Oct 23     | Look at three examples | 30 mins  |                |
+|  Oct 23     | Look at three examples | Finished writing migrations and planning out tables |                |
 |  Oct 24     |   |    M     |    30 mins     |     15      |
 |  Oct 25     |   |    M     |    30 mins     |     15      |
 |  Oct 26     |   |    M     |    30 mins     |     15      |
