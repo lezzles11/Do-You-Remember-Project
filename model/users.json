@@ -1,15 +1,1 @@
-{
-    "users": [{
-            "id": 1,
-            "username": "sam",
-            "password": "12345",
-            "email": "sam.o@xccelerate.co"
-        },
-        {
-            "id": 2,
-            "username": "lesley",
-            "password": "12345",
-            "email": "lesley.c@xccelerate.co"
-        }
-    ]
-}
+{"users":[{"id":1,"username":"sam.o@xccelerate.co","password":"apple"},{"id":2,"username":"lavine.h@xccelerate.co","password":"apple"},{"id":3,"username":"lesley.c@xccelerate.co","password":"apple"},{"id":4,"password":"orange"},{"id":5,"password":"asdfadsf"},{"id":6,"username":"lesley@bu.edu","password":"orange"}]}

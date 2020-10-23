@@ -17,34 +17,27 @@ class UserController {
     }
     router() {
         let router = express.Router()
-        router.post("/adduser", this.addUser.bind(this))
+        router.post("/addUser", this.addUser.bind(this))
         return router;
     }
     addUser(input, output) {
         let {
             username,
             password,
-            email
         } = input.body;
         let getAllUsers = this.readAndWriteJSONService.read()
-        console.log("GEtting all friends", getAllFriends)
-        let totalLength = this.readAndWriteJSONService.length()
-        console.log("LENGTH", totalLength)
+        console.log("Getting all users", getAllUsers)
         getAllUsers.then((user) => {
             let parsedUserData = JSON.parse(user);
             let userObject = {
                 id: parsedUserData.users.length + 1,
                 username: username,
                 password: password,
-                email: email
             }
-            console.log("New User: ", userObject);
+            // Adding the new object to the parsed json file 
             parsedUserData.users.push(userObject)
-            console.log("After adding friend: ", userObject)
-            console.log(userObject.users.length)
-            this.readAndWriteJSONService.write(JSON.stringify(userObject)).then(() => {
-                console.log("Finished writing data")
-                console.log("Added new user: ", userObject)
+            this.readAndWriteJSONService.write(JSON.stringify(parsedUserData)).then(() => {
+                console.log("New data: ", parsedUserData)
             })
         })
         output.end("done!")

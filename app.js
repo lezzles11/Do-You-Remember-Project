@@ -3,11 +3,12 @@ const app = express()
 const handlebars = require("express-handlebars")
 const bodyParser = require("body-parser")
 const basicAuth = require("express-basic-auth")
+const ReadAndWriteJSON = require("./model/ReadAndWriteJSON")
+const usernamePasswordCheck = require("./model/usernamePasswordCheck")
 const FRIENDS_DATA_ROUTE = "./model/friends.json"
 const USERS_DATA_ROUTE = "./model/users.json"
 const QUESTIONS_DATA_ROUTE = "./model/questions.json"
 const ORDERS_DATA_ROUTE = "./model/orders.json"
-
 app.engine("handlebars", handlebars({
     defaultLayout: "main"
 }))
@@ -19,16 +20,15 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 
-const usernamePasswordCheck = require("./model/usernamePasswordCheck")
 
-app.use(
-    basicAuth({
-        authorizer: usernamePasswordCheck,
-        challenge: true,
-        authorizeAsync: true,
-        realm: "My Application",
-    })
-);
+// app.use(
+//     basicAuth({
+//         authorizer: usernamePasswordCheck,
+//         challenge: true,
+//         authorizeAsync: true,
+//         realm: "My Application",
+//     })
+// );
 
 
 /**********************************************
@@ -47,7 +47,6 @@ const UserController = require("./controller/apis/UserController")
 // 2. Declare database 
 const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);
 const readAndWriteUsers = new ReadAndWriteJSON(USERS_DATA_ROUTE)
-const ReadAndWriteJSON = require("./model/ReadAndWriteJSON")
 const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
 
 // 3. Pass database into router 

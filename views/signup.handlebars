@@ -16,15 +16,16 @@
       <!-- Grid column -->
       <div class="col-md-9 mb-md-0 mb-5">
 
-        <form action="/" method="post" id="addUserForm">
+        <form action="/" method="POST" id="addUserForm">
 
           <!-- Grid row -->
           <div class="row">
 
             <!-- Grid column -->
-            <div class="col-md-6">
-              <div class="md-form mb-0">
-                <input type="text" id="username" placeholder="username" class="form-control" name="username"> 
+               <div class="col-md-12">
+              <div class="md-form">
+                <input id="username" placeholder="email"
+                name="username" class="form-control md-textarea" rows="3"></textarea>
               </div>
             </div>
             <!-- Grid column -->
@@ -45,24 +46,23 @@
           <div class="row">
 
             <!-- Grid column -->
-            <div class="col-md-12">
-              <div class="md-form">
-                <input id="email" placeholder="email"
-                name="email" class="form-control md-textarea" rows="3"></textarea>
-              </div>
-            </div>
+       
             <!-- Grid column -->
 
           </div>
           <!-- Grid row -->
 
-        </form>
-
-        <div class="text-center text-md-left">
-          <a id="addUserButton" class="btn btn-primary btn-md btn-rounded">Sign Up</a>
+   <div class="text-center text-md-left">
+              <button type="submit" id="addUserButton" class="btn btn-outline-dark waves-effect">
+                  Sign Up
+              </button>
         </div>
 
+        </form>
+
       </div>
+     
+
       <!-- Grid column -->
 
       <!-- Grid column -->
@@ -92,39 +92,3 @@
 
 
 </div>
-<script>
-    $("#addUserForm").on("submit", function(event) {
-    event.preventDefault();
-    let sendToServer = $("#addUserForm").serializeArray()
-    let username = $("#username").val()
-    let password = $("#password").val()
-    let email = $("#email").val()
-    console.log("Data: ", sendToServer)
-    let friend = {
-        id: 
-        username: name,
-        password: emoji,
-        email: wishfulCity,
-    }
-    sendToServer.push(friend)
-    console.log("Sending friend to server: ", sendToServer)
-
-    $.ajax({
-        type: "POST",
-        url: "/api/friends/addfriend",
-        data: sendToServer,
-        success: function() {
-            console.log("data sent!")
-            $("#name").val("")
-            $("#emoji").val("")
-            $("#wishfulCity").val("")
-            $("#favoriteMemory").val("")
-            location.replace("http://localhost:3000/")
-        },
-        error: function(error) {
-            console.log("An error occurred in your form submit handler")
-            console.log("The error is here: ", error)
-        }
-    })
-})
-</script>
