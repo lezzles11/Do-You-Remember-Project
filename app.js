@@ -22,14 +22,14 @@ app.use(bodyParser.urlencoded({
 }))
 
 
-app.use(
-    basicAuth({
-        authorizer: usernamePasswordCheck,
-        challenge: true,
-        authorizeAsync: true,
-        realm: "My Application",
-    })
-);
+// app.use(
+//     basicAuth({
+//         authorizer: usernamePasswordCheck,
+//         challenge: true,
+//         authorizeAsync: true,
+//         realm: "My Application",
+//     })
+// );
 
 
 /**********************************************
@@ -42,8 +42,8 @@ app.use(
  ***********************************************/
 // 1: Declare routers 
 const MainRouter = require("./controller/routes/MainRouter")
-const FriendController = require("./controller/apis/FriendController")
-const UserController = require("./controller/apis/UserController")
+const FriendControllerJSON = require("./controller/apis/FriendControllerJSON")
+const UserControllerJSON = require("./controller/apis/UserControllerJSON")
 
 // 2. Declare database 
 const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);
@@ -51,14 +51,14 @@ const readAndWriteUsers = new ReadAndWriteJSON(USERS_DATA_ROUTE)
 const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
 
 // 3. Pass database into router 
-const friendController = new FriendController(readAndWriteFriends).router()
-const userController = new UserController(readAndWriteUsers).router()
+const friendControllerJSON = new FriendControllerJSON(readAndWriteFriends).router()
+const userControllerJSON = new UserControllerJSON(readAndWriteUsers).router()
 const newMainRouter = new MainRouter().router()
 
 // 4. Explicitly connect the route to the router 
 app.use("/", newMainRouter)
-app.use("/api/friends", friendController)
-app.use("/api/users", userController)
+app.use("/api/friends", friendControllerJSON)
+app.use("/api/users", userControllerJSON)
 
 
 /**********************************************

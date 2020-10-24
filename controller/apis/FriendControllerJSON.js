@@ -11,7 +11,7 @@
  ***********************************************/
 const express = require("express");
 
-class FriendController {
+class FriendControllerJSON {
     constructor(readAndWriteJSONService) {
         this.readAndWriteJSONService = readAndWriteJSONService;
     }
@@ -81,4 +81,4 @@ class FriendController {
     }
 }
 
-module.exports = FriendController
+module.exports = FriendControllerJSON

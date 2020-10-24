@@ -1,6 +1,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("friends_questions", (table) => {
         table.increments()
+        table.integer("user_id").unsigned()
+        table.foreign("user_id").references("users.id")
         table.integer("users_friends_id").unsigned()
         table.foreign("users_friends_id").references("users_friends.id")
         table.integer("question_id").unsigned()

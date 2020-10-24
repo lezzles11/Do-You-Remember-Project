@@ -4,8 +4,9 @@ exports.up = function(knex) {
         table.integer("user_id").unsigned()
         table.foreign("user_id").references("users.id")
         table.string("name")
-        table.string("relation")
-        table.string("description")
+        table.string("emoji")
+        table.string("wishfulCity")
+        table.string("favoriteMemory")
         table.timestamps(false, true)
     })
 };

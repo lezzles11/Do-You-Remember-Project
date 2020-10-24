@@ -11,7 +11,7 @@
  ***********************************************/
 const express = require("express");
 
-class UserController {
+class UserControllerJSON {
     constructor(readAndWriteJSONService) {
         this.readAndWriteJSONService = readAndWriteJSONService;
     }
@@ -44,4 +44,4 @@ class UserController {
     }
 }
 
-module.exports = UserController
+module.exports = UserControllerJSON
