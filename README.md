@@ -139,14 +139,14 @@ Element:
 
 - [ x] Open postgres 
 - [x ] Create migration files 
-- [ ] Create seed files
+- [ x] Create seed files
 - [ ] Render the data onto index.handlebars
-- [ ] Create and verify user table
-- [ ] Create and verify user_friend table 
-- [ ] Create and verify category table 
-- [ ] Create and verify question table
-- [ ] Create and verify user_fav_question table
-- [ ] Create and verify user_friend_all_questions table 
+- [ x] Create and verify user table
+- [ x] Create and verify user_friend table 
+- [ x] Create and verify category table 
+- [ x] Create and verify question table
+- [ x] Create and verify user_fav_question table
+- [ x] Create and verify user_friend_all_questions table 
 
 PSEUDO CODE 
 - [ ] User Table 
@@ -205,14 +205,12 @@ user {
 - Users will be able to get a friend's profile
 
 #### Setting of Story ####
-user table 
+user_table table 
 ```
-user {
+user_table {
     id
     email
     password
-    facebook_id
-    facebook_access_token
     spotify_id
     spotify_access_token
     timestamp
@@ -233,6 +231,7 @@ user_friend {
 
 #### Outline of Story #####
 - Router Methods: 
+  - getAllFriendsRoute("api/friend")
   - addFriendRoute("/api/friend/", (incoming, outgoing))
   - getFriendRoute("/api/friend/:id", (incoming, outgoing))
   - editFriendRoute("/api/friend/:id", (incoming, outgoing))
@@ -305,6 +304,7 @@ user_friend_all_questions {
 ##### Essay Outline ######
 - Router Methods: 
   - getAllQuestionsRoute("/api/questions/")
+  - router.get("api/category/:categoryId/:questionId", this.getQuestionFromCategoryRoute.bind(this))
   - getAllQuestionsFromCategoryRoute("/api/questions/:category", (incoming, outgoing))
     - incoming data: incoming.query.category, incoming.body.friend, incoming.auth.user
     - outgoing: outgoing.json(an array of questions?)

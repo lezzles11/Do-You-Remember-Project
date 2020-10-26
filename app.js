@@ -42,8 +42,8 @@ app.use(bodyParser.urlencoded({
  ***********************************************/
 // 1: Declare routers 
 const MainRouter = require("./controller/routes/MainRouter")
-const FriendControllerJSON = require("./controller/apis/FriendControllerJSON")
-const UserControllerJSON = require("./controller/apis/UserControllerJSON")
+const FriendControllerJSON = require("./controller/services/JSON/FriendControllerJSON")
+const UserControllerJSON = require("./controller/services/JSON/UserControllerJSON")
 
 // 2. Declare database 
 const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);

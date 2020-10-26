@@ -1,3 +1,14 @@
+/**********************************************
+ * Routes and Controllers 
+ * ==================================
+ * Routes handle the HTTP request that hits the API and routes them to the appropriate controller 
+ * 
+ * The purpose of this class is to be able to add, edit, delete and get the user from the database 
+ * 
+ * 1. Connect the routes 
+ * 2. Grab input from frontend
+ * 3. Add / edit / delete data from backend accordingly 
+ ***********************************************/
 const express = require("express")
 
 const ReadAndWriteJSON = require("../../model/ReadAndWriteJSON.js")
