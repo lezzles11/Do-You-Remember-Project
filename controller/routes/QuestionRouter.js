@@ -26,12 +26,29 @@ class QuestionRouter {
         let router = express.Router();
         router.get("api/category/:categoryId", this.getAllQuestionsFromCategoryRoute.bind(this))
         router.get("api/category/:categoryId/:questionId", this.getQuestionFromCategoryRoute.bind(this))
+        router.get("api/category/:categoryId/:questionId", this.userFavoritesQuestionRoute.bind(this))
+        router.get("api/category/:categoryId/:questionId", this.friendAnswersQuestionRoute.bind(this))
         router.get("api/question", this.getAllQuestionsRoute.bind(this));
         router.get("api/question/:questionId", this.getQuestionRoute.bind(this));
         router.post("api/question", this.addQuestionRoute.bind(this));
         router.put("api/question/:questionId", this.editQuestionRoute.bind(this));
         router.delete("api/question/:questionId", this.deleteQuestionRoute.bind(this));
         return router;
+    }
+    /**********************************************
+     * Favorite a question 
+     * ==================================
+     ***********************************************/
+    userFavoritesQuestionRoute(incoming, outgoing) {
+
+    }
+
+    /**********************************************
+     * Make question answered for user 
+     * ==================================
+     ***********************************************/
+    friendAnswersQuestionRoute(incoming, outgoing) {
+
     }
     /**********************************************
      * Gets all questions from a specific category
@@ -88,7 +105,7 @@ class QuestionRouter {
     /**********************************************
      * Adds Question
      * ==================================
-     * Connects the route "/signup" AND API/Question
+     * Connects the route "/api/question" AND API/Question
      * Incoming data: 
      * Outgoing data: 
      * Methods from service class
@@ -100,7 +117,7 @@ class QuestionRouter {
     /**********************************************
      * Edits Question
      * ==================================
-     * Connects the route "/api/Question/:QuestionId"
+     * Connects the route "/api/question/:questionId"
      * Incoming data: 
      * Outgoing data: 
      * Methods from service class
@@ -112,7 +129,7 @@ class QuestionRouter {
     /**********************************************
      * Deletes Question
      * ==================================
-     * Connects the route "/api/Question/:QuestionId"
+     * Connects the route "/api/question/:questionId"
      * Incoming data: 
      * Outgoing data: 
      * Methods from service class
@@ -121,7 +138,5 @@ class QuestionRouter {
     deleteQuestionRoute(incoming, outgoing) {
 
     }
-
-
 
 }
