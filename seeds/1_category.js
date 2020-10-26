@@ -5,19 +5,19 @@ exports.seed = function(knex) {
             // Inserts seed entries
             return knex('category').insert([{
                     id: 1,
-                    category: "Friends"
+                    name: "Friends"
                 },
                 {
                     id: 2,
-                    category: "Work"
+                    name: "Work"
                 },
                 {
                     id: 3,
-                    category: "Family"
+                    name: "Family"
                 },
                 {
                     id: 4,
-                    category: "Love"
+                    name: "Love"
                 }
             ]);
         });

@@ -130,6 +130,20 @@ exports.down = function(knex) {
     return knex.schema.dropTable("question")
 };
 
+Seeds
+```
+exports.seed = function(knex) {
+    // Deletes ALL existing entries
+    return knex('question').del()
+        .then(function() {
+            // Inserts seed entries
+            return knex('question').insert([{
+                    id: 1,
+                    category_id: 1,
+                    question_string: "If you could alter something about a parent, what would it be?",
+                    photo_url: ""
+                },
+```
 USER_FRIEND_ALL_QUESTIONS 
 
 exports.up = function(knex) {

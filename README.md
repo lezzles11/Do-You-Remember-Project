@@ -137,8 +137,8 @@ SIGNUP
 
 Element: 
 
-- [ ] Open postgres 
-- [ ] Create migration files 
+- [ x] Open postgres 
+- [x ] Create migration files 
 - [ ] Create seed files
 - [ ] Render the data onto index.handlebars
 - [ ] Create and verify user table

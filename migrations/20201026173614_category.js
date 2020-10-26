@@ -5,9 +5,6 @@ exports.up = function(knex) {
         table.timestamps(false, true);
     })
 };
-
-
-
 exports.down = function(knex) {
     return knex.schema.dropTable("category")
 };

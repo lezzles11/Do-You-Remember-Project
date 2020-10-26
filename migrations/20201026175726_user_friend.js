@@ -2,7 +2,7 @@ exports.up = function(knex) {
     return knex.schema.createTable("user_friend", (table) => {
         table.increments()
         table.integer("user_id").unsigned()
-        table.foreign("user_id").references("users.id")
+        table.foreign("user_id").references("user_table.id")
         table.string("name")
         table.string("emoji")
         table.string("wishful_city")
