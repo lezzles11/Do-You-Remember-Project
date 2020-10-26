@@ -1,9 +1,9 @@
 exports.seed = function(knex) {
     // Deletes ALL existing entries
-    return knex('users_fav_questions').del()
+    return knex('user_fav_question').del()
         .then(function() {
             // Inserts seed entries
-            return knex('users_fav_questions').insert([{
+            return knex('user_fav_question').insert([{
                     id: 1,
                     user_id: 1,
                     question_id: 1

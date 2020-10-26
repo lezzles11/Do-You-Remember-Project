@@ -1,28 +1,31 @@
 exports.seed = function(knex) {
     // Deletes ALL existing entries
-    return knex('users_friends').del()
+    return knex('user_friend').del()
         .then(function() {
             // Inserts seed entries
-            return knex('users_friends').insert([{
+            return knex('user_friend').insert([{
                     id: 1,
                     user_id: 1,
                     name: "Sam",
-                    relation: "Friend",
-                    description: "Cool person"
+                    emoji: "Friend",
+                    wishful_city: "Cool person",
+                    favorite_memory: ""
                 },
                 {
                     id: 2,
                     user_id: 2,
                     name: "Sam Poon",
-                    relation: "Family",
-                    description: "Another cool person"
+                    emoji: "",
+                    wishful_city: "Cool person",
+                    favorite_memory: ""
                 },
                 {
                     id: 3,
                     user_id: 3,
                     name: "Sam Ng",
-                    relation: "Family",
-                    description: "Another really cool person"
+                    emoji: "",
+                    wishful_city: "Cool person",
+                    favorite_memory: ""
                 }
             ]);
         });
