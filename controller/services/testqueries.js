@@ -23,8 +23,8 @@ let getQuery = knex.from("user_table").select("email", "password");
  * QUERIES REQUIRED
  * ==================================
  * - [x ] get all users 
- * - [ ] get user (id, user)
- * - [ ] add user (user)
+ * - [ x] get user (id, user)
+ * - [ x] add user (user)
  * - [ ] edit user service (id, user) 
  * - [ ] delete user service (id, user)
  * - [ ] get all user friends
@@ -46,17 +46,83 @@ let user_table_email = "email"
 let user_table_password = "password"
 let category = "category"
 let category_name = "name"
+let insertUserObject = {
+    id: 4,
+    email: "test@bu.edu",
+    password: "cheung",
+    spotify_id: "",
+    spotify_access_token: "",
+}
+let replaceUserObject = {
+    id: 4,
+    email: "replaceTest@bu.edu",
+    password: "cheung",
+    spotify_id: "",
+    spotify_access_token: "",
+}
 
+/**********************************************
+ * Get all users    
+ * ==================================
+ * input:  
+ * output: 
+ ***********************************************/
 let getAllFromUserTable = knex.from(user_table).select(user_table_email, user_table_password)
-let getFromUser = knex.from(user_table).select("")
 
-let getUserQuery = knex.from
-    .then((rows) => {
-        console.log("HERE YA GO YA IDIOT")
-        console.log(rows);
-        console.log("AT LEAST SOMETHING HAPPENED TODAY")
-    })
-    .catch((error) => {
-        console.log("THE IDIOCY NEVER ENDS")
-        console.log(error);
-    });
+/**********************************************
+ * Get user by id
+ * ==================================
+ * input: user id 
+ * output: user object {
+ *  id 
+ *  email
+ *  spotify_id
+ *  spotify_access_token
+ *  created_at
+ *  updated_at
+ * }
+ ***********************************************/
+let getUserById = knex.from(user_table).where("id", 1)
+
+/**********************************************
+ * Add User
+ * ==================================
+ let insertUserObject = {
+     id: 4,
+     email: "test@bu.edu",
+     password: "cheung",
+     spotify_id: "",
+     spotify_access_token: "",
+ }
+ ***********************************************/
+let addUser = knex(user_table).insert(insertUserObject)
+
+/**********************************************
+ * Edit User 
+ * ==================================
+ let replaceUserObject = {
+     id: 4,
+     email: "replaceTest@bu.edu",
+     password: "cheung",
+     spotify_id: "",
+     spotify_access_token: "",
+ }
+ ***********************************************/
+let editUser = knex(user_table).where({
+    id: 4
+}).update(replaceUserObject)
+
+function runQuery(query) {
+    query.then((rows) => {
+            console.log("HERE YA GO YA IDIOT")
+            console.log(rows);
+            console.log("AT LEAST SOMETHING HAPPENED TODAY")
+        })
+        .catch((error) => {
+            console.log("THE IDIOCY NEVER ENDS")
+            console.log(error);
+        });
+}
+runQuery(getAllFromUserTable)
+runQuery(editUser)
+runQuery(getAllFromUserTable)
