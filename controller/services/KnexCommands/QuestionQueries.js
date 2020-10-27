@@ -61,8 +61,6 @@ let replaceQuestionObject = {
     photo_url: ""
 }
 // let user question table 
-let user_friend_all_questions = "user_friend_all_questions"
-
 function printQuery(query) {
     query.then((eachRowInQuery) => {
         console.log("Each Row in Query: ", eachRowInQuery);
@@ -156,27 +154,49 @@ function deleteQuery(table, id) {
 // probaby like the update function 
 function favoriteQuestion(question, friend, user) {
     // grab the id from all the questions 
-    // increment the id by one and assign to this object 
+    // increment the id by one and assign to this object
+
     let newFriendQuestionObject = {
-        id: "", // create new id, 
         user_id: user.id,
         user_friend_id: friend.id,
         question_id: question.id,
         answered: true
     }
-    knex(user_friend_all_questions).insert(newFriendQuestionObject)
-
 
 
 }
+// get count
+
 /**********************************************
  * Make question answered for user 
  * ==================================
  ***********************************************/
 
-function makeQuestionAnswered(user, question) {
-
+// let user question table 
+function printQuery(query) {
+    query.then((eachRowInQuery) => {
+        console.log("Each Row in Query: ", eachRowInQuery);
+    }).catch((error) => {
+        console.log("Error: ", error);
+    });
 }
+
+let newFriendQuestionObject = {
+    id: 5,
+    user_id: 2,
+    user_friend_id: 2,
+    question_id: 7,
+    answered: true
+}
+
+function makeQuestionAnswered(newFriendQuestionObject) {
+    return printQuery(knex.table(user_friend_all_questions).insert(newFriendQuestionObject))
+}
+// This works
+// makeQuestionAnswered(newFriendQuestionObject)
+
+// This works
+// getObjectByIdQuery(user_friend_all_questions, 5)
 
 /**********************************************
  * Get all questions from specific category 
@@ -187,7 +207,6 @@ function getQuestionFromCategoryName(categoryName) {
     let categoryId = knex.select("id").from("category").where("name", categoryName)
     console.log("Category name: ", categoryName)
     console.log("Category Id: ", categoryId)
-
     return printQuery(knex.select("question_string", "category_id", "photo_url").from("question").where("category_id", categoryId))
 }
 /**********************************************
@@ -199,8 +218,8 @@ function grabAllQuestions() {
 }
 
 
-getQuestionFromCategoryName("Love")
-grabAllQuestions()
+// getQuestionFromCategoryName("Love")
+// grabAllQuestions()
 // console.log("BEFORE EDITING")
 // insertObjectQuery(question_table, insertQuestionObject)
 // getObjectByIdQuery(question_table, 201)
