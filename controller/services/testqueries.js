@@ -25,8 +25,8 @@ let getQuery = knex.from("user_table").select("email", "password");
  * - [x ] get all users 
  * - [ x] get user (id, user)
  * - [ x] add user (user)
- * - [ ] edit user service (id, user) 
- * - [ ] delete user service (id, user)
+ * - [ x] edit user service (id, user) 
+ * - [x ] delete user service (id, user)
  * - [ ] get all user friends
  * - [ ] add friend
  * - [ ] edit friend
@@ -41,76 +41,27 @@ let getQuery = knex.from("user_table").select("email", "password");
 
 // get all from table 
 
-let user_table = "user_table"
-let user_table_email = "email"
-let user_table_password = "password"
-let category = "category"
-let category_name = "name"
-let insertUserObject = {
+let table = "user_friend"
+let col1 = "name"
+let col2 = "emoji"
+let col3 = "wishful_city"
+let col4 = "favorite_memory"
+let insertFriendObject = {
     id: 4,
-    email: "test@bu.edu",
-    password: "cheung",
-    spotify_id: "",
-    spotify_access_token: "",
+    user_id: 1,
+    name: "Janice",
+    emoji: "yoga",
+    wishful_city: "Barcelona",
+    favorite_memory: "Going to yoga together"
 }
-let replaceUserObject = {
+let replaceFriendObject = {
     id: 4,
-    email: "replaceTest@bu.edu",
-    password: "cheung",
-    spotify_id: "",
-    spotify_access_token: "",
+    user_id: 2,
+    name: "Genny",
+    emoji: "cousin",
+    wishful_city: "denmark",
+    favorite_memory: "hanging out as kids writing weird stories"
 }
-
-/**********************************************
- * Get all users    
- * ==================================
- * input:  
- * output: 
- ***********************************************/
-let getAllFromUserTable = knex.from(user_table).select(user_table_email, user_table_password)
-
-/**********************************************
- * Get user by id
- * ==================================
- * input: user id 
- * output: user object {
- *  id 
- *  email
- *  spotify_id
- *  spotify_access_token
- *  created_at
- *  updated_at
- * }
- ***********************************************/
-let getUserById = knex.from(user_table).where("id", 1)
-
-/**********************************************
- * Add User
- * ==================================
- let insertUserObject = {
-     id: 4,
-     email: "test@bu.edu",
-     password: "cheung",
-     spotify_id: "",
-     spotify_access_token: "",
- }
- ***********************************************/
-let addUser = knex(user_table).insert(insertUserObject)
-
-/**********************************************
- * Edit User 
- * ==================================
- let replaceUserObject = {
-     id: 4,
-     email: "replaceTest@bu.edu",
-     password: "cheung",
-     spotify_id: "",
-     spotify_access_token: "",
- }
- ***********************************************/
-let editUser = knex(user_table).where({
-    id: 4
-}).update(replaceUserObject)
 
 function runQuery(query) {
     query.then((rows) => {
@@ -123,6 +74,70 @@ function runQuery(query) {
             console.log(error);
         });
 }
-runQuery(getAllFromUserTable)
-runQuery(editUser)
-runQuery(getAllFromUserTable)
+
+
+/**********************************************
+ * Query: get all objects    
+ * ==================================
+ * input:  
+ * output: 
+ ***********************************************/
+let getAllObjectsQuery = knex.from(table).select(col1, col2, col3, col4)
+
+// runQuery(getAllObjectsQuery)
+
+/**********************************************
+ * Query: get object by id
+ * ==================================
+ ***********************************************/
+let getObjectByIdQuery = knex.from(table).where("id", 1)
+// runQuery(getObjectByIdQuery)
+
+/**********************************************
+ * Query: add friend object 
+ * ==================================
+let insertFriendObject = {
+    id: 4,
+    user_id: 1,
+    name: "Janice",
+    emoji: "yoga",
+    wishful_city: "Barcelona",
+    favorite_memory: "Going to yoga together"
+}
+ ***********************************************/
+let insertObjectQuery = knex(table).insert(insertFriendObject)
+// runQuery(getAllObjectsQuery)
+
+
+/**********************************************
+ * Query: edit object 
+ * ==================================
+let replaceFriendObject = {
+    id: 5,
+    user_id: 2,
+    name: "Genny",
+    emoji: "cousin",
+    wishful_city: "denmark",
+    favorite_memory: "hanging out as kids writing weird stories"
+}
+ ***********************************************/
+let editQuery = knex(table).where({
+    id: 4
+}).update(replaceFriendObject)
+
+// runQuery(editQuery)
+// runQuery(getAllObjectsQuery)
+
+/**********************************************
+ * Delete object based on id 
+ * ==================================
+ ***********************************************/
+let deleteQuery = knex(table).where({
+    id: 4
+}).del()
+// delete query is run by friend id and user id 
+
+runQuery(insertObjectQuery)
+// runQuery(getAllObjectsQuery)
+runQuery(deleteQuery)
+// runQuery(getAllObjectsQuery)
