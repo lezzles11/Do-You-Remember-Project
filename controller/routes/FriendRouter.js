@@ -40,10 +40,6 @@ class FriendRouter {
      * Outgoing data: 
      * Methods from service class
      * 1. getAllFriendsService()
-     * 2. getFriendService(id, friend)
-     * 3. addFriendService(friend)
-     * 4. editFriendService(id, friend)
-     * 5. deleteFriendService(id, friend)
      ***********************************************/
     getAllFriendsRoute(incoming, outgoing) {
 

@@ -62,6 +62,10 @@ node app.js
 - [ ] ![SQL Diagram](./sql.png)
 - [ ] Postgres
 
+Final Database Diagram
+
+
+
 ## Important Vocabulary
 
 | Word | Where it occurs | How it works |
@@ -375,7 +379,7 @@ user_fav_question {
     - [ ] Get user 
       - [ ] Service: getUserService("/:id")
       - [ ] Route: getUserRoute 
-      - [ ] Knex command works
+      - [ x] Knex command works
       - [ ] Postgres check 
       - [ ] Router: 
       - [ ] Incoming route:
