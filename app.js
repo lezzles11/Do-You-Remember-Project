@@ -42,23 +42,24 @@ app.use(bodyParser.urlencoded({
  ***********************************************/
 // 1: Declare routers 
 const MainRouter = require("./controller/routes/MainRouter")
-const FriendControllerJSON = require("./controller/services/JSON/FriendControllerJSON")
-const UserControllerJSON = require("./controller/services/JSON/UserControllerJSON")
+// const FriendKnexService = require("./controller/services/FriendKnexService")
+// const QuestionKnexService = require("./controller/services/QuestionKnexService")
+// const UserTableKnexService = require("./controller/services/UserTableKnexService")
 
 // 2. Declare database 
-const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);
-const readAndWriteUsers = new ReadAndWriteJSON(USERS_DATA_ROUTE)
-const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
+// const readAndWriteFriends = new ReadAndWriteJSON(FRIENDS_DATA_ROUTE);
+// const readAndWriteUsers = new ReadAndWriteJSON(USERS_DATA_ROUTE)
+// const parsedOrderData = new ReadAndWriteJSON(ORDERS_DATA_ROUTE)
 
 // 3. Pass database into router 
-const friendControllerJSON = new FriendControllerJSON(readAndWriteFriends).router()
-const userControllerJSON = new UserControllerJSON(readAndWriteUsers).router()
+// const friendControllerJSON = new FriendControllerJSON(readAndWriteFriends).router()
+// const userControllerJSON = new UserControllerJSON(readAndWriteUsers).router()
 const newMainRouter = new MainRouter().router()
 
 // 4. Explicitly connect the route to the router 
 app.use("/", newMainRouter)
-app.use("/api/friends", friendControllerJSON)
-app.use("/api/users", userControllerJSON)
+// app.use("/", friendControllerJSON)
+// app.use("/", userControllerJSON)
 
 
 /**********************************************

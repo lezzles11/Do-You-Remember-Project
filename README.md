@@ -46,11 +46,11 @@ node app.js
   - [x ] questions_love.json
   - [ x] questions_work.json 
     - The question 
-    - [ ] Grab modal from the MDBootstrap 
-    - [ ] See if you can have an arrow that just clicks through a bunch of data points, like a modal sort of thing? 
-    - [ ] You also want to add a button to see if you can favorite the question 
-    - [ ] Create that for every page 
-  - [ ] categories.json
+    - [x ] Grab modal from the MDBootstrap 
+    - [x ] See if you can have an arrow that just clicks through a bunch of data points, like a modal sort of thing? 
+    - [ x] You also want to add a button to see if you can favorite the question 
+    - [ x] Create that for every page 
+  - [x ] categories.json
     - [ ] Will be linked to the modal, so technically there might not be a question page 
   - [ ] users.json 
     - This will contain the list of authorized users 
@@ -159,11 +159,11 @@ PSEUDO CODE
 
     - [ ] Add user (signup)
 
-      - [ ] Service: addUserService(user)
-        - [ ] Incoming data: user object
-        - [ ] throw new error otherwise  
-        - [ ] Knex command works
-        - [ ] Postgres check 
+      - [x ] Service: addUserService(user)
+        - [x ] Incoming data: user object
+        - [ x] throw new error otherwise  
+        - [ x] Knex command works
+        - [xx ] Postgres check 
 
 
 ### User Stories ### 

@@ -23,7 +23,6 @@ class QuestionControllerKnex {
      ***********************************************/
     favoriteQuestion(question, friend, user) {
         // GRAB QUESTION OBJECT 
-        // 
 
     }
 
