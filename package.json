@@ -17,5 +17,8 @@
     "express-handlebars": "^5.1.0",
     "knex": "^0.21.6",
     "pg": "^8.4.1"
+  },
+  "devDependencies": {
+    "prettier": "2.1.2"
   }
 }
