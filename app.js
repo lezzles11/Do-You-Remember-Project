@@ -77,6 +77,21 @@ app.post("/profile", function (req, res, next) {
     res.json(req.body);
 });
 
+app.put("/api/user/:userId", function (incoming, outgoing, next) {
+    console.log(incoming.params.userId);
+    knex("user_table")
+        .where({
+            id: incoming.params.userId,
+        })
+        .update(incoming.body)
+        .then((eachRow) => {
+            outgoing.json(eachRow);
+        });
+});
+/**********************************************
+ * Add Method Works
+ * ==================================
+ ***********************************************/
 app.post("/api/user", function (incoming, outgoing, next) {
     console.log(incoming.body);
     knex("user_table")
@@ -105,7 +120,7 @@ app.get("/api/user/:userId", function (incoming, outgoing, next) {
  * Get All Users Method
  * ==================================
  ***********************************************/
-app.use("/api/users", function (incoming, outgoing) {
+app.use("/api/user", function (incoming, outgoing) {
     let getAllUsersQuery = knex
         .from("user_table")
         .select(
