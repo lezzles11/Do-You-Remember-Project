@@ -69,14 +69,28 @@ function makeUser(eachUserRow) {
 }
 // 4. Explicitly connect the route to the router
 app.use("/", newMainRouter);
-app.put("/api/user", function (incoming, outgoing) {
-    outgoing.send("Edit function got!");
+
+app.delete("/deleteuser", function (incoming, outgoing, next) {
+    outgoing.send("Got a DELETE request at /user");
 });
-app.post("/profile", function (req, res, next) {
-    console.log(req.body);
-    res.json(req.body);
+app.delete("/api/user/:userId", function (incoming, outgoing, next) {
+    console.log(incoming.params.userId);
+    console.log("Delete User Method");
+    knex("user_table")
+        .where({
+            id: incoming.params.userId,
+        })
+        .del()
+        .then((eachRow) => {
+            outgoing.json(eachRow);
+        })
+        .catch(next);
 });
 
+/**********************************************
+ * Edit User Method Works
+ * ==================================
+ ***********************************************/
 app.put("/api/user/:userId", function (incoming, outgoing, next) {
     console.log(incoming.params.userId);
     knex("user_table")
@@ -86,7 +100,8 @@ app.put("/api/user/:userId", function (incoming, outgoing, next) {
         .update(incoming.body)
         .then((eachRow) => {
             outgoing.json(eachRow);
-        });
+        })
+        .catch(next);
 });
 /**********************************************
  * Add Method Works
@@ -98,7 +113,8 @@ app.post("/api/user", function (incoming, outgoing, next) {
         .insert(incoming.body)
         .then((eachRow) => {
             outgoing.json(eachRow);
-        });
+        })
+        .catch(next);
 });
 /**********************************************
  * Get One Method
@@ -110,17 +126,19 @@ app.get("/api/user/:userId", function (incoming, outgoing, next) {
         .from("user_table")
         .select("id", "email", "password", "spotify_id", "spotify_access_token")
         .where("id", incoming.params.userId);
-    getUserByIdQuery.then((eachRow) => {
-        console.log(eachRow);
-        outgoing.json(eachRow);
-    });
+    getUserByIdQuery
+        .then((eachRow) => {
+            console.log(eachRow);
+            outgoing.json(eachRow);
+        })
+        .catch(next);
 });
 
 /**********************************************
  * Get All Users Method
  * ==================================
  ***********************************************/
-app.use("/api/user", function (incoming, outgoing) {
+app.use("/api/user", function (incoming, outgoing, next) {
     let getAllUsersQuery = knex
         .from("user_table")
         .select(
@@ -130,10 +148,12 @@ app.use("/api/user", function (incoming, outgoing) {
             "spotify_id",
             "spotify_access_token"
         );
-    getAllUsersQuery.then((eachUserRow) => {
-        console.log("Each user: ", eachUserRow);
-        outgoing.send(eachUserRow);
-    });
+    getAllUsersQuery
+        .then((eachUserRow) => {
+            console.log("Each user: ", eachUserRow);
+            outgoing.send(eachUserRow);
+        })
+        .catch(next);
 });
 
 /**********************************************
