@@ -3,12 +3,6 @@ const app = express();
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const basicAuth = require("express-basic-auth");
-const ReadAndWriteJSON = require("./model/ReadAndWriteJSON");
-const usernamePasswordCheck = require("./model/usernamePasswordCheck");
-const FRIENDS_DATA_ROUTE = "./model/friends.json";
-const USERS_DATA_ROUTE = "./model/users.json";
-const QUESTIONS_DATA_ROUTE = "./model/questions.json";
-const ORDERS_DATA_ROUTE = "./model/orders.json";
 
 const knex = require("knex")({
     client: "postgresql",
@@ -16,9 +10,6 @@ const knex = require("knex")({
         user: "postgres",
         password: "orange",
         database: "doyouremember",
-    },
-    migrations: {
-        tableName: "migrations",
     },
 });
 
@@ -37,6 +28,7 @@ app.use(
         extended: false,
     })
 );
+app.use(bodyParser.json());
 
 // app.use(
 //     basicAuth({
@@ -61,21 +53,80 @@ const USER_ROUTER = require("./controller/routes/UserTableRouter.js");
 // 2. Declare database
 const USER_SERVICE = require("./controller/services/UserTableKnexService.js");
 
-// 3. Pass database into router
-const userService = new USER_SERVICE(knex);
-const userRouter = new USER_ROUTER(userService).router();
+// // 3. Pass database into router
+// // const userService = new USER_SERVICE(knex);
+// const userRouter = new USER_ROUTER(userService).router();
 
 const newMainRouter = new MainRouter().router();
-
+function makeUser(eachUserRow) {
+    return eachUserRow.map((eachRow) => ({
+        id: eachRow.id,
+        email: eachRow.email,
+        password: eachRow.password,
+        spotify_id: eachRow.spotify_id,
+        spotify_access_token: eachRow.spotify_access_token,
+    }));
+}
 // 4. Explicitly connect the route to the router
 app.use("/", newMainRouter);
-app.use("/", userRouter);
+app.put("/api/user", function (incoming, outgoing) {
+    outgoing.send("Edit function got!");
+});
+app.post("/profile", function (req, res, next) {
+    console.log(req.body);
+    res.json(req.body);
+});
 
-app.use(require("./config/helpers/error_middleware").all);
+app.post("/api/user", function (incoming, outgoing, next) {
+    console.log(incoming.body);
+    knex("user_table")
+        .insert(incoming.body)
+        .then((eachRow) => {
+            outgoing.json(eachRow);
+        });
+});
+/**********************************************
+ * Get One Method
+ * ==================================
+ ***********************************************/
+app.get("/api/user/:userId", function (incoming, outgoing, next) {
+    console.log(incoming.params.userId);
+    let getUserByIdQuery = knex
+        .from("user_table")
+        .select("id", "email", "password", "spotify_id", "spotify_access_token")
+        .where("id", incoming.params.userId);
+    getUserByIdQuery.then((eachRow) => {
+        console.log(eachRow);
+        outgoing.json(eachRow);
+    });
+});
+
+/**********************************************
+ * Get All Users Method
+ * ==================================
+ ***********************************************/
+app.use("/api/users", function (incoming, outgoing) {
+    let getAllUsersQuery = knex
+        .from("user_table")
+        .select(
+            "id",
+            "email",
+            "password",
+            "spotify_id",
+            "spotify_access_token"
+        );
+    getAllUsersQuery.then((eachUserRow) => {
+        console.log("Each user: ", eachUserRow);
+        outgoing.send(eachUserRow);
+    });
+});
 
 /**********************************************
  * Start server
  ***********************************************/
+// app.use("/", userRouter);
+app.use(require("./config/helpers/error_middleware").all);
+
 app.listen(3000, () => {
     console.log("Application listening to port 3000!!");
 });

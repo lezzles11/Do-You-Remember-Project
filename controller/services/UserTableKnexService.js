@@ -87,11 +87,20 @@ class UserTableKnexService {
      * 5. Throw new error otherwise
      ***********************************************/
     addUserService(user) {
-        let addUserQuery = this.knex(user_table).insert(user);
-        return addUserQuery.then((eachRow) => {
-            console.log(makeFriend(eachRow));
+        console.log("2. Adding user service!");
+        let email = user.email;
+        console.log("Adding user: ", user);
+        this.knex("user").insert(user);
+        return addUser.then((eachRow) => {
+            console.log("Add: ", makeFriend(eachRow));
             return makeFriend(eachRow);
         });
+        // let addUserQuery = this.knex(user_table).insert(user);
+        // console.log("does this function run");
+        // return addUserQuery.then((rows) => {
+        //     console.log("Adding user query");
+        //     return makeUser(rows);
+        // });
     }
 
     /**********************************************

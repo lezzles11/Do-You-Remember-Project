@@ -17,6 +17,13 @@
  * 5. deleteUserService(id, user)
  ***********************************************/
 
+let newUser = {
+    id: 6,
+    email: "maria@mazen.com",
+    password: "cheung",
+    spotify_id: "",
+    spotify_access_token: "",
+};
 const express = require("express");
 class UserTableRouter {
     constructor(userTableService) {
@@ -27,12 +34,12 @@ class UserTableRouter {
         router.get("/api/user", this.getAllUsersRoute.bind(this));
         router.get("/api/user/:userId", this.getUserRoute.bind(this));
         // router.post("/signup", this.addUserRoute.bind(this));
-        // router.post("/api/user", this.addUserRoute.bind(this));
-        // router.put("/api/user/:userId", this.editUserRoute.bind(this));
+        router.post("/api/adduser", this.addUserRoute.bind(this));
+        router.put("/api/user/:userId", this.editUserRoute.bind(this));
         // router.delete("/api/user/:userId", this.deleteUserRoute.bind(this));
         return router;
     }
-    /**********************************************
+    /**********************ç************************
      * Gets all users
      * ==================================
      * Connects the route "/api/user"
@@ -83,9 +90,23 @@ class UserTableRouter {
      * Incoming data:
      * Outgoing data:
      * Methods from service class
-     *
      ***********************************************/
-    addUserRoute(incoming, outgoing) {}
+    // #TODO: Need to finish this add user route
+    // #TODO: not adding the incoming data well
+    addUserRoute(incoming, outgoing, next) {
+        // #TODO: incoming string cannot be console.logged
+        // #TODO: Why doesn't the post method work if I already have added get to it?
+        let object = incoming.body;
+        console.log(object);
+        console.log("1. Adding user route!");
+        return this.userTableService
+            .addUserService(object)
+            .then((object2) => {
+                outgoing.json(object2);
+                outgoing.json("Added");
+            })
+            .catch(next);
+    }
     /**********************************************
      * Edits user
      * ==================================
@@ -95,7 +116,21 @@ class UserTableRouter {
      * Methods from service class
      *
      ***********************************************/
-    editUserRoute(incoming, outgoing) {}
+    editUserRoute2(incoming, outgoing, next) {
+        console.log("Editing User Route ");
+        let userId = incoming.params.userId;
+        console.log(incoming.body.user);
+        this.userTableService
+            .editUserService(userId, incoming.body.user)
+            .then(() => {
+                outgoing.json("Added");
+            })
+            .catch(next);
+    }
+    editUserRoute(incoming, outgoing, next) {
+        console.log("Edit User Route Received");
+        outgoing.send("Edit User Route Received");
+    }
     /**********************************************
      * Deletes user
      * ==================================
