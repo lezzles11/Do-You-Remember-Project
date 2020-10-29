@@ -49,30 +49,100 @@ app.use(bodyParser.json());
  ***********************************************/
 // 1: Declare routers
 const MainRouter = require("./controller/routes/MainRouter");
-const USER_ROUTER = require("./controller/routes/UserTableRouter.js");
-// 2. Declare database
-const USER_SERVICE = require("./controller/services/UserTableKnexService.js");
+let user_friend = "user_friend";
+let user_friend_col1 = "id";
+let user_friend_col2 = "user_id";
+let user_friend_col3 = "name";
+let user_friend_col4 = "emoji";
+let user_friend_col5 = "wishful_city";
+let user_friend_col6 = "favorite_memory";
 
 // // 3. Pass database into router
 // // const userService = new USER_SERVICE(knex);
 // const userRouter = new USER_ROUTER(userService).router();
 
 const newMainRouter = new MainRouter().router();
-function makeUser(eachUserRow) {
-    return eachUserRow.map((eachRow) => ({
-        id: eachRow.id,
-        email: eachRow.email,
-        password: eachRow.password,
-        spotify_id: eachRow.spotify_id,
-        spotify_access_token: eachRow.spotify_access_token,
-    }));
-}
 // 4. Explicitly connect the route to the router
 app.use("/", newMainRouter);
 
-app.delete("/deleteuser", function (incoming, outgoing, next) {
-    outgoing.send("Got a DELETE request at /user");
+/**********************************************
+ * Get
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * Get questions from this category
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Make Question Answered for Friend
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Get all questions from this particular friend
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Delete Friend
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Edit Friend
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Get one friend
+ * ==================================
+ ***********************************************/
+app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
+    let id = incoming.params.friendId;
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("id", id)
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.send(eachFriend);
+        })
+        .catch(next);
 });
+/**********************************************
+ * Get all friends
+ * ==================================
+ ***********************************************/
+
+app.get("/api/friend", function (incoming, outgoing, next) {
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.send(eachFriend);
+        })
+        .catch(next);
+});
+
+/**********************************************
+ * Delete User Works
+ * ==================================
+ ***********************************************/
+
 app.delete("/api/user/:userId", function (incoming, outgoing, next) {
     console.log(incoming.params.userId);
     console.log("Delete User Method");
@@ -81,8 +151,8 @@ app.delete("/api/user/:userId", function (incoming, outgoing, next) {
             id: incoming.params.userId,
         })
         .del()
-        .then((eachRow) => {
-            outgoing.json(eachRow);
+        .then((eachUser) => {
+            outgoing.json(eachUser);
         })
         .catch(next);
 });
