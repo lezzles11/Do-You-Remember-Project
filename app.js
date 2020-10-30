@@ -89,24 +89,24 @@ app.use("/", newMainRouter);
  * ==================================
  ***********************************************/
 
+ 
+
 /**********************************************
  * Edit Friend
  * ==================================
  ***********************************************/
-// app.post("/api/friend/:friendId", function (incoming, outgoing, next) {
-//     console.log("Edit friend");
-//     let id = incoming.params.friendId;
-//     console.log(incoming.body);
-//     console.log("Id: ", id);
-//     knex("user_friend")
-//         .where({ id: incoming.params.friendId })
-//         .update(incoming.body)
-//         .then((eachFriend) => {
-//             console.log(eachFriend);
-//             outgoing.json(eachFriend);
-//         })
-//         .catch(next);
-// });
+app.put("/api/friend/:friendId", function (incoming, outgoing, next) {
+    console.log("Edit friend");
+    let id = incoming.params.friendId;
+    knex("user_friend")
+        .where({ id: incoming.params.friendId })
+        .update(incoming.body)
+        .then((eachFriend) => {
+            console.log(eachFriend);
+            outgoing.json(eachFriend);
+        })
+        .catch(next);
+});
 
 /**********************************************
  * Add One friend
