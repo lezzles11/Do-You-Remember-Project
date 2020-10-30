@@ -88,8 +88,16 @@ app.use("/", newMainRouter);
  * Delete Friend
  * ==================================
  ***********************************************/
-
- 
+app.delete("/api/friend/:friendId", function (incoming, outgoing, next) {
+    console.log("Id: ", incoming.params.friendId);
+    knex("user_friend")
+        .where({ id: incoming.params.friendId })
+        .del()
+        .then((eachFriend) => {
+            outgoing.json(eachFriend);
+        })
+        .catch(next);
+});
 
 /**********************************************
  * Edit Friend
