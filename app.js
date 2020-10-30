@@ -242,6 +242,30 @@ app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
         })
         .catch(next);
 });
+
+/**********************************************
+ * Get all friends for this particular user
+ * ==================================
+ ***********************************************/
+app.get("/api/user/allfriends/:userId", function (incoming, outgoing, next) {
+    let id = incoming.params.userId;
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("user_id", id)
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.send(eachFriend);
+        })
+        .catch(next);
+});
+
 /**********************************************
  * Get all friends
  * ==================================
@@ -414,7 +438,7 @@ app.get("/api/profile/:userId", function (incoming, outgoing, next) {
         .catch(next);
 });
 
-app.get("/notloggedin", function (incoming, outgoing, next) {
+app.get("/", function (incoming, outgoing, next) {
     if (incoming.auth) {
         let checkUser = incoming.auth.user;
         console.log("User to authorize: ", checkUser);
