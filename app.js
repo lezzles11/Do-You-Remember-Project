@@ -3,7 +3,6 @@ const app = express();
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const basicAuth = require("express-basic-auth");
-
 const knex = require("knex")({
     client: "postgresql",
     connection: {
@@ -47,8 +46,7 @@ app.use(bodyParser.json());
  * 3. Pass the database into the router
  * 4. Explicitly connect the route to the router
  ***********************************************/
-// 1: Declare routers
-const MainRouter = require("./controller/routes/MainRouter");
+// 1: Declare routers;
 let user_friend = "user_friend";
 let user_friend_col1 = "id";
 let user_friend_col2 = "user_id";
@@ -62,18 +60,7 @@ let question_col2 = "category_id";
 let question_col3 = "question_string";
 let question_col4 = "photo_url";
 
-// // 3. Pass database into router
-// // const userService = new USER_SERVICE(knex);
-// const userRouter = new USER_ROUTER(userService).router();
-
-const newMainRouter = new MainRouter().router();
-// 4. Explicitly connect the route to the router
-app.use("/", newMainRouter);
-
-/**********************************************
- * Make Question Answered for Friend
- * ==================================
- ***********************************************/
+// #TODO: once you add a friend, the computer will loop through the list of questions, then add all the questions into the table user_friend_all_questions
 
 /**********************************************
  * Get all questions that has this user and this friend
@@ -89,7 +76,7 @@ app.get("/api/user_friend_all_questions/:userId/:friendId", function (
         .where("user_id", incoming.params.userId)
         .where("user_friend_id", incoming.params.friendId)
         .then((eachFriend) => {
-            outgoing.json(eachFriend);
+            outgoing.status(200).json(eachFriend);
         })
         .catch(next);
 });
@@ -102,7 +89,7 @@ app.get("/api/user_friend_all_questions", function (incoming, outgoing, next) {
     knex("user_friend_all_questions")
         .select("id", "user_id", "user_friend_id", "question_id", "answered")
         .then((eachFriend) => {
-            outgoing.json(eachFriend);
+            outgoing.status(200).json(eachFriend);
         })
         .catch(next);
 });
@@ -126,7 +113,7 @@ app.post("/api/user_friend_all_questions/add", function (
     knex("user_friend_all_questions")
         .insert(incoming.body)
         .then((eachRow) => {
-            outgoing.json(eachRow);
+            outgoing.status(200).json(eachRow);
         })
         .catch(next);
 });
@@ -142,8 +129,9 @@ app.get("/api/category/:categoryId", function (incoming, outgoing, next) {
         .select(question_col1, question_col2, question_col3, question_col4)
         .where("category_id", id)
         .then((eachQuestion) => {
-            outgoing.send(eachQuestion);
-        });
+            outgoing.stauts(200).send(eachQuestion);
+        })
+        .catch(next);
 });
 
 /**********************************************
@@ -158,8 +146,9 @@ app.get("/api/question/:questionId", function (incoming, outgoing, next) {
         .where("id", id)
         .then((eachQuestion) => {
             console.log(eachQuestion);
-            outgoing.json(eachQuestion);
-        });
+            outgoing.status(200).json(eachQuestion);
+        })
+        .catch(next);
 });
 
 /**********************************************
@@ -170,7 +159,7 @@ app.get("/api/question", function (incoming, outgoing, next) {
     knex("question")
         .select(question_col1, question_col2, question_col3, question_col4)
         .then((eachQuestion) => {
-            outgoing.json(eachQuestion);
+            outgoing.status(200).json(eachQuestion);
         })
         .catch(next);
 });
@@ -185,7 +174,7 @@ app.delete("/api/friend/:friendId", function (incoming, outgoing, next) {
         .where({ id: incoming.params.friendId })
         .del()
         .then((eachFriend) => {
-            outgoing.json(eachFriend);
+            outgoing.status(200).json(eachFriend);
         })
         .catch(next);
 });
@@ -202,7 +191,7 @@ app.put("/api/friend/:friendId", function (incoming, outgoing, next) {
         .update(incoming.body)
         .then((eachFriend) => {
             console.log(eachFriend);
-            outgoing.json(eachFriend);
+            outgoing.status(200).json(eachFriend);
         })
         .catch(next);
 });
@@ -226,7 +215,7 @@ app.post("/api/addfriend", function (incoming, outgoing, next) {
     knex("user_friend")
         .insert(incoming.body)
         .then((eachFriend) => {
-            outgoing.json(eachFriend);
+            outgoing.status(200).json(eachFriend);
         })
         .catch(next);
 });
@@ -289,7 +278,7 @@ app.delete("/api/user/:userId", function (incoming, outgoing, next) {
         })
         .del()
         .then((eachUser) => {
-            outgoing.json(eachUser);
+            outgoing.status(200).json(eachUser);
         })
         .catch(next);
 });
@@ -306,7 +295,7 @@ app.put("/api/user/:userId", function (incoming, outgoing, next) {
         })
         .update(incoming.body)
         .then((eachRow) => {
-            outgoing.json(eachRow);
+            outgoing.status(200).json(eachRow);
         })
         .catch(next);
 });
@@ -319,7 +308,7 @@ app.post("/api/adduser", function (incoming, outgoing, next) {
     knex("user_table")
         .insert(incoming.body)
         .then((eachRow) => {
-            outgoing.json(eachRow);
+            outgoing.status(200).json(eachRow);
         })
         .catch(next);
 });
@@ -336,7 +325,7 @@ app.get("/api/user/:userId", function (incoming, outgoing, next) {
     getUserByIdQuery
         .then((eachRow) => {
             console.log(eachRow);
-            outgoing.json(eachRow);
+            outgoing.status(200).json(eachRow);
         })
         .catch(next);
 });
@@ -358,15 +347,96 @@ app.use("/api/user", function (incoming, outgoing, next) {
     getAllUsersQuery
         .then((eachUserRow) => {
             console.log("Each user: ", eachUserRow);
-            outgoing.send(eachUserRow);
+            outgoing.status(200).send(eachUserRow);
         })
         .catch(next);
+});
+
+/**********************************************
+ * Login page
+ * ==================================
+ ***********************************************/
+app.get("/login", (incoming, outgoing) => {
+    outgoing.render("login");
+});
+
+/**********************************************
+ * Getting categories page
+ * ==================================
+ ***********************************************/
+app.get("/categories", (incoming, outgoing, next) => {
+    outgoing.render("categories");
+});
+
+/**********************************************
+ * Getting profile page
+ * ==================================
+ ***********************************************/
+app.get("/profile", function (incoming, outgoing, next) {
+    outgoing.render("userprofile");
+});
+/**********************************************
+ * Getting question page
+ * ==================================
+ ***********************************************/
+app.get("/question", function (incoming, outgoing, next) {
+    outgoing.render("question");
+});
+
+/**********************************************
+ * Getting about page
+ * ==================================
+ ***********************************************/
+app.get("/about", function (incoming, outgoing, next) {
+    outgoing.render("about");
+});
+
+/**********************************************
+ * Getting home page
+ * ==================================
+ * 1. Check for authorization
+ * 2. If authorized, then get the
+ ***********************************************/
+
+app.get("/api/profile/:userId", function (incoming, outgoing, next) {
+    console.log(incoming.params.userId);
+    let getUserByIdQuery = knex
+        .from("user_table")
+        .select("id", "email", "password", "spotify_id", "spotify_access_token")
+        .where("id", incoming.params.userId);
+    getUserByIdQuery
+        .then((user) => {
+            console.log(user);
+            outgoing.render("userProfile", {
+                user: user[0],
+            });
+        })
+        .catch(next);
+});
+
+app.get("/notloggedin", function (incoming, outgoing, next) {
+    if (incoming.auth) {
+        let checkUser = incoming.auth.user;
+        console.log("User to authorize: ", checkUser);
+        outgoing.render("home", { index: checkUser });
+    } else {
+        outgoing.render("index");
+    }
 });
 
 /**********************************************
  * Start server
  ***********************************************/
 // app.use("/", userRouter);
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
+
 app.use(require("./config/helpers/error_middleware").all);
 
 app.listen(3000, () => {
