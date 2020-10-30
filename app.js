@@ -76,6 +76,25 @@ app.use("/", newMainRouter);
  ***********************************************/
 
 /**********************************************
+ * Get all questions that has this user and this friend
+ * ==================================
+ ***********************************************/
+app.get("/api/user_friend_all_questions/:userId/:friendId", function (
+    incoming,
+    outgoing,
+    next
+) {
+    knex("user_friend_all_questions")
+        .select("id", "user_id", "user_friend_id", "question_id", "answered")
+        .where("user_id", incoming.params.userId)
+        .where("user_friend_id", incoming.params.friendId)
+        .then((eachFriend) => {
+            outgoing.json(eachFriend);
+        })
+        .catch(next);
+});
+
+/**********************************************
  * Get all questions from this particular friend
  * ==================================
  ***********************************************/
@@ -84,7 +103,8 @@ app.get("/api/user_friend_all_questions", function (incoming, outgoing, next) {
         .select("id", "user_id", "user_friend_id", "question_id", "answered")
         .then((eachFriend) => {
             outgoing.json(eachFriend);
-        });
+        })
+        .catch(next);
 });
 /**********************************************
  * Friend Answers Question
