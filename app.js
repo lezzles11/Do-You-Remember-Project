@@ -56,6 +56,11 @@ let user_friend_col3 = "name";
 let user_friend_col4 = "emoji";
 let user_friend_col5 = "wishful_city";
 let user_friend_col6 = "favorite_memory";
+let question = "question";
+let question_col1 = "id";
+let question_col2 = "category_id";
+let question_col3 = "question_string";
+let question_col4 = "photo_url";
 
 // // 3. Pass database into router
 // // const userService = new USER_SERVICE(knex);
@@ -83,6 +88,24 @@ app.use("/", newMainRouter);
  * Get all questions from this particular friend
  * ==================================
  ***********************************************/
+
+/**********************************************
+ * Get all questions from this particular category
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Get all questions
+ * ==================================
+ ***********************************************/
+app.get("/api/question", function (incoming, outgoing, next) {
+    knex("question")
+        .select(question_col1, question_col2, question_col3, question_col4)
+        .then((eachQuestion) => {
+            outgoing.json(eachQuestion);
+        })
+        .catch(next);
+});
 
 /**********************************************
  * Delete Friend

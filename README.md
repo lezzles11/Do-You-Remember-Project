@@ -71,11 +71,21 @@ node app.js
 
 Final Database Diagram
 
-## Important Vocabulary
+## Backend
 
-| Word | Where it occurs | How it works |
-| ---- | :-------------: | :----------: |
-| Word |                 |              |
+| Done? | Method | Table       |         Route         |  How it works   | How it fits                      |
+| ----- | ------ | ----------- | :-------------------: | :-------------: | -------------------------------- |
+| x     | GET    | user_table  |       /api/user       |  get all users  | Admin purposes                   |
+| x     | GET    | user_table  |   /api/user/:userId   |  get one user   | See the profile of a user        |
+| x     | POST   | user_table  |     /api/adduser      |    add user     | Signing up                       |
+| x     | PUT    | user_table  |   /api/user/:userId   |    edit user    | Editing user profile             |
+| x     | DELETE | user_table  |   /api/user/:userId   |   delete user   | Deleting user                    |
+| x     | GET    | user_friend |      /api/friend      | get all friends | for profile page                 |
+| x     | GET    | user_friend | /api/friend/:friendId | get one friend  | see friend's page                |
+| x     | POST   | user_friend |      /api/friend      |  add a friend   | adding a new friend on home page |
+| x     | PUT    | user_friend | /api/friend/:friendId |  edit a friend  |                                  |
+| x     | DELETE | user_friend | /api/friend/:friendId | delete a friend |                                  |
+|       | GET    | user_friend |      /api/friend      |                 |                                  |
 
 ### User Stories :telescope:
 
