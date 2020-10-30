@@ -94,6 +94,18 @@ app.use("/", newMainRouter);
  * ==================================
  ***********************************************/
 
+app.get("/api/question/:questionId", function (incoming, outgoing, next) {
+    // grab all the questions where caegory id equals category
+    let id = incoming.params.questionId;
+    knex.from("question")
+        .select(question_col1, question_col2, question_col3, question_col4)
+        .where("id", id)
+        .then((eachQuestion) => {
+            console.log(eachQuestion);
+            outgoing.json(eachQuestion);
+        });
+});
+
 /**********************************************
  * Get all questions
  * ==================================
