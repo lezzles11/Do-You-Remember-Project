@@ -71,15 +71,6 @@ const newMainRouter = new MainRouter().router();
 app.use("/", newMainRouter);
 
 /**********************************************
- * Get
- * ==================================
- ***********************************************/
-/**********************************************
- * Get questions from this category
- * ==================================
- ***********************************************/
-
-/**********************************************
  * Make Question Answered for Friend
  * ==================================
  ***********************************************/
@@ -88,12 +79,57 @@ app.use("/", newMainRouter);
  * Get all questions from this particular friend
  * ==================================
  ***********************************************/
+app.get("/api/user_friend_all_questions", function (incoming, outgoing, next) {
+    knex("user_friend_all_questions")
+        .select("id", "user_id", "user_friend_id", "question_id", "answered")
+        .then((eachFriend) => {
+            outgoing.json(eachFriend);
+        });
+});
+/**********************************************
+ * Friend Answers Question
+ * ==================================
+ {
+	"id": 4, 
+    "user_id": 2,
+    "user_friend_id": 3, 
+    "question_id": 2, 
+    "answered": true
+}
+ ***********************************************/
+app.post("/api/user_friend_all_questions/add", function (
+    incoming,
+    outgoing,
+    next
+) {
+    console.log(incoming.body);
+    knex("user_friend_all_questions")
+        .insert(incoming.body)
+        .then((eachRow) => {
+            outgoing.json(eachRow);
+        })
+        .catch(next);
+});
 
 /**********************************************
  * Get all questions from this particular category
  * ==================================
  ***********************************************/
+app.get("/api/category/:categoryId", function (incoming, outgoing, next) {
+    let id = incoming.params.categoryId;
+    console.log("Id: ", id);
+    knex.from("question")
+        .select(question_col1, question_col2, question_col3, question_col4)
+        .where("category_id", id)
+        .then((eachQuestion) => {
+            outgoing.send(eachQuestion);
+        });
+});
 
+/**********************************************
+ * Get one question
+ * ==================================
+ ***********************************************/
 app.get("/api/question/:questionId", function (incoming, outgoing, next) {
     // grab all the questions where caegory id equals category
     let id = incoming.params.questionId;

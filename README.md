@@ -71,24 +71,23 @@ node app.js
 
 ## Backend
 
-| Done? | Method | Table       |                 Route                 |               How it works               | How it fits                      |
-| ----- | ------ | ----------- | :-----------------------------------: | :--------------------------------------: | -------------------------------- |
-| x     | GET    | user_table  |               /api/user               |              get all users               | Admin purposes                   |
-| x     | GET    | user_table  |           /api/user/:userId           |               get one user               | See the profile of a user        |
-| x     | POST   | user_table  |             /api/adduser              |                 add user                 | Signing up                       |
-| x     | PUT    | user_table  |           /api/user/:userId           |                edit user                 | Editing user profile             |
-| x     | DELETE | user_table  |           /api/user/:userId           |               delete user                | Deleting user                    |
-| x     | GET    | user_friend |              /api/friend              |             get all friends              | For profile page                 |
-| x     | GET    | user_friend |         /api/friend/:friendId         |              get one friend              | See friend's page                |
-| x     | POST   | user_friend |              /api/friend              |               add a friend               | Adding a new friend on home page |
-| x     | PUT    | user_friend |         /api/friend/:friendId         |              edit a friend               | Editing friend profile           |
-| x     | DELETE | user_friend |         /api/friend/:friendId         |             delete a friend              | Deleting friend profile page     |
-| x     | GET    | question    |             /api/question             |            get all questions             |                                  |
-|       | GET    | question    |       /api/category/:categoryId       | get all questions from specific category |                                  |
-|       | GET    | question    | /api/category/:categoryId/:questionId | get one question from specific category  |                                  |
-|       | POST   | question    |             /api/question             |               add question               |                                  |
-|       | PUT    | question    |       /api/question/:questionId       |             edit a question              |                                  |
-|       | DELETE | question    |       /api/question/:questionId       |             delete a friend              |                                  |
+| Done? | Method | Table       |           Route           |               How it works               | How it fits                             |
+| ----- | ------ | ----------- | :-----------------------: | :--------------------------------------: | --------------------------------------- |
+| x     | GET    | user_table  |         /api/user         |              get all users               | Admin purposes                          |
+| x     | GET    | user_table  |     /api/user/:userId     |               get one user               | See the profile of a user               |
+| x     | POST   | user_table  |       /api/adduser        |                 add user                 | Signing up                              |
+| x     | PUT    | user_table  |     /api/user/:userId     |                edit user                 | Editing user profile                    |
+| x     | DELETE | user_table  |     /api/user/:userId     |               delete user                | Deleting user                           |
+| x     | GET    | user_friend |        /api/friend        |             get all friends              | For profile page                        |
+| x     | GET    | user_friend |   /api/friend/:friendId   |              get one friend              | See friend's page                       |
+| x     | POST   | user_friend |        /api/friend        |               add a friend               | Adding a new friend on home page        |
+| x     | PUT    | user_friend |   /api/friend/:friendId   |              edit a friend               | Editing friend profile                  |
+| x     | DELETE | user_friend |   /api/friend/:friendId   |             delete a friend              | Deleting friend profile page            |
+| x     | GET    | question    |       /api/question       |            get all questions             | Get all questions                       |
+| x     | GET    | question    | /api/category/:categoryId | get all questions from specific category | Get all questions from this category id |
+| x     | GET    | question    | /api/question/:questionId |         Get a specific question          | Grabbing a specific question            |
+|       |        |             |                           |                                          |                                         |
+|       |        |             |                           |                                          |                                         |
 
 ### User Stories :telescope:
 
@@ -97,30 +96,14 @@ node app.js
 
 ## Sprint :athletic_shoe:
 
-| Done? | Component                                    | Priority | Estimated Time | Actual Time |
-| ----- | -------------------------------------------- | :------: | :------------: | :---------: |
-| x     | Complete JSON Files (Data)                   |    H     |                |             |
-|       | Create frontend and implement event handlers |    M     |    30 mins     |             |
-|       | Create app.js                                | 30 mins  |                |
-|       | Install all needed packages                  |    M     |    30 mins     |     15      |
+| Done? | Component                                 | Priority | Estimated Time | Actual Time |
+| ----- | ----------------------------------------- | :------: | :------------: | :---------: |
+| x     | Complete JSON Files (Data)                |    H     |                |             |
+| x     | Create backend and ensure all routes work |    M     |     3 days     |   3 days    |
+|       | Create app.js                             | 30 mins  |                |
+|       | Install all needed packages               |    M     |    30 mins     |     15      |
 
 Documentation:
-
-### Daily Stand Up :hourglass:
-
-| Date   | What I did yesterday               |                                                                              Today                                                                               | Obstacles | Comments |
-| ------ | ---------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------: | :------: |
-| Oct 21 | Finished marking student exercises | Work on implementing the checklist for this assignment, continue commenting through the application and playing around with it - Zuckerberg said to break things |           |          |
-| Oct 22 |                                    |                                                                                M                                                                                 |  30 mins  |          |
-| Oct 23 | Look at three examples             |                                                       Finished writing migrations and planning out tables                                                        |           |
-| Oct 24 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
-| Oct 25 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
-| Oct 26 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
-| Oct 27 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
-| Oct 28 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
-| Oct 29 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
-| Oct 30 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
-| Oct 31 |                                    |                                                                                M                                                                                 |  30 mins  |    15    |
 
 ## Issues and Resolutions :flashlight:
 
