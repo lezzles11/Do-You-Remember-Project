@@ -193,22 +193,18 @@ timestamp
 
 -   Router Methods:
 
-    -   [ ] getAllUsersRoute("/api/user", (incoming, outgoing))
-        -   getAllUsersService()
-    -   [ ] getUserRoute("api/user/:userId", (incoming, outgoing))
-        -   incoming: incoming.param.userId, incoming.auth.user
-        -   getUserService(id, user)
-        -   outgoing: outgoing.json(user)
-    -   [ ] addUserRoute("/signup", (incoming, outgoing))
-    -   [ ] editUserRoute("api/user/:id", (incoming, outgoing))
-    -   [ ] deleteUserRoute("api/user/:id", (incoming, outgoing))
+    -   [ x ] getAllUsersRoute("/api/user", (incoming, outgoing))
+    -   [ x ] getUserRoute("api/user/:userId", (incoming, outgoing))
+    -   [ x ] addUserRoute("/signup", (incoming, outgoing))
+    -   [ x ] editUserRoute("api/user/:id", (incoming, outgoing))
+    -   [ x ] deleteUserRoute("api/user/:id", (incoming, outgoing))
 
 -   Service Method Names:
-    -   getAllUsersService()
-    -   getUserService(id, user)
-    -   addUserService(user)
-    -   editUserService(id, user)
-    -   deleteUserService (id, user)
+    -   [ x ] getAllUsersService()
+    -   [ x ] getUserService(id, user)
+    -   [ x ] addUserService(user)
+    -   [ x ] editUserService(id, user)
+    -   [ x ] deleteUserService (id, user)
 
 #### User Stories
 
@@ -250,18 +246,18 @@ user_friend {
 
 -   Router Methods:
 
-    -   getAllFriendsRoute("api/friend")
-    -   addFriendRoute("/api/friend/", (incoming, outgoing))
-    -   getFriendRoute("/api/friend/:id", (incoming, outgoing))
-    -   editFriendRoute("/api/friend/:id", (incoming, outgoing))
-    -   deleteFriendRoute("/api/friend/:id", (incoming, outgoing))
+    -   [ x ] getAllFriendsRoute("api/friend")
+    -   [ x ] addFriendRoute("/api/friend/", (incoming, outgoing))
+    -   [ x ] getFriendRoute("/api/friend/:id", (incoming, outgoing))
+    -   [ x ] editFriendRoute("/api/friend/:id", (incoming, outgoing))
+    -   [ x ] deleteFriendRoute("/api/friend/:id", (incoming, outgoing))
 
 -   Service Method Names:
-    -   getAllFriendsService(user)
-    -   addFriendService(friend, user)
-    -   getFriendService(friendId, user)
-    -   editFriendService(friendId, friend, user)
-    -   deleteFriendService(friendId, user)
+    -   [ x ] getAllFriendsService(user)
+    -   [ x ] addFriendService(friend, user)
+    -   [ x ] getFriendService(friendId, user)
+    -   [ x ] editFriendService(friendId, friend, user)
+    -   [ x ] deleteFriendService(friendId, user)
 
 ### User Stories
 
@@ -331,21 +327,21 @@ user_friend_all_questions {
 
 -   Router Methods:
 
-    -   getAllQuestionsRoute("/api/questions/")
-    -   router.get("api/category/:categoryId/:questionId", this.getQuestionFromCategoryRoute.bind(this))
-    -   getAllQuestionsFromCategoryRoute("/api/questions/:category", (incoming, outgoing))
+    -   [ ] getAllQuestionsRoute("/api/questions/")
+    -   [ ] router.get("api/category/:categoryId/:questionId", this.getQuestionFromCategoryRoute.bind(this))
+    -   [ ] getAllQuestionsFromCategoryRoute("/api/questions/:category", (incoming, outgoing))
         -   incoming data: incoming.query.category, incoming.body.friend, incoming.auth.user
         -   outgoing: outgoing.json(an array of questions?)
-    -   getQuestionRoute("/api/question/:id", (incoming, outgoing))
-    -   editQuestionRoute("/api/question/:id", (incoming, outgoing))
+    -   [ ] getQuestionRoute("/api/question/:id", (incoming, outgoing))
+    -   [ ] editQuestionRoute("/api/question/:id", (incoming, outgoing))
 
 -   Service Method Names:
-    -   getAllQuestionsService
+    -   [ ] getAllQuestionsService
         -   get all questions
-    -   getAllQuestionsFromCategoryService(category, friend, user)
+    -   [ ] getAllQuestionsFromCategoryService(category, friend, user)
         -   loop through user_friend_all_questions
         -   return all that are marked answered: false
-    -   getQuestionService(id)
+    -   [ ] getQuestionService(id)
         -   Return that question
 
 #### Outline of Story
@@ -385,184 +381,6 @@ user_fav_question {
 ##### Essay OUtline
 
 -   Router Methods:
-    -   getCategoriesRoute("/api/friend/", (incoming, outgoing))
+    -   [ ] getCategoriesRoute("/api/friend/", (incoming, outgoing))
 -   Service Method Names:
-    -   markAsFavoriteQuestionService(user, ques)
-
-// NEED TO CHECK THIS
-
-        - [ ] Outgoing data: outgoing.json()
-      - [ ] Knex command works
-      - [ ] Postgres check
-      - [ ] Router:
-      - [ ] Incoming route:
-      - [ ] Incoming data:
-      - [ ] Outgoing route:
-      - [ ] Outgoing data:
-
-
-
-    - [ ] Get user
-      - [ ] Service: getUserService("/:id")
-      - [ ] Route: getUserRoute
-      - [ x] Knex command works
-      - [ ] Postgres check
-      - [ ] Router:
-      - [ ] Incoming route:
-      - [ ] Incoming data:
-      - [ ] Outgoing route:
-      - [ ] Outgoing data:
-    - [ ] List users
-      - [ ] Service:
-      - [ ] Knex command works
-      - [ ] Postgres check
-      - [ ] Router:
-      - [ ] Incoming route:
-      - [ ] Incoming data:
-      - [ ] Outgoing route:
-      - [ ] Outgoing data:
-    - [ ] Delete user (when user wants to delete their account)
-      - [ ] Service: getAllUserFriendsService
-      - [ ] Knex command works
-      - [ ] Postgres check
-      - [ ] Router:
-      - [ ] Incoming route:
-      - [ ] Incoming data:
-      - [ ] Outgoing route:
-      - [ ] Outgoing data:
-    - [ ] Edit user (if user wants to edit their profile)
-      - [ ] Service: getAllUserFriendsService
-      - [ ] Knex command works
-      - [ ] Postgres check
-      - [ ] Router:
-      - [ ] Incoming route:
-      - [ ] Incoming data:
-      - [ ] Outgoing route:
-      - [ ] Outgoing data:
-
--   [ ] user_friend table
-
-    -   [ ] UserFriendService class
-
-        -   [ ] Get all of the user's friends
-
-            -   [ ] Method name: getAllUserFriendsService
-            -   [ ]
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-
-            -   [ ] Service: getAllUserFr
-
-                -   [ ] Incoming data: user object
-                -   [ ] throw new error otherwise
-                -   [ ] Knex command works
-                -   [ ] Postgres check
-
-            -   [ ] Router: addUserRoute(incoming, outgoing)
-                -   [ ] Incoming data: incoming.auth.user
-
-        -   [ ] add user_friend (add new friend)
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-        -   [ ] edit user_friend (edit friend)
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-        -   [ ] delete user_friend (delete friend)
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-        -   [ ] get user_friend (get friend)
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-
--   [ ] category table
-
-    -   [ ] service class
-        -   [ ] get name from id
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-
--   [ ] question table
-
-    -   [ ] Service class
-        -   [ ] get question from category
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-        -   [ ] favorite question
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-        -   [ ] mark question as answered
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-        -   [ ] get all questions
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
-
--   [ ] user_friend_all_questions
-    -   [ ] service class
-        -   [ ] mark as true
-            -   [ ] Service: getAllUserFriendsService
-            -   [ ] Knex command works
-            -   [ ] Postgres check
-            -   [ ] Router:
-            -   [ ] Incoming route:
-            -   [ ] Incoming data:
-            -   [ ] Outgoing route:
-            -   [ ] Outgoing data:
+    -   [ ] markAsFavoriteQuestionService(user, ques)
