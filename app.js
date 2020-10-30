@@ -93,6 +93,44 @@ app.use("/", newMainRouter);
  * Edit Friend
  * ==================================
  ***********************************************/
+// app.post("/api/friend/:friendId", function (incoming, outgoing, next) {
+//     console.log("Edit friend");
+//     let id = incoming.params.friendId;
+//     console.log(incoming.body);
+//     console.log("Id: ", id);
+//     knex("user_friend")
+//         .where({ id: incoming.params.friendId })
+//         .update(incoming.body)
+//         .then((eachFriend) => {
+//             console.log(eachFriend);
+//             outgoing.json(eachFriend);
+//         })
+//         .catch(next);
+// });
+
+/**********************************************
+ * Add One friend
+ * ==================================
+ *
+{
+	"id": 5, 
+	"user_id": 2,
+	"name": "anubhav",
+	"emoji": ":godmode:",
+	"wishful_city": "Hawaii",
+	"favorite_memory": ""
+}
+ ***********************************************/
+app.post("/api/addfriend", function (incoming, outgoing, next) {
+    let body = incoming.body;
+    console.log("Body: ", incoming.body);
+    knex("user_friend")
+        .insert(incoming.body)
+        .then((eachFriend) => {
+            outgoing.json(eachFriend);
+        })
+        .catch(next);
+});
 
 /**********************************************
  * Get one friend
@@ -177,7 +215,7 @@ app.put("/api/user/:userId", function (incoming, outgoing, next) {
  * Add Method Works
  * ==================================
  ***********************************************/
-app.post("/api/user", function (incoming, outgoing, next) {
+app.post("/api/adduser", function (incoming, outgoing, next) {
     console.log(incoming.body);
     knex("user_table")
         .insert(incoming.body)
