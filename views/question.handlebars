@@ -1,66 +1,31 @@
-{{!-- hANDLE BARS TEMPLATE BEGINS --}}
+
+<div class="container">
   {{#each question}}
-   {{this.question_string}} 
-   <img
-                       style="height: 250px"
-                       src={{this.photo_url}}
-                     />
-                     Question id: {{this.id}}
-                    Category id: {{this.category_id}}
-                    conditional rendering - if category id === 4, then render this title
-                   
-                   {{/each}}
-           {{!-- #TODO: Figure out how to render the category string --}}
-{{!-- HANDLE BARS TEMPLATE ENDS  --}}
+           <!-- Card -->
+  <div class="card mb-4">
 
-<style>
-
-  html,
-  body,
-  header,
-  .view {
-    height: 100%;
-  }
-
-</style>
-
-<!-- Main navigation -->
-<header>
-{{!-- CATEGORY PAGE  --}}
-  <!-- Full Page Intro -->
-  <div class="view deep-purple darken-3">
-    <!-- Mask & flexbox options-->
-    <div class="mask">
-      <!-- Content -->
-      <div class="container h-100">
-        <!--Grid row-->
-        <div class="row align-items-center h-100">
-          <!--Grid column-->
-
-          <div class="col-md-6 wow fadeInLeft" data-wow-delay="0.2s">
-            <h1 class="white-text mb-4">Category</h1>
-            <p class="mb-4 pb-2 white-text">
-                {{question_string}}
-            </p>
-          	<button type="button" class="btn btn-outline-white btn-md ml-md-0">Favorite</button>
-          	<button type="button" class="btn btn-white btn-md">Next Question</button>
-          </div>
-          <!--Grid column-->
-       
-          <!--Grid column-->
-          <div class="col-md-6 wow fadeInRight" data-wow-delay="0.2s">
-            <img src={{photo_url}} alt="" class="img-fluid">
-          </div>
-          <!--Grid column-->
-        </div>
-        <!--Grid row-->
-      </div>
-      <!-- Content -->
+    <!--Card image-->
+    <div class="view overlay">
+      <img class="card-img-top" src={{this.photo_url}}
+        alt="Card image cap">
+      <a href="#!">
+        <div class="mask rgba-white-slight"></div>
+      </a>
     </div>
-    <!-- Mask & flexbox options-->
+
+    <!--Card content-->
+    <div class="card-body">
+
+      <!--Title-->
+      <h4 class="card-title">how do i pass in category here</h4>
+      <!--Text-->
+      <p class="card-text"> {{this.question_string}} </p>
+      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      <button type="button" class="btn btn-light-blue btn-md">Mark as Done</button>
+      <button type="button" class="btn btn-light-blue btn-md">Favorite</button>
+
+    </div>
+
   </div>
-  <!-- Full Page Intro -->
-  
-{{!-- CATEGORY PAGE  --}}
-</header>
-<!-- Main navigation -->
+  <!-- Card -->
+  {{/each}}</div>

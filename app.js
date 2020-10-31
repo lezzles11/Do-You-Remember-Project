@@ -520,7 +520,7 @@ app.get("/play/:categoryString/:userId/:friendId", function (
         .select(question_col1, question_col2, question_col3, question_col4)
         .where("category_id", categoryQuery)
         .then((eachQuestion) => {
-            outgoing.status(200).send(eachQuestion);
+            outgoing.status(200).render("question", { question: eachQuestion });
         })
         .catch(next);
 });
