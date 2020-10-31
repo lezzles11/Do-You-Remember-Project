@@ -13,10 +13,12 @@ const knex = require("knex")({
 });
 
 require("dotenv").config();
+
 app.engine(
     "handlebars",
     handlebars({
         defaultLayout: "main",
+        heleprs: require("./views/helpers/handlebars-helpers"),
     })
 );
 app.set("view engine", "handlebars");
@@ -491,7 +493,7 @@ app.post("/login", (incoming, outgoing, next) => {
  * Get all questions from this particular category
  * ==================================
  * Current Category and Id's:
- * Friendship: 1
+ * Friends: 1
  * Work: 2
  * Family: 3
  * Love: 4
@@ -499,16 +501,24 @@ app.post("/login", (incoming, outgoing, next) => {
  * Favorites: 6
  ***********************************************/
 
-app.get("/play/:userId/:friendId/:categoryId", function (
+app.get("/play/:categoryString/:userId/:friendId", function (
     incoming,
     outgoing,
     next
 ) {
-    let id = incoming.params.categoryId;
-    console.log("Id: ", id);
+    let categoryString = incoming.params.categoryString;
+
+    let firstLetter = categoryString[0].toUpperCase();
+    let sliced = categoryString.slice(1);
+    categoryString = firstLetter.concat(sliced);
+    console.log("Category String: ", categoryString);
+    let categoryQuery = knex
+        .from("category")
+        .select("id")
+        .where("name", categoryString);
     knex.from("question")
         .select(question_col1, question_col2, question_col3, question_col4)
-        .where("category_id", id)
+        .where("category_id", categoryQuery)
         .then((eachQuestion) => {
             outgoing.status(200).send(eachQuestion);
         })
@@ -548,9 +558,27 @@ app.get("/profile", function (incoming, outgoing, next) {
  * ==================================
  ***********************************************/
 app.get("/question", function (incoming, outgoing, next) {
-    outgoing.render("question");
+    outgoing.render("question", {
+        question: [
+            {
+                id: 1,
+                category_id: 4,
+                question_string:
+                    "What do you want more of in this relationship?",
+                photo_url:
+                    "https://www.cerclemagazine.com/wp-content/uploads/2017/10/316_N-Atlantic-Ocean-Cliffs-of-Moher-1989.jpg",
+            },
+            {
+                id: 2,
+                category_id: 4,
+                question_string:
+                    "What do you less pressure of in this relationship?",
+                photo_url:
+                    "https://www.cerclemagazine.com/wp-content/uploads/2017/10/316_N-Atlantic-Ocean-Cliffs-of-Moher-1989.jpg",
+            },
+        ],
+    });
 });
-
 /**********************************************
  * Getting about page
  * ==================================

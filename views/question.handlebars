@@ -1,10 +1,16 @@
 {{!-- hANDLE BARS TEMPLATE BEGINS --}}
-   {{!-- {{#each question}}
-   {{emoji}} {{wishful_city}} 
-   <img src={{photo_url}} />
-                  {{favorite_memory}} 
-          {{/each}} 
-
+  {{#each question}}
+   {{this.question_string}} 
+   <img
+                       style="height: 250px"
+                       src={{this.photo_url}}
+                     />
+                     Question id: {{this.id}}
+                    Category id: {{this.category_id}}
+                    conditional rendering - if category id === 4, then render this title
+                   
+                   {{/each}}
+           {{!-- #TODO: Figure out how to render the category string --}}
 {{!-- HANDLE BARS TEMPLATE ENDS  --}}
 
 <style>
