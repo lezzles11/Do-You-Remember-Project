@@ -242,6 +242,35 @@ app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
         })
         .catch(next);
 });
+app.get("/api/friend/friendPage/:friendId", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let id = incoming.params.friendId;
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("id", id)
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.render("getFriend", {
+                id: 1,
+                user_id: 2,
+                name: "lesley",
+                emoji: "grandma",
+                wishful_city: "copenhagen",
+                favorite_memory: "whatsup",
+            });
+        })
+        .catch(next);
+});
 
 /**********************************************
  * Get all friends for this particular user
@@ -261,7 +290,24 @@ app.get("/api/user/allfriends/:userId", function (incoming, outgoing, next) {
         .where("user_id", id)
         .then((eachFriend) => {
             console.log("Each friend: ", eachFriend);
-            outgoing.send(eachFriend);
+            outgoing.render("home", [
+                {
+                    id: 1,
+                    user_id: 2,
+                    name: "name1",
+                    emoji: ":grandpa:",
+                    wishful_city: "barcelona",
+                    favorite_memory: "favorite memory",
+                },
+                {
+                    id: 2,
+                    user_id: 2,
+                    name: "name1",
+                    emoji: ":grandpa:",
+                    wishful_city: "barcelona",
+                    favorite_memory: "favorite memory",
+                },
+            ]);
         })
         .catch(next);
 });
@@ -337,7 +383,7 @@ app.post("/api/adduser", function (incoming, outgoing, next) {
         .catch(next);
 });
 /**********************************************
- * Get One Method
+ * Get One User Method
  * ==================================
  ***********************************************/
 app.get("/api/user/:userId", function (incoming, outgoing, next) {
@@ -380,8 +426,33 @@ app.use("/api/user", function (incoming, outgoing, next) {
  * Login page
  * ==================================
  ***********************************************/
-app.get("/login", (incoming, outgoing) => {
+app.get("/login", (incoming, outgoing, next) => {
+    console.log("Login button pressed");
+    console.log("Login post method: ", incoming.body);
     outgoing.render("login");
+});
+app.post("/login", (incoming, outgoing, next) => {
+    console.log("Login route post: ", incoming.body);
+    // Get one user method
+    let getUserByEmailQuery = knex
+        .from("user_table")
+        .select("id", "email", "password", "spotify_id", "spotify_access_token")
+        .where("email", incoming.body.email);
+    getUserByEmailQuery
+        .then((eachRow) => {
+            console.log(eachRow[0]);
+            let email = eachRow[0].email;
+            let password = eachRow[0].password;
+            if (
+                email == incoming.body.email &&
+                password == incoming.body.password
+            ) {
+                outgoing.status(200).send("login successful");
+            } else {
+                outgoing.send("not correct user or password");
+            }
+        })
+        .catch(next);
 });
 
 /**********************************************
@@ -438,6 +509,10 @@ app.get("/api/profile/:userId", function (incoming, outgoing, next) {
         .catch(next);
 });
 
+/**********************************************
+ * Checking for authentication
+ * ==================================
+ ***********************************************/
 app.get("/", function (incoming, outgoing, next) {
     if (incoming.auth) {
         let checkUser = incoming.auth.user;
@@ -463,6 +538,6 @@ app.use(function (req, res, next) {
 
 app.use(require("./config/helpers/error_middleware").all);
 
-app.listen(3000, () => {
-    console.log("Application listening to port 3000!!");
+app.listen(3001, () => {
+    console.log("Application listening to port 3001!!");
 });

@@ -23,20 +23,22 @@
     <div class="row d-flex justify-content-center">
 
       <!--Grid column-->
+
       <div class="col-md-6 text-center">
 
         <h3 class="font-weight-bold">Login</h3>
 
+{{!-- beginning of form  --}}
+        <form action="/login" method="POST">
+
+<a href="/auth/spotify">
 <button type="button" class="btn btn-fb"><i class="fab fa-facebook-f pr-1"></i> Spotify</button>
+</a>
         <!-- Material outline input -->
-        <div class="md-form md-outline mt-3">
-          <input type="text" id="username" placeholder="username" name="username" class="form-control">
-        </div>
-        or
+
           <div class="md-form md-outline mt-3">
           <input type="text" id="email" placeholder="email" name="email" class="form-control">
         </div>
-        and
 
         <!-- Material outline input -->
         <div class="md-form md-outline">
@@ -44,7 +46,16 @@
         </div>
 
 
-        <button type="submit" class="btn btn-info btn-sm ml-0">Login<i class="far fa-paper-plane ml-2"></i></button>
+        <button type="submit" class="btn btn-info btn-sm ml-0">Login<i class="far fa-paper-plane ml-2"></i></button><br />
+
+        <button type="submit" class="btn btn-info btn-sm ml-0">Signup<i class="far fa-paper-plane ml-2"></i></button>
+
+      <br />
+        
+        <button type="submit" class="btn btn-info btn-sm ml-0">Forgot Password<i class="far fa-paper-plane ml-2"></i></button>
+
+        </form>
+        {{!-- End of form --}}
       </div>
       <!--Grid column-->
     </div>
