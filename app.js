@@ -63,25 +63,6 @@ let question_col4 = "photo_url";
 // #TODO: once you add a friend, the computer will loop through the list of questions, then add all the questions into the table user_friend_all_questions
 
 /**********************************************
- * Get all questions that has this user and this friend
- * ==================================
- ***********************************************/
-app.get("/api/user_friend_all_questions/:userId/:friendId", function (
-    incoming,
-    outgoing,
-    next
-) {
-    knex("user_friend_all_questions")
-        .select("id", "user_id", "user_friend_id", "question_id", "answered")
-        .where("user_id", incoming.params.userId)
-        .where("user_friend_id", incoming.params.friendId)
-        .then((eachFriend) => {
-            outgoing.status(200).json(eachFriend);
-        })
-        .catch(next);
-});
-
-/**********************************************
  * Get all questions from this particular friend
  * ==================================
  ***********************************************/
@@ -224,24 +205,24 @@ app.post("/api/addfriend", function (incoming, outgoing, next) {
  * Get one friend
  * ==================================
  ***********************************************/
-app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
-    let id = incoming.params.friendId;
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .where("id", id)
-        .then((eachFriend) => {
-            console.log("Each friend: ", eachFriend);
-            outgoing.send(eachFriend);
-        })
-        .catch(next);
-});
+// app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
+//     let id = incoming.params.friendId;
+//     knex.from(user_friend)
+//         .select(
+//             user_friend_col1,
+//             user_friend_col2,
+//             user_friend_col3,
+//             user_friend_col4,
+//             user_friend_col5,
+//             user_friend_col6
+//         )
+//         .where("id", id)
+//         .then((eachFriend) => {
+//             console.log("Each friend: ", eachFriend);
+//             outgoing.send(eachFriend);
+//         })
+//         .catch(next);
+// });
 app.get("/api/friend/friendPage/:friendId", function (
     incoming,
     outgoing,
@@ -268,46 +249,6 @@ app.get("/api/friend/friendPage/:friendId", function (
                 wishful_city: "copenhagen",
                 favorite_memory: "whatsup",
             });
-        })
-        .catch(next);
-});
-
-/**********************************************
- * Get all friends for this particular user
- * ==================================
- ***********************************************/
-app.get("/api/user/allfriends/:userId", function (incoming, outgoing, next) {
-    let id = incoming.params.userId;
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .where("user_id", id)
-        .then((eachFriend) => {
-            console.log("Each friend: ", eachFriend);
-            outgoing.render("home", [
-                {
-                    id: 1,
-                    user_id: 2,
-                    name: "name1",
-                    emoji: ":grandpa:",
-                    wishful_city: "barcelona",
-                    favorite_memory: "favorite memory",
-                },
-                {
-                    id: 2,
-                    user_id: 2,
-                    name: "name1",
-                    emoji: ":grandpa:",
-                    wishful_city: "barcelona",
-                    favorite_memory: "favorite memory",
-                },
-            ]);
         })
         .catch(next);
 });
@@ -352,7 +293,6 @@ app.delete("/api/user/:userId", function (incoming, outgoing, next) {
         })
         .catch(next);
 });
-
 /**********************************************
  * Edit User Method Works
  * ==================================
@@ -423,6 +363,89 @@ app.use("/api/user", function (incoming, outgoing, next) {
 });
 
 /**********************************************
+ * After login, users will be able to see their home page, which is a list of all their friends
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * Get all questions that has this user and this friend
+ * ==================================
+ ***********************************************/
+app.get("/api/user_friend_all_questions/:userId/:friendId", function (
+    incoming,
+    outgoing,
+    next
+) {
+    knex("user_friend_all_questions")
+        .select("id", "user_id", "user_friend_id", "question_id", "answered")
+        .where("user_id", incoming.params.userId)
+        .where("user_friend_id", incoming.params.friendId)
+        .then((eachFriend) => {
+            outgoing.status(200).json(eachFriend);
+        })
+        .catch(next);
+});
+
+app.get("/api/play/:userId/:friendId", function (incoming, outgoing, next) {
+    let userId = incoming.params.userId;
+    let friendId = incoming.params.friendId;
+    console.log("User Id: ", userId);
+    console.log("Friend Id: ", friendId);
+    outgoing.send("works");
+});
+
+app.get("/signup", function (incoming, outgoing, next) {
+    outgoing.render("signup");
+});
+
+/**********************************************
+ * See Friend's Page
+ * ==================================
+ * # TODO: Link the game
+ ***********************************************/
+app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
+    let friendId = incoming.params.friendId;
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("id", friendId)
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.render("getFriend", { friend: eachFriend[0] });
+        })
+        .catch(next);
+});
+
+/**********************************************
+ * Get all friends for this particular user
+ * ==================================
+ ***********************************************/
+app.get("/home/:userId", (incoming, outgoing, next) => {
+    let id = incoming.params.userId;
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("user_id", id)
+        .then((eachFriend) => {
+            let friendId = user_friend_col1;
+            console.log("friendid: ", friendId);
+            console.log("Each friend: ", eachFriend);
+            outgoing.render("home", { user_friend: eachFriend });
+        })
+        .catch(next);
+});
+/**********************************************
  * Login page
  * ==================================
  ***********************************************/
@@ -441,16 +464,53 @@ app.post("/login", (incoming, outgoing, next) => {
     getUserByEmailQuery
         .then((eachRow) => {
             console.log(eachRow[0]);
+            let id = eachRow[0].id;
             let email = eachRow[0].email;
             let password = eachRow[0].password;
             if (
                 email == incoming.body.email &&
                 password == incoming.body.password
             ) {
-                outgoing.status(200).send("login successful");
+                console.log(id);
+                outgoing.status(200);
+                outgoing.redirect(`/home/${id}`);
             } else {
-                outgoing.send("not correct user or password");
+                outgoing.redirect("error", {
+                    message: "it's not the correct username or password",
+                });
             }
+        })
+        .catch(next);
+});
+/**********************************************
+ * Get all questions from this category
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Get all questions from this particular category
+ * ==================================
+ * Current Category and Id's:
+ * Friendship: 1
+ * Work: 2
+ * Family: 3
+ * Love: 4
+ * All: 5
+ * Favorites: 6
+ ***********************************************/
+
+app.get("/play/:userId/:friendId/:categoryId", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let id = incoming.params.categoryId;
+    console.log("Id: ", id);
+    knex.from("question")
+        .select(question_col1, question_col2, question_col3, question_col4)
+        .where("category_id", id)
+        .then((eachQuestion) => {
+            outgoing.status(200).send(eachQuestion);
         })
         .catch(next);
 });
@@ -459,6 +519,19 @@ app.post("/login", (incoming, outgoing, next) => {
  * Getting categories page
  * ==================================
  ***********************************************/
+
+app.get("/categories/:userId/:friendId", (incoming, outgoing, next) => {
+    let userId = incoming.params.userId;
+    let friendId = incoming.params.friendId;
+    console.log("User Id: ", userId);
+    console.log("Friend id: ", friendId);
+    outgoing.render("categories", {
+        information: {
+            userId: userId,
+            friendId: friendId,
+        },
+    });
+});
 app.get("/categories", (incoming, outgoing, next) => {
     outgoing.render("categories");
 });
@@ -507,6 +580,10 @@ app.get("/api/profile/:userId", function (incoming, outgoing, next) {
             });
         })
         .catch(next);
+});
+
+app.get("/error", function (incoming, outgoing, next) {
+    outgoing.render("error");
 });
 
 /**********************************************

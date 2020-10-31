@@ -57,13 +57,17 @@
       <div class="col-md-6">
 
         <div class="d-flex flex-column justify-content-center align-items-center h-100">
-          <h3 class="heading">{{name}}{{emoji}}</h3> 
+          <h3 class="heading">hi{{friend.name}}
+              {{friend.emoji}}</h3> 
+              {{friend.user_id}}{{friend.id}}
           <h4 class="subheading font-weight-bold">
-              {{favorite_memory}}</h4>
-                  <p class="lead text-center text-muted pt-2 mb-5">{{wishful_city}}</p>
+              {{friend.favorite_memory}}</h4>
+                  <p class="lead text-center text-muted pt-2 mb-5">{{friend.wishful_city}}</p>
           <div class="row justify-content-center mr-auto">
               button
+              <a href=`/categories/{{friend.user_id}}/{{friend.id}}`>
             <button type="button" class="btn btn-lily btn-margin btn-rounded">Get started <i class="fas fa-caret-right ml-3"></i></button>
+        </a>
           </div>
         </div>
 

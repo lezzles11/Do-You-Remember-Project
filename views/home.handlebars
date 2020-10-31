@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Product example for Bootstrap</title>
+    <title>Home</title>
     <link href="product.css" rel="stylesheet">
   </head>
 
@@ -14,104 +14,55 @@
 
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
       <div class="col-md-5 p-lg-5 mx-auto my-5">
-        <h1 class="display-4 font-weight-normal">Punny headline</h1>
-        <p class="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple's marketing pages.</p>
+        <h1 class="display-4 font-weight-normal">the coolest people I know</h1>
+        <p class="lead font-weight-normal">Now, try to render all the user's friends here</p>
         <a class="btn btn-outline-secondary" href="#">Coming soon</a>
       </div>
       <div class="product-device box-shadow d-none d-md-block"></div>
       <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
     </div>
-
-    {{!-- BEGINNING OF CARDS --}}
-
-<div class="container py-5 my-5">
-  <section class="p-md-3 mx-md-5 text-center text-lg-left">
-    <h2 class="text-center font-weight-bold mb-4 pb-1">the coolest people I know</h2>
-    <p class="text-center lead mb-5 pb-2 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-    <div class="row">
-
-        {{#each user_friend}}
-      <div class="col-lg-4 mb-4">
-        <div class="card">
-          <div
-            class="avatar w-100 white d-flex justify-content-center align-items-center"
-          >
-          
-              {{nickname}}
-          
-            <img
-              src="https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1"
-              class="img-fluid"
-            />
-          </div>
-          <div class="card-body">
-            <p class="font-weight-bold my-2">{{name}}</p>
-            <p class="text-muted">{{wishfulCity}}</p>
-
-            <p class="text-muted">{{favoriteMemory}}</p>
-          </div>
-        </div>
-      </div>
-      {{/each}}
-     <div class="col-lg-4 mb-4">
-        <div class="card">
-          <div
-            class="avatar w-100 white d-flex justify-content-center align-items-center"
-          >
-          
-              {{nickname}}
-          
-            <img
-              src="https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1"
-              class="img-fluid"
-            />
-          </div>
-          <div class="card-body">
-            <p class="font-weight-bold my-2">{{name}}</p>
-            <p class="text-muted">{{wishfulCity}}</p>
-
-            <p class="text-muted">{{favoriteMemory}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4">
-        <div class="card">
-          <div
-            class="avatar w-100 white d-flex justify-content-center align-items-center"
-          >
-            <img
-              src="https://mdbootstrap.com/img/Photos/Avatars/img%20(29).jpg"
-              class="img-fluid"
-            />
-          </div>
-          <div class="card-body">
-            <p class="font-weight-bold my-2">Anna Smith</p>
-            <p class="text-muted">Backend Developer</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-    {{!-- ENDING OF CARDS --}}
-
 {{!-- beginning of first row --}}
-          <button type="button" class="btn btn-outline-dark waves-effect">Play
-                      </button>
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+<div>
+    <h1>hELLO</h1>
+ {{#each user_friend}}
+ <div class="card">
+   <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
         <div class="my-3 py-3">
-          <h2 class="display-5">Janice Chow</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
+          <h2 class="display-5">
 
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+ {{this.name}} {{this.emoji}} </h2>
+    <p class="lead"> 
+ {{this.wishful_city}}
+ {{this.favorite_memory}}</p>
+ </div>
+  <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
              <img src="https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1" class="img-fluid z-depth-1"/>
         </div>
-
-          <button type="button" class="btn btn-outline-dark waves-effect">Play
+ </div>
+ {{!-- #TODO: Why isn't the a href workingggggg
+ 
+ /**********************************************
+ * PADS
+ * ==================================
+ * Plan (research): 
+ * Act: 
+ * Double Check: 
+ * Self Reflect: 
+ ***********************************************/
+ 
+  --}}
+ {{!-- problemo --}}
+ <a href="/categories/{{this.user_id}}/{{this.id}}">
+          <button type="button" class="btn btn-outline-dark waves-effect">Play 
                       </button>
+                      </a>
       </div>
+
+{{/each}}
+
+</div>
+
+
       <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
         <div class="my-3 p-3">
           <h2 class="display-5">Sam O'Shaughnessy</h2>
