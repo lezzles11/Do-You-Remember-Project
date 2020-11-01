@@ -112,7 +112,7 @@ app.get("/api/category/:categoryId", function (incoming, outgoing, next) {
         .select(question_col1, question_col2, question_col3, question_col4)
         .where("category_id", id)
         .then((eachQuestion) => {
-            outgoing.stauts(200).send(eachQuestion);
+            outgoing.status(200).send(eachQuestion);
         })
         .catch(next);
 });
@@ -180,30 +180,6 @@ app.put("/api/friend/:friendId", function (incoming, outgoing, next) {
 });
 
 /**********************************************
- * Add One friend
- * ==================================
- *
-{
-	"id": 5, 
-	"user_id": 2,
-	"name": "anubhav",
-	"emoji": ":godmode:",
-	"wishful_city": "Hawaii",
-	"favorite_memory": ""
-}
- ***********************************************/
-app.post("/api/addfriend", function (incoming, outgoing, next) {
-    let body = incoming.body;
-    console.log("Body: ", incoming.body);
-    knex("user_friend")
-        .insert(incoming.body)
-        .then((eachFriend) => {
-            outgoing.status(200).json(eachFriend);
-        })
-        .catch(next);
-});
-
-/**********************************************
  * Get one friend
  * ==================================
  ***********************************************/
@@ -259,7 +235,6 @@ app.get("/api/friend/friendPage/:friendId", function (
  * Get all friends
  * ==================================
  ***********************************************/
-
 app.get("/api/friend", function (incoming, outgoing, next) {
     knex.from(user_friend)
         .select(
@@ -277,6 +252,48 @@ app.get("/api/friend", function (incoming, outgoing, next) {
         .catch(next);
 });
 
+/**********************************************
+ * Add One friend
+ * ==================================
+ *
+{
+	"id": 5, 
+	"user_id": 2,
+	"name": "anubhav",
+	"emoji": ":godmode:",
+	"wishful_city": "Hawaii",
+	"favorite_memory": ""
+}
+ ***********************************************/
+app.post("/:userId/addfriendform", function (incoming, outgoing, next) {
+    console.log("Add friend method works");
+    let userId = incoming.params.userId;
+
+    let body = incoming.body;
+    console.log("body: ", body);
+    let newFriend = {
+        id: 10,
+        user_id: userId,
+        name: incoming.body.name,
+        emoji: incoming.body.emoji,
+        wishful_city: incoming.body.wishful_city,
+        favorite_memory: incoming.body.favorite_memory,
+    };
+    console.log("Body: ", newFriend);
+    knex("user_friend")
+        .insert(newFriend)
+        .then((eachFriend) => {
+            console.log("Adding new friend: ", eachFriend);
+            outgoing.redirect("/home/" + userId);
+        })
+        .catch(next);
+});
+app.get("/:userId/addfriend", function (incoming, outgoing, next) {
+    console.log("User Id: ", incoming.params.userId);
+    outgoing.render("addFriend", {
+        id: incoming.params.userId,
+    });
+});
 /**********************************************
  * Delete User Works
  * ==================================
@@ -312,17 +329,43 @@ app.put("/api/user/:userId", function (incoming, outgoing, next) {
         .catch(next);
 });
 /**********************************************
- * Add Method Works
+ * Add Use Method
  * ==================================
  ***********************************************/
-app.post("/api/adduser", function (incoming, outgoing, next) {
+
+app.post("/signup", function (incoming, outgoing, next) {
     console.log(incoming.body);
+    let totalNumber;
     knex("user_table")
-        .insert(incoming.body)
+        .count("id")
+        .first()
+        .then(function (total) {
+            totalNumber = total.count;
+        });
+    let number = Number(totalNumber);
+    /**********************************************
+     * The submit method works, but only if I pass in an id
+     * ==================================
+     * How do I just get it to increment by one?
+     ***********************************************/
+    let newBody = {
+        id: 10,
+        email: incoming.body.email,
+        password: incoming.body.password,
+        spotify_id: "",
+        spotify_access_token: "",
+    };
+    console.log("POST WORKS");
+    knex("user_table")
+        .insert(newBody)
         .then((eachRow) => {
-            outgoing.status(200).json(eachRow);
+            console.log("Added user: ", eachRow);
+            outgoing.redirect("/");
         })
         .catch(next);
+});
+app.get("/signup", function (incoming, outgoing, next) {
+    outgoing.render("signup");
 });
 /**********************************************
  * Get One User Method
@@ -395,10 +438,6 @@ app.get("/api/play/:userId/:friendId", function (incoming, outgoing, next) {
     outgoing.send("works");
 });
 
-app.get("/signup", function (incoming, outgoing, next) {
-    outgoing.render("signup");
-});
-
 /**********************************************
  * See Friend's Page
  * ==================================
@@ -429,6 +468,7 @@ app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
  ***********************************************/
 app.get("/home/:userId", (incoming, outgoing, next) => {
     let id = incoming.params.userId;
+
     knex.from(user_friend)
         .select(
             user_friend_col1,
@@ -443,7 +483,10 @@ app.get("/home/:userId", (incoming, outgoing, next) => {
             let friendId = user_friend_col1;
             console.log("friendid: ", friendId);
             console.log("Each friend: ", eachFriend);
-            outgoing.render("home", { user_friend: eachFriend });
+            outgoing.render("home", {
+                user_id: incoming.params.userId,
+                user_friend: eachFriend,
+            });
         })
         .catch(next);
 });
@@ -484,13 +527,24 @@ app.post("/login", (incoming, outgoing, next) => {
         })
         .catch(next);
 });
-/**********************************************
- * Get all questions from this category
- * ==================================
- ***********************************************/
 
 /**********************************************
- * Get all questions from this particular category
+ * Add this question to answered
+ * ==================================
+ ***********************************************/
+app.post("/play/:categoryString/:userId/:friendId/add", function (
+    incoming,
+    outgoing,
+    next
+) {
+    // get data
+    let userId = incoming.params.userId;
+    let friendId = incoming.params.friendId;
+    let questionId = incoming.body.id;
+    console.log("incoming body: ", incoming.body);
+});
+/**********************************************
+ * Get all questions from this category
  * ==================================
  * Current Category and Id's:
  * Friends: 1
@@ -500,13 +554,14 @@ app.post("/login", (incoming, outgoing, next) => {
  * All: 5
  * Favorites: 6
  ***********************************************/
-
 app.get("/play/:categoryString/:userId/:friendId", function (
     incoming,
     outgoing,
     next
 ) {
     let categoryString = incoming.params.categoryString;
+    let userId = incoming.params.userId;
+    let friendId = incoming.params.friendId;
 
     let firstLetter = categoryString[0].toUpperCase();
     let sliced = categoryString.slice(1);
@@ -519,8 +574,15 @@ app.get("/play/:categoryString/:userId/:friendId", function (
     knex.from("question")
         .select(question_col1, question_col2, question_col3, question_col4)
         .where("category_id", categoryQuery)
+
         .then((eachQuestion) => {
-            outgoing.status(200).render("question", { question: eachQuestion });
+            outgoing.status(200).render("question", {
+                question: eachQuestion,
+                categoryString: categoryString,
+                userId: userId,
+                friendId,
+                friendId,
+            });
         })
         .catch(next);
 });

@@ -22,7 +22,13 @@
       <!--Text-->
       <p class="card-text"> {{this.question_string}} </p>
       <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      
+      <form action="/play/{{categoryString}}/{{userId}}/{{friendId}}/add" method="POST">
+      {{!-- #TODO: to add the form link -> make sure you pass in the user id, question id and friend id into the object for question </form> --}}
+        <button type="button" value={{this.id}} class="btn btn-light-blue btn-md">Done</button>
+
       <button type="button" class="btn btn-light-blue btn-md">Favorite</button>
+      </form>
 
     </div>
 

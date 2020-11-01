@@ -57,9 +57,8 @@
                <!--Grid column-->
                <!--Grid column-->
                <div class="col-md-6 col-xl-5 mb-4">
-                  {{!-- Beginning of form --}}
-                  <form action="/" method="POST" id="addFriendForm">
-                     <!--Form-->
+                   <form action="/{{id}}/addfriendform" method="POST">
+                   
                      <div class="card wow fadeInRight" data-wow-delay="0.3s">
                         <div class="card-body z-depth-2">
                            <!--Header-->
@@ -76,6 +75,10 @@
                               <input placeholder="Name" type="text" id="name" name="name" class="form-control">
                            </div>
                            {{!-- Label  End --}}
+                             <div class="md-form">
+                              <i class="fas fa-user prefix grey-text"></i>
+                              <input placeholder="Emoji" type="text" id="emoji" name="emoji" class="form-control">
+                           </div>
                            {{!-- Start Dropdown --}}
                            <div class="md-form">
                            </div>
@@ -89,17 +92,14 @@
                            <!--Textarea with icon prefix-->
                            <div class="md-form">
                               <i class="fas fa-pencil-alt prefix grey-text"></i>
-                              <textarea type="text" id="fav_memory" class="md-textarea form-control" name="fav_memory" placeholder="Your favorite memory" rows="3" ></textarea>
+                              <textarea type="text" id="favorite_memory" class="md-textarea form-control" name="favorite_memory" placeholder="Your favorite memory" rows="3" ></textarea>
                            </div>
 <div class="row justify-content-center">
 
-                     <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
+                     <button type="submit" class="btn btn-outline-dark waves-effect">Add Friend
                                  </button></div>
                         </div>
-                     </div>
-                     <!--/.Form-->
-                  </form>
-                  {{!-- end of form --}}
+                     </div> </form>
                </div>
                <!--Grid column-->
             </div>
