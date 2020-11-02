@@ -18,11 +18,10 @@ app.engine(
     "handlebars",
     handlebars({
         defaultLayout: "main",
-        heleprs: require("./views/helpers/handlebars-helpers"),
     })
 );
 app.set("view engine", "handlebars");
-app.use(express.static("views"));
+app.use(express.static("public"));
 
 app.use(
     bodyParser.urlencoded({
@@ -61,11 +60,244 @@ let question_col1 = "id";
 let question_col2 = "category_id";
 let question_col3 = "question_string";
 let question_col4 = "photo_url";
+/**********************************************
+ * ALL JSON DATA API ROUTES HERE START HERE
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * TABLE OF CONTENTS
+ * ==================================
+ * 0: Users (post, get one, get all, edit, delete)
+ * 1: Friend (post, get one, get all, edit, delete)
+ * 2: Question (get all questions from this friend, get all from category, add to favorite)
+ ***********************************************/
+/**********************************************
+ * 0: User (post, get one, get all, edit, delete)
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * Get All Users Method
+ * ==================================
+ ***********************************************/
+app.use("/api/user", function (incoming, outgoing, next) {
+    let getAllUsersQuery = knex
+        .from("user_table")
+        .select(
+            "id",
+            "email",
+            "password",
+            "spotify_id",
+            "spotify_access_token"
+        );
+    getAllUsersQuery
+        .then((eachUserRow) => {
+            console.log("Each user: ", eachUserRow);
+            outgoing.status(200).send(eachUserRow);
+        })
+        .catch(next);
+});
+/**********************************************
+ * Get One User
+ * ==================================
+ ***********************************************/
+app.get("/api/user/:user_id", function (incoming, outgoing, next) {
+    console.log(incoming.params.user_id);
+    let getUserByIdQuery = knex
+        .from("user_table")
+        .select("id", "email", "password", "spotify_id", "spotify_access_token")
+        .where("id", incoming.params.user_id);
+    getUserByIdQuery
+        .then((eachRow) => {
+            console.log(eachRow);
+            outgoing.status(200).json(eachRow);
+        })
+        .catch(next);
+});
+/**********************************************
+ * Edit User
+ * ==================================
+ ***********************************************/
+app.put("/api/user/:user_id", function (incoming, outgoing, next) {
+    console.log(incoming.params.user_id);
+    knex("user_table")
+        .where({
+            id: incoming.params.user_id,
+        })
+        .update(incoming.body)
+        .then((eachRow) => {
+            outgoing.status(200).json(eachRow);
+        })
+        .catch(next);
+});
+/**********************************************
+ * Delete User
+ * ==================================
+ ***********************************************/
 
-// #TODO: once you add a friend, the computer will loop through the list of questions, then add all the questions into the table user_friend_all_questions
+app.delete("/api/user/:user_id", function (incoming, outgoing, next) {
+    console.log(incoming.params.user_id);
+    console.log("Delete User Method");
+    knex("user_table")
+        .where({
+            id: incoming.params.user_id,
+        })
+        .del()
+        .then((eachUser) => {
+            outgoing.status(200).json(eachUser);
+        })
+        .catch(next);
+});
+/**********************************************
+ * 0: User End Here
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * 1: Friend (post, get one, get all, edit, delete)
+ * ==================================
+ * A: Add Friend
+ * B: Get all friends
+ * C: Get all friends from this user
+ * D: Get one friend
+ * E: Delete Friend
+ * F: Edit Friend
+ ***********************************************/
+/**********************************************
+ * A: Add One friend
+ * ==================================
+ *
+{
+	"id": 5, 
+	"user_id": 2,
+	"name": "anubhav",
+	"emoji": ":godmode:",
+	"wishful_city": "Hawaii",
+	"favorite_memory": ""
+}
+ ***********************************************/
+app.post("/:user_id/addfriendform", function (incoming, outgoing, next) {
+    console.log("Add friend method works");
+    let user_id = incoming.params.user_id;
+
+    let body = incoming.body;
+    console.log("body: ", body);
+    let newFriend = {
+        id: 10,
+        user_id: user_id,
+        name: incoming.body.name,
+        emoji: incoming.body.emoji,
+        wishful_city: incoming.body.wishful_city,
+        favorite_memory: incoming.body.favorite_memory,
+    };
+    console.log("Body: ", newFriend);
+    knex("user_friend")
+        .insert(newFriend)
+        .then((eachFriend) => {
+            console.log("Adding new friend: ", eachFriend);
+            outgoing.redirect("/home/" + user_id);
+        })
+        .catch(next);
+});
+/**********************************************
+ * B: Get all friends
+ * ==================================
+ ***********************************************/
+app.get("/api/friend", function (incoming, outgoing, next) {
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.send(eachFriend);
+        })
+        .catch(next);
+});
+/**********************************************
+ * D: Get one friend
+ * ==================================
+ ***********************************************/
+app.get("/api/friend/friendPage/:friend_id", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let id = incoming.params.friend_id;
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("id", id)
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.render("getFriend", {
+                user_id: user_id,
+                friend: eachFriend,
+            });
+        })
+        .catch(next);
+});
+/**********************************************
+ * E: Edit Friend
+ * ==================================
+ ***********************************************/
+app.put("/api/friend/:friend_id", function (incoming, outgoing, next) {
+    console.log("Edit friend");
+    let id = incoming.params.friend_id;
+    knex("user_friend")
+        .where({ id: incoming.params.friend_id })
+        .update(incoming.body)
+        .then((eachFriend) => {
+            console.log(eachFriend);
+            outgoing.status(200).json(eachFriend);
+        })
+        .catch(next);
+});
 
 /**********************************************
- * Get all questions from this particular friend
+ * F: Delete Friend
+ * ==================================
+ ***********************************************/
+app.delete("/api/friend/:friend_id", function (incoming, outgoing, next) {
+    console.log("Id: ", incoming.params.friend_id);
+    knex("user_friend")
+        .where({ id: incoming.params.friend_id })
+        .del()
+        .then((eachFriend) => {
+            outgoing.status(200).json(eachFriend);
+        })
+        .catch(next);
+});
+
+app.get("/:user_id/addfriend", function (incoming, outgoing, next) {
+    console.log("User Id: ", incoming.params.user_id);
+    outgoing.render("addFriend", {
+        user_id: user_id,
+        id: incoming.params.user_id,
+    });
+});
+/**********************************************
+ * 1: Friend Ends Here
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * 2: Question (get all from category, add to favorite)
+ * ==================================
+ * A: Get all questions from this particular friend
+ * B: Get all questions that has this user and this friend
+ * C: Friend Answers Question
+ ***********************************************/
+/**********************************************
+ * A: Get all questions from this particular friend
  * ==================================
  ***********************************************/
 app.get("/api/user_friend_all_questions", function (incoming, outgoing, next) {
@@ -77,7 +309,25 @@ app.get("/api/user_friend_all_questions", function (incoming, outgoing, next) {
         .catch(next);
 });
 /**********************************************
- * Friend Answers Question
+ * B: Get all questions that has this user and this friend
+ * ==================================
+ ***********************************************/
+app.get("/api/user_friend_all_questions/:user_id/:friend_id", function (
+    incoming,
+    outgoing,
+    next
+) {
+    knex("user_friend_all_questions")
+        .select("id", "user_id", "user_friend_id", "question_id", "answered")
+        .where("user_id", incoming.params.user_id)
+        .where("user_friend_id", incoming.params.friend_id)
+        .then((eachFriend) => {
+            outgoing.status(200).json(eachFriend);
+        })
+        .catch(next);
+});
+/**********************************************
+ * C: Friend Answers Question
  * ==================================
  {
 	"id": 4, 
@@ -100,9 +350,8 @@ app.post("/api/user_friend_all_questions/add", function (
         })
         .catch(next);
 });
-
 /**********************************************
- * Get all questions from this particular category
+ * D: Get all questions from this particular category
  * ==================================
  ***********************************************/
 app.get("/api/category/:categoryId", function (incoming, outgoing, next) {
@@ -118,7 +367,7 @@ app.get("/api/category/:categoryId", function (incoming, outgoing, next) {
 });
 
 /**********************************************
- * Get one question
+ * E: Get one question
  * ==================================
  ***********************************************/
 app.get("/api/question/:questionId", function (incoming, outgoing, next) {
@@ -148,189 +397,45 @@ app.get("/api/question", function (incoming, outgoing, next) {
 });
 
 /**********************************************
- * Delete Friend
+ * 2: Question Ends Here
  * ==================================
  ***********************************************/
-app.delete("/api/friend/:friendId", function (incoming, outgoing, next) {
-    console.log("Id: ", incoming.params.friendId);
-    knex("user_friend")
-        .where({ id: incoming.params.friendId })
-        .del()
-        .then((eachFriend) => {
-            outgoing.status(200).json(eachFriend);
-        })
-        .catch(next);
-});
-
 /**********************************************
- * Edit Friend
- * ==================================
- ***********************************************/
-app.put("/api/friend/:friendId", function (incoming, outgoing, next) {
-    console.log("Edit friend");
-    let id = incoming.params.friendId;
-    knex("user_friend")
-        .where({ id: incoming.params.friendId })
-        .update(incoming.body)
-        .then((eachFriend) => {
-            console.log(eachFriend);
-            outgoing.status(200).json(eachFriend);
-        })
-        .catch(next);
-});
-
-/**********************************************
- * Get one friend
- * ==================================
- ***********************************************/
-// app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
-//     let id = incoming.params.friendId;
-//     knex.from(user_friend)
-//         .select(
-//             user_friend_col1,
-//             user_friend_col2,
-//             user_friend_col3,
-//             user_friend_col4,
-//             user_friend_col5,
-//             user_friend_col6
-//         )
-//         .where("id", id)
-//         .then((eachFriend) => {
-//             console.log("Each friend: ", eachFriend);
-//             outgoing.send(eachFriend);
-//         })
-//         .catch(next);
-// });
-app.get("/api/friend/friendPage/:friendId", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let id = incoming.params.friendId;
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .where("id", id)
-        .then((eachFriend) => {
-            console.log("Each friend: ", eachFriend);
-            outgoing.render("getFriend", {
-                id: 1,
-                user_id: 2,
-                name: "lesley",
-                emoji: "grandma",
-                wishful_city: "copenhagen",
-                favorite_memory: "whatsup",
-            });
-        })
-        .catch(next);
-});
-
-/**********************************************
- * Get all friends
- * ==================================
- ***********************************************/
-app.get("/api/friend", function (incoming, outgoing, next) {
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .then((eachFriend) => {
-            console.log("Each friend: ", eachFriend);
-            outgoing.send(eachFriend);
-        })
-        .catch(next);
-});
-
-/**********************************************
- * Add One friend
- * ==================================
  *
-{
-	"id": 5, 
-	"user_id": 2,
-	"name": "anubhav",
-	"emoji": ":godmode:",
-	"wishful_city": "Hawaii",
-	"favorite_memory": ""
-}
- ***********************************************/
-app.post("/:userId/addfriendform", function (incoming, outgoing, next) {
-    console.log("Add friend method works");
-    let userId = incoming.params.userId;
-
-    let body = incoming.body;
-    console.log("body: ", body);
-    let newFriend = {
-        id: 10,
-        user_id: userId,
-        name: incoming.body.name,
-        emoji: incoming.body.emoji,
-        wishful_city: incoming.body.wishful_city,
-        favorite_memory: incoming.body.favorite_memory,
-    };
-    console.log("Body: ", newFriend);
-    knex("user_friend")
-        .insert(newFriend)
-        .then((eachFriend) => {
-            console.log("Adding new friend: ", eachFriend);
-            outgoing.redirect("/home/" + userId);
-        })
-        .catch(next);
-});
-app.get("/:userId/addfriend", function (incoming, outgoing, next) {
-    console.log("User Id: ", incoming.params.userId);
-    outgoing.render("addFriend", {
-        id: incoming.params.userId,
-    });
-});
-/**********************************************
- * Delete User Works
  * ==================================
  ***********************************************/
 
-app.delete("/api/user/:userId", function (incoming, outgoing, next) {
-    console.log(incoming.params.userId);
-    console.log("Delete User Method");
-    knex("user_table")
-        .where({
-            id: incoming.params.userId,
-        })
-        .del()
-        .then((eachUser) => {
-            outgoing.status(200).json(eachUser);
-        })
-        .catch(next);
-});
 /**********************************************
- * Edit User Method Works
+ * ALL JSON DATA API ROUTES HERE END HERE
  * ==================================
  ***********************************************/
-app.put("/api/user/:userId", function (incoming, outgoing, next) {
-    console.log(incoming.params.userId);
-    knex("user_table")
-        .where({
-            id: incoming.params.userId,
-        })
-        .update(incoming.body)
-        .then((eachRow) => {
-            outgoing.status(200).json(eachRow);
-        })
-        .catch(next);
-});
+
 /**********************************************
- * Add Use Method
+ *
  * ==================================
+ ***********************************************/
+
+/**********************************************
+ * ALL PAGE ROUTES BEGIN HERE
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * TABLE OF CONTENTS
+ * ==================================
+ * 0. Signup
+ *  A: Sign up get
+ *  B: Sign up post
+ * 1. Login
+ *  A: Login get
+ *  B: Login post
+ * 2. Home (Logged In)
+ *  A: Home get (get all friends)
+ * 3. Categories
+ *  A: Categories get
+ * 4. Questions
+ *  A:
+ * 5.
+ * 6.
  ***********************************************/
 
 app.post("/signup", function (incoming, outgoing, next) {
@@ -341,110 +446,50 @@ app.post("/signup", function (incoming, outgoing, next) {
         .first()
         .then(function (total) {
             totalNumber = total.count;
-        });
-    let number = Number(totalNumber);
+            let user_id = Number(totalNumber) + 1;
+            let newBody = {
+                id: user_id,
+                email: incoming.body.email,
+                password: incoming.body.password,
+                spotify_id: "",
+                spotify_access_token: "",
+            };
+            console.log(newBody);
+            knex("user_table")
+                .insert(newBody)
+                .then((eachRow) => {
+                    console.log("Added user: ", eachRow);
+                    outgoing.redirect("/", { user_id: user_id });
+                })
+                .catch(next);
+        })
+        .catch(next);
     /**********************************************
      * The submit method works, but only if I pass in an id
      * ==================================
      * How do I just get it to increment by one?
      ***********************************************/
-    let newBody = {
-        id: 10,
-        email: incoming.body.email,
-        password: incoming.body.password,
-        spotify_id: "",
-        spotify_access_token: "",
-    };
-    console.log("POST WORKS");
-    knex("user_table")
-        .insert(newBody)
-        .then((eachRow) => {
-            console.log("Added user: ", eachRow);
-            outgoing.redirect("/");
-        })
-        .catch(next);
 });
+
 app.get("/signup", function (incoming, outgoing, next) {
     outgoing.render("signup");
 });
 /**********************************************
- * Get One User Method
+ * 0:
  * ==================================
  ***********************************************/
-app.get("/api/user/:userId", function (incoming, outgoing, next) {
-    console.log(incoming.params.userId);
-    let getUserByIdQuery = knex
-        .from("user_table")
-        .select("id", "email", "password", "spotify_id", "spotify_access_token")
-        .where("id", incoming.params.userId);
-    getUserByIdQuery
-        .then((eachRow) => {
-            console.log(eachRow);
-            outgoing.status(200).json(eachRow);
-        })
-        .catch(next);
-});
-
-/**********************************************
- * Get All Users Method
- * ==================================
- ***********************************************/
-app.use("/api/user", function (incoming, outgoing, next) {
-    let getAllUsersQuery = knex
-        .from("user_table")
-        .select(
-            "id",
-            "email",
-            "password",
-            "spotify_id",
-            "spotify_access_token"
-        );
-    getAllUsersQuery
-        .then((eachUserRow) => {
-            console.log("Each user: ", eachUserRow);
-            outgoing.status(200).send(eachUserRow);
-        })
-        .catch(next);
-});
-
 /**********************************************
  * After login, users will be able to see their home page, which is a list of all their friends
  * ==================================
  ***********************************************/
-/**********************************************
- * Get all questions that has this user and this friend
- * ==================================
- ***********************************************/
-app.get("/api/user_friend_all_questions/:userId/:friendId", function (
-    incoming,
-    outgoing,
-    next
-) {
-    knex("user_friend_all_questions")
-        .select("id", "user_id", "user_friend_id", "question_id", "answered")
-        .where("user_id", incoming.params.userId)
-        .where("user_friend_id", incoming.params.friendId)
-        .then((eachFriend) => {
-            outgoing.status(200).json(eachFriend);
-        })
-        .catch(next);
-});
-
-app.get("/api/play/:userId/:friendId", function (incoming, outgoing, next) {
-    let userId = incoming.params.userId;
-    let friendId = incoming.params.friendId;
-    console.log("User Id: ", userId);
-    console.log("Friend Id: ", friendId);
-    outgoing.send("works");
-});
 
 /**********************************************
  * See Friend's Page
  * ==================================
  * # TODO: Link the game
  ***********************************************/
-app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
-    let friendId = incoming.params.friendId;
+app.get("/api/friend/:friend_id", function (incoming, outgoing, next) {
+    let friend_id = incoming.params.friend_id;
     knex.from(user_friend)
         .select(
             user_friend_col1,
@@ -454,7 +499,7 @@ app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
             user_friend_col5,
             user_friend_col6
         )
-        .where("id", friendId)
+        .where("id", friend_id)
         .then((eachFriend) => {
             console.log("Each friend: ", eachFriend);
             outgoing.render("getFriend", { friend: eachFriend[0] });
@@ -466,8 +511,8 @@ app.get("/api/friend/:friendId", function (incoming, outgoing, next) {
  * Get all friends for this particular user
  * ==================================
  ***********************************************/
-app.get("/home/:userId", (incoming, outgoing, next) => {
-    let id = incoming.params.userId;
+app.get("/home/:user_id", (incoming, outgoing, next) => {
+    let id = incoming.params.user_id;
 
     knex.from(user_friend)
         .select(
@@ -480,11 +525,11 @@ app.get("/home/:userId", (incoming, outgoing, next) => {
         )
         .where("user_id", id)
         .then((eachFriend) => {
-            let friendId = user_friend_col1;
-            console.log("friendid: ", friendId);
+            let friend_id = user_friend_col1;
+            console.log("friend_id: ", friend_id);
             console.log("Each friend: ", eachFriend);
             outgoing.render("home", {
-                user_id: incoming.params.userId,
+                user_id: incoming.params.user_id,
                 user_friend: eachFriend,
             });
         })
@@ -532,16 +577,24 @@ app.post("/login", (incoming, outgoing, next) => {
  * Add this question to answered
  * ==================================
  ***********************************************/
-app.post("/play/:categoryString/:userId/:friendId/add", function (
+app.post("/play/:categoryString/:user_id/:friend_id", function (
     incoming,
     outgoing,
     next
 ) {
     // get data
-    let userId = incoming.params.userId;
-    let friendId = incoming.params.friendId;
-    let questionId = incoming.body.id;
-    console.log("incoming body: ", incoming.body);
+    let user_id = incoming.params.user_id;
+    let questionId = incoming.params.questionId;
+    console.log("User Id: ", user_id);
+    console.log("Question Id: ", questionId);
+    let newFavQuestion = {
+        id: 6,
+        user_id: user_id,
+        question_id: questionId,
+    };
+    knex("user_fav_question")
+        .insert(newFavQuestion)
+        .then(console.log("inserted"));
 });
 /**********************************************
  * Get all questions from this category
@@ -554,15 +607,14 @@ app.post("/play/:categoryString/:userId/:friendId/add", function (
  * All: 5
  * Favorites: 6
  ***********************************************/
-app.get("/play/:categoryString/:userId/:friendId", function (
+app.get("/play/:categoryString/:user_id/:friend_id", function (
     incoming,
     outgoing,
     next
 ) {
     let categoryString = incoming.params.categoryString;
-    let userId = incoming.params.userId;
-    let friendId = incoming.params.friendId;
-
+    let user_id = incoming.params.user_id;
+    let friend_id = incoming.params.friend_id;
     let firstLetter = categoryString[0].toUpperCase();
     let sliced = categoryString.slice(1);
     categoryString = firstLetter.concat(sliced);
@@ -576,12 +628,15 @@ app.get("/play/:categoryString/:userId/:friendId", function (
         .where("category_id", categoryQuery)
 
         .then((eachQuestion) => {
+            let newObject = eachQuestion;
+            for (let i = 0; i < newObject.length; i++) {
+                newObject[i].user_id = user_id;
+            }
             outgoing.status(200).render("question", {
-                question: eachQuestion,
+                question: newObject,
                 categoryString: categoryString,
-                userId: userId,
-                friendId,
-                friendId,
+                user_id: user_id,
+                friend_id: friend_id,
             });
         })
         .catch(next);
@@ -592,20 +647,20 @@ app.get("/play/:categoryString/:userId/:friendId", function (
  * ==================================
  ***********************************************/
 
-app.get("/categories/:userId/:friendId", (incoming, outgoing, next) => {
-    let userId = incoming.params.userId;
-    let friendId = incoming.params.friendId;
-    console.log("User Id: ", userId);
-    console.log("Friend id: ", friendId);
+app.get("/categories/:user_id/:friend_id", (incoming, outgoing, next) => {
+    let user_id = incoming.params.user_id;
+    let friend_id = incoming.params.friend_id;
+    console.log("User Id: ", user_id);
+    console.log("Friend id: ", friend_id);
     outgoing.render("categories", {
         information: {
-            userId: userId,
-            friendId: friendId,
+            user_id: user_id,
+            friend_id: friend_id,
         },
     });
 });
 app.get("/categories", (incoming, outgoing, next) => {
-    outgoing.render("categories");
+    outgoing.render("categories", { user_id: 1 });
 });
 
 /**********************************************
@@ -613,7 +668,7 @@ app.get("/categories", (incoming, outgoing, next) => {
  * ==================================
  ***********************************************/
 app.get("/profile", function (incoming, outgoing, next) {
-    outgoing.render("userprofile");
+    outgoing.render("userprofile", { user_id: 1 });
 });
 /**********************************************
  * Getting question page
@@ -621,6 +676,7 @@ app.get("/profile", function (incoming, outgoing, next) {
  ***********************************************/
 app.get("/question", function (incoming, outgoing, next) {
     outgoing.render("question", {
+        user_id: 1,
         question: [
             {
                 id: 1,
@@ -646,7 +702,7 @@ app.get("/question", function (incoming, outgoing, next) {
  * ==================================
  ***********************************************/
 app.get("/about", function (incoming, outgoing, next) {
-    outgoing.render("about");
+    outgoing.render("about", { user_id: 1 });
 });
 
 /**********************************************
@@ -656,17 +712,18 @@ app.get("/about", function (incoming, outgoing, next) {
  * 2. If authorized, then get the
  ***********************************************/
 
-app.get("/api/profile/:userId", function (incoming, outgoing, next) {
-    console.log(incoming.params.userId);
+app.get("/api/profile/:user_id", function (incoming, outgoing, next) {
+    console.log(incoming.params.user_id);
     let getUserByIdQuery = knex
         .from("user_table")
         .select("id", "email", "password", "spotify_id", "spotify_access_token")
-        .where("id", incoming.params.userId);
+        .where("id", incoming.params.user_id);
     getUserByIdQuery
         .then((user) => {
             console.log(user);
             outgoing.render("userProfile", {
                 user: user[0],
+                user_id: incoming.params.user_id,
             });
         })
         .catch(next);
@@ -684,10 +741,13 @@ app.get("/", function (incoming, outgoing, next) {
     if (incoming.auth) {
         let checkUser = incoming.auth.user;
         console.log("User to authorize: ", checkUser);
-        outgoing.render("home", { index: checkUser });
+        outgoing.render("home", { index: checkUser, user_id: user_id });
     } else {
-        outgoing.render("index");
+        outgoing.render("index", { user_id: 1 });
     }
+});
+app.get("/", function (incoming, outgoing, next) {
+    outgoing.render("index", { user_id: 1 });
 });
 
 /**********************************************

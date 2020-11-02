@@ -1,65 +1,60 @@
 <div class="container z-depth-1 my-5 py-5">
-   <!-- Section -->
-   <section>
-      <style>
-         .border-top {
-         border-top-width: 2px !important;
-         }
-      </style>
-      <h6 class="text-center small mb-4">
-         <p class="text-muted pb-md-3">let's talk</p>
-      </h6>
-      <h3 class="font-weight-bold text-center dark-grey-text pb-2">categories</h3>
-      <hr class="w-header my-4">
-      <div class="row d-flex justify-content-center">
-         <div class="text-center col-md-6 col-lg-5 col-xl-4">
-            <h5 class="font-weight-normal border-top border-light pt-4 mb-4"><a class="dark-grey-text" href="#">
-               Friendship</a>
-            </h5>
-            <i class="fa fa-map-marker-alt fa-3x indigo-text mb-4"></i><br />
-            <a class="dark-grey-text"
-               href="/play/friends/{{information.userId}}/{{information.friendId}}">
-            <button type="button" class="btn btn-outline-dark waves-effect">
-            converse
-            </button>
-            </a>
-         </div>
-         <br/>
-         <div class="text-center col-md-6 col-lg-5 col-xl-4">
-            <h5 class="font-weight-normal border-top border-secondary pt-4 mb-4"><a class="dark-grey-text"
-               href="#">Work</a></h5>
-            <i class="far fa-map fa-3x pink-text mb-4"></i><br />
-            <a class="dark-grey-text"
-               href="/play/work/{{information.userId}}/{{information.friendId}}">
-            <button type="button" class="btn btn-outline-dark waves-effect">
-            converse
-            </button>
-            </a>
-         </div>
-         <br/><br/>
-         <div class="w-100"></div><br/>
-         <div class="text-center col-md-6 col-lg-5 col-xl-4">
-            <h5 class="font-weight-normal border-top border-light pt-4 mb-4"><a class="dark-grey-text" href="#">Family</a></h5>
-            <i class="fa fa-globe-africa fa-3x amber-text mb-4"></i><br />
-             <a class="dark-grey-text"
-               href="/play/family/{{information.userId}}/{{information.friendId}}">
-            <button type="button" class="btn btn-outline-dark waves-effect">
-            converse
-            </button>
-            </a>
-         </div>
-         <br />
-         <div class="text-center col-md-6 col-lg-5 col-xl-4">
-            <h5 class="font-weight-normal border-top border-light pt-4 mb-4">Love{{information.friendId}}</h5>
-            <i class="fa fa-street-view fa-3x green-text mb-4"></i><br />
-            <a class="dark-grey-text"
-               href="/play/love/{{information.userId}}/{{information.friendId}}">
-            <button type="button" class="btn btn-outline-dark waves-effect">
-            converse
-            </button>
-            </a>
-         </div>
-      </div>
-   </section>
-   <!-- Section -->
+    <!-- Section -->
+    <section>
+        <style>
+            .border-top {
+                border-top-width: 2px !important;
+            }
+        </style>
+        <h6 class="text-center small mb-4">
+            <p class="text-muted pb-md-3">let's talk</p>
+        </h6>
+        <h3 class="font-weight-bold text-center dark-grey-text pb-2">categories</h3>
+        <hr class="w-header my-4">
+        <div class="row d-flex justify-content-center">
+            <div class="text-center col-md-6 col-lg-5 col-xl-4">
+                <h5 class="font-weight-normal border-top border-light pt-4 mb-4"><a class="dark-grey-text" href="#">
+                        Friendship</a>
+                </h5>
+                <i class="fa fa-map-marker-alt fa-3x indigo-text mb-4"></i><br />
+                <a class="dark-grey-text" href="/play/friends/{{information.user_id}}/{{information.friend_id}}">
+                    <button type="button" class="btn btn-outline-dark waves-effect">
+                        converse
+                    </button>
+                </a>
+            </div>
+            <br />
+            <div class="text-center col-md-6 col-lg-5 col-xl-4">
+                <h5 class="font-weight-normal border-top border-secondary pt-4 mb-4"><a class="dark-grey-text" href="#">Work</a></h5>
+                <i class="far fa-map fa-3x pink-text mb-4"></i><br />
+                <a class="dark-grey-text" href="/play/work/{{information.user_id}}/{{information.friend_id}}">
+                    <button type="button" class="btn btn-outline-dark waves-effect">
+                        converse
+                    </button>
+                </a>
+            </div>
+            <br /><br />
+            <div class="w-100"></div><br />
+            <div class="text-center col-md-6 col-lg-5 col-xl-4">
+                <h5 class="font-weight-normal border-top border-light pt-4 mb-4"><a class="dark-grey-text" href="#">Family</a></h5>
+                <i class="fa fa-globe-africa fa-3x amber-text mb-4"></i><br />
+                <a class="dark-grey-text" href="/play/family/{{information.user_id}}/{{information.friend_id}}">
+                    <button type="button" class="btn btn-outline-dark waves-effect">
+                        converse
+                    </button>
+                </a>
+            </div>
+            <br />
+            <div class="text-center col-md-6 col-lg-5 col-xl-4">
+                <h5 class="font-weight-normal border-top border-light pt-4 mb-4">Love{{information.friend_id}}</h5>
+                <i class="fa fa-street-view fa-3x green-text mb-4"></i><br />
+                <a class="dark-grey-text" href="/play/love/{{information.user_id}}/{{information.friend_id}}">
+                    <button type="button" class="btn btn-outline-dark waves-effect">
+                        converse
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Section -->
 </div>

@@ -32,11 +32,11 @@ class UserTableRouter {
     router() {
         let router = express.Router();
         router.get("/api/user", this.getAllUsersRoute.bind(this));
-        router.get("/api/user/:userId", this.getUserRoute.bind(this));
+        router.get("/api/user/:user_id", this.getUserRoute.bind(this));
         // router.post("/signup", this.addUserRoute.bind(this));
         router.post("/api/adduser", this.addUserRoute.bind(this));
-        router.put("/api/user/:userId", this.editUserRoute.bind(this));
-        // router.delete("/api/user/:userId", this.deleteUserRoute.bind(this));
+        router.put("/api/user/:user_id", this.editUserRoute.bind(this));
+        // router.delete("/api/user/:user_id", this.deleteUserRoute.bind(this));
         return router;
     }
     /**********************ç************************
@@ -65,7 +65,7 @@ class UserTableRouter {
     /**********************************************
      * Gets user
      * ==================================
-     * Connects the route "/api/user/:userId"
+     * Connects the route "/api/user/:user_id"
      * Incoming data:
      * Outgoing data:
      * Methods from service class
@@ -74,8 +74,8 @@ class UserTableRouter {
      ***********************************************/
     getUserRoute(incoming, outgoing, next) {
         console.log("Getting all users route");
-        let id = incoming.params.userId;
-        console.log("Incoming: ", incoming.params.userId);
+        let id = incoming.params.user_id;
+        console.log("Incoming: ", incoming.params.user_id);
         this.userTableService
             .getUserService(id)
             .then((user) => {
@@ -110,7 +110,7 @@ class UserTableRouter {
     /**********************************************
      * Edits user
      * ==================================
-     * Connects the route "/api/user/:userId"
+     * Connects the route "/api/user/:user_id"
      * Incoming data:
      * Outgoing data:
      * Methods from service class
@@ -118,10 +118,10 @@ class UserTableRouter {
      ***********************************************/
     editUserRoute2(incoming, outgoing, next) {
         console.log("Editing User Route ");
-        let userId = incoming.params.userId;
+        let user_id = incoming.params.user_id;
         console.log(incoming.body.user);
         this.userTableService
-            .editUserService(userId, incoming.body.user)
+            .editUserService(user_id, incoming.body.user)
             .then(() => {
                 outgoing.json("Added");
             })
@@ -134,7 +134,7 @@ class UserTableRouter {
     /**********************************************
      * Deletes user
      * ==================================
-     * Connects the route "/api/user/:userId"
+     * Connects the route "/api/user/:user_id"
      * Incoming data:
      * Outgoing data:
      * Methods from service class

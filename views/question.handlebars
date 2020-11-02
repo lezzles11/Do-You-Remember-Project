@@ -1,37 +1,46 @@
 
-<div class="container">
+User Id: {{user_id}}
+Friend Id: {{friend_id}}
+{{question.user_id}}
   {{#each question}}
-           <!-- Card -->
-  <div class="card mb-4">
+ user id: 
 
-    <!--Card image-->
-    <div class="view overlay">
-      {{!-- <img class="card-img-top" src={{this.photo_url}}
-        alt="Card image cap"> --}}
-            <img class="card-img-top" src="https://www.cerclemagazine.com/wp-content/uploads/2017/10/316_N-Atlantic-Ocean-Cliffs-of-Moher-1989.jpg"
-        alt="Card image cap">
-      <a href="#!">
-        <div class="mask rgba-white-slight"></div>
-      </a>
-    </div>
+  <!--Section: Content-->
+  <section class="text-center">
 
-    <!--Card content-->
-    <div class="card-body">
+      <style>
+        @media (max-width: 767px) {
+          .social-buttons .btn {
+            padding: 8px 15px;
+            margin: 1px;
+          }
+        }
+      </style>
 
-      <!--Title-->
-      <!--Text-->
-      <p class="card-text"> {{this.question_string}} </p>
-      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      <!-- Featured image -->
+      <img src="https://www.cerclemagazine.com/wp-content/uploads/2017/10/316_N-Atlantic-Ocean-Cliffs-of-Moher-1989.jpg" class="img-fluid z-depth-1 rounded mb-4"
+        alt="">
+
+      <p class="mb-4">
+         {{this.question_string}}
+       user_id: {{this.user_id}}
+      </p>
+
+      <!-- Interactions -->
+      <div class="social-buttons smooth-scroll">
+       {{!-- Submit form --}}
+  
+        <form id="favoriteQuestionForm">
+        <button type="submit" name="favorite" value={{this.id}} id="favorite" class="btn btn-outline-dark waves-effect">Favorite
+                    </button>
+        </form>
+      </div>
+      <!-- Interactions -->
       
-      <form action="/play/{{categoryString}}/{{userId}}/{{friendId}}/add" method="POST">
-      {{!-- #TODO: to add the form link -> make sure you pass in the user id, question id and friend id into the object for question </form> --}}
-        <button type="button" value={{this.id}} class="btn btn-light-blue btn-md">Done</button>
 
-      <button type="button" class="btn btn-light-blue btn-md">Favorite</button>
-      </form>
+    </section>
+  <!--Section: Content-->
 
-    </div>
 
-  </div>
-  <!-- Card -->
-  {{/each}}</div>
+</div><br/><br/>
+ {{/each}}

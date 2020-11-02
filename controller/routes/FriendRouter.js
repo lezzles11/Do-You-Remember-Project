@@ -25,12 +25,12 @@ class FriendRouter {
     router() {
         let router = express.Router();
         router.get("/api/friend", this.getAllFriendsRoute.bind(this));
-        router.get("api/friend/:friendId", this.getfriendRoute.bind(this));
+        router.get("api/friend/:friend_id", this.getfriendRoute.bind(this));
         router.post("/signup", this.addFriendRoute.bind(this));
         router.post("/api/friend", this.addFriendRoute.bind(this));
-        router.put("api/friend/:friendId", this.editFriendRoute.bind(this));
+        router.put("api/friend/:friend_id", this.editFriendRoute.bind(this));
         router.delete(
-            "api/friend/:friendId",
+            "api/friend/:friend_id",
             this.deleteFriendRoute.bind(this)
         );
         return router;
@@ -48,7 +48,7 @@ class FriendRouter {
     /**********************************************
      * Gets friend
      * ==================================
-     * Connects the route "/api/friend/:friendId"
+     * Connects the route "/api/friend/:friend_id"
      * Incoming data:
      * Outgoing data:
      * Methods from service class
@@ -69,7 +69,7 @@ class FriendRouter {
     /**********************************************
      * Edits friend
      * ==================================
-     * Connects the route "/api/friend/:friendId"
+     * Connects the route "/api/friend/:friend_id"
      * Incoming data:
      * Outgoing data:
      * Methods from service class
@@ -79,7 +79,7 @@ class FriendRouter {
     /**********************************************
      * Deletes friend
      * ==================================
-     * Connects the route "/api/friend/:friendId"
+     * Connects the route "/api/friend/:friend_id"
      * Incoming data:
      * Outgoing data:
      * Methods from service class

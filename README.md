@@ -71,26 +71,26 @@ node app.js
 
 ## Backend
 
-| Done? | Method | Table                     |                      Route                       |                     How it works                      | How it fits                                            |
-| ----- | ------ | ------------------------- | :----------------------------------------------: | :---------------------------------------------------: | ------------------------------------------------------ |
-| x     | GET    | user_table                |                    /api/user                     |                     get all users                     | Admin purposes                                         |
-| x     | GET    | user_table                |                /api/user/:userId                 |                     get one user                      | See the profile of a user                              |
-| x     | POST   | user_table                |                   /api/adduser                   |                       add user                        | Signing up                                             |
-| x     | PUT    | user_table                |                /api/user/:userId                 |                       edit user                       | Editing user profile                                   |
-| x     | DELETE | user_table                |                /api/user/:userId                 |                      delete user                      | Deleting user                                          |
-| x     | GET    | user_friend               |                   /api/friend                    |                    get all friends                    | For profile page                                       |
-| x     | GET    | user_friend               |              /api/friend/:friendId               |                    get one friend                     | See friend's page                                      |
-| x     | POST   | user_friend               |                   /api/friend                    |                     add a friend                      | Adding a new friend on home page                       |
-| x     | PUT    | user_friend               |              /api/friend/:friendId               |                     edit a friend                     | Editing friend profile                                 |
-| x     | DELETE | user_friend               |              /api/friend/:friendId               |                    delete a friend                    | Deleting friend profile page                           |
-| x     | GET    | question                  |                  /api/question                   |                   get all questions                   | Get all questions                                      |
-| x     | GET    | question                  |            /api/category/:categoryId             |       get all questions from specific category        | Get all questions from this category id                |
-| x     | GET    | question                  |            /api/question/:questionId             |                Get a specific question                | Grabbing a specific question                           |
-| x     | POST   | user_friend_all_questions |        /api/user_friend_all_questions/add        | Incoming has id, user_id, user_friend_id, question_id | Marking a question as answered                         |
-| x     | GET    | user_friend_all_questions |          /api/user_friend_all_questions          |   Getting all the data regarding answered questions   | Reference                                              |
-| x     | GET    | user_friend_all_questions | /api/user_friend_all_questions/:userId/:friendId |    Get all the questions between a user and friend    | See all the answered questions between user and friend |
-| x     |        | user_friend_all_questions |          /api/user_friend_all_questions          |                                                       |                                                        |
-|       |        | user_friend_all_questions |                                                  |                                                       |                                                        |
+| Done? | Method | Table                     |                       Route                        |                     How it works                      | How it fits                                            |
+| ----- | ------ | ------------------------- | :------------------------------------------------: | :---------------------------------------------------: | ------------------------------------------------------ |
+| x     | GET    | user_table                |                     /api/user                      |                     get all users                     | Admin purposes                                         |
+| x     | GET    | user_table                |                 /api/user/:user_id                 |                     get one user                      | See the profile of a user                              |
+| x     | POST   | user_table                |                    /api/adduser                    |                       add user                        | Signing up                                             |
+| x     | PUT    | user_table                |                 /api/user/:user_id                 |                       edit user                       | Editing user profile                                   |
+| x     | DELETE | user_table                |                 /api/user/:user_id                 |                      delete user                      | Deleting user                                          |
+| x     | GET    | user_friend               |                    /api/friend                     |                    get all friends                    | For profile page                                       |
+| x     | GET    | user_friend               |               /api/friend/:friend_id               |                    get one friend                     | See friend's page                                      |
+| x     | POST   | user_friend               |                    /api/friend                     |                     add a friend                      | Adding a new friend on home page                       |
+| x     | PUT    | user_friend               |               /api/friend/:friend_id               |                     edit a friend                     | Editing friend profile                                 |
+| x     | DELETE | user_friend               |               /api/friend/:friend_id               |                    delete a friend                    | Deleting friend profile page                           |
+| x     | GET    | question                  |                   /api/question                    |                   get all questions                   | Get all questions                                      |
+| x     | GET    | question                  |             /api/category/:categoryId              |       get all questions from specific category        | Get all questions from this category id                |
+| x     | GET    | question                  |             /api/question/:questionId              |                Get a specific question                | Grabbing a specific question                           |
+| x     | POST   | user_friend_all_questions |         /api/user_friend_all_questions/add         | Incoming has id, user_id, user_friend_id, question_id | Marking a question as answered                         |
+| x     | GET    | user_friend_all_questions |           /api/user_friend_all_questions           |   Getting all the data regarding answered questions   | Reference                                              |
+| x     | GET    | user_friend_all_questions | /api/user_friend_all_questions/:user_id/:friend_id |    Get all the questions between a user and friend    | See all the answered questions between user and friend |
+| x     |        | user_friend_all_questions |           /api/user_friend_all_questions           |                                                       |                                                        |
+|       |        | user_friend_all_questions |                                                    |                                                       |                                                        |
 
 ### User Stories :telescope:
 
@@ -193,7 +193,7 @@ timestamp
 -   Router Methods:
 
     -   [ x ] getAllUsersRoute("/api/user", (incoming, outgoing))
-    -   [ x ] getUserRoute("api/user/:userId", (incoming, outgoing))
+    -   [ x ] getUserRoute("api/user/:user_id", (incoming, outgoing))
     -   [ x ] addUserRoute("/signup", (incoming, outgoing))
     -   [ x ] editUserRoute("api/user/:id", (incoming, outgoing))
     -   [ x ] deleteUserRoute("api/user/:id", (incoming, outgoing))
@@ -254,9 +254,9 @@ user_friend {
 -   Service Method Names:
     -   [ x ] getAllFriendsService(user)
     -   [ x ] addFriendService(friend, user)
-    -   [ x ] getFriendService(friendId, user)
-    -   [ x ] editFriendService(friendId, friend, user)
-    -   [ x ] deleteFriendService(friendId, user)
+    -   [ x ] getFriendService(friend_id, user)
+    -   [ x ] editFriendService(friend_id, friend, user)
+    -   [ x ] deleteFriendService(friend_id, user)
 
 ### User Stories
 

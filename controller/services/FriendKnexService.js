@@ -70,7 +70,7 @@ class FriendControllerKnex {
     addFriendService(friend, user) {
         let insertObjectQuery = knex(table).insert(insertFriendObject);
     }
-    getFriendService(friendId, user) {
+    getFriendService(friend_id, user) {
         let getObjectByIdQuery = knex.from(table).where("id", 1);
     }
     /**********************************************
@@ -79,7 +79,7 @@ class FriendControllerKnex {
      * 1. Grab user
      * 2. Grab friend, then replace friend with updated friend
      ***********************************************/
-    editFriendService(friendId, friend, user) {
+    editFriendService(friend_id, friend, user) {
         // grab user friend
         let editQuery = knex(table)
             .where({
@@ -94,10 +94,10 @@ class FriendControllerKnex {
      * 2. Grab the id of the friend
      * 3. Delete the friend
      ***********************************************/
-    deleteFriendService(friendId, user) {
+    deleteFriendService(friend_id, user) {
         let deleteQuery = knex(table)
             .where({
-                id: friendId,
+                id: friend_id,
             })
             .del();
     }

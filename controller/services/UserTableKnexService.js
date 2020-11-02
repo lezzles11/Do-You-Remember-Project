@@ -106,7 +106,7 @@ class UserTableKnexService {
     /**********************************************
      * This method will be used to edit the user, as needed
      * ==================================
-     * 1. Incoming data: userId and userObject
+     * 1. Incoming data: user_id and userObject
      * 2. Grab user
      * 3. Grab user, then replace user with updated user
      ***********************************************/
