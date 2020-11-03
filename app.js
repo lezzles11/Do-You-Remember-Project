@@ -1,3 +1,8 @@
+/**********************************************
+ * App.js
+ * ==================================
+ * Think of this file as your main outline - should always be open
+ ***********************************************/
 const express = require("express");
 const app = express();
 const handlebars = require("express-handlebars");
@@ -295,6 +300,10 @@ app.get("/:user_id/addfriend", function (incoming, outgoing, next) {
  * A: Get all questions from this particular friend
  * B: Get all questions that has this user and this friend
  * C: Friend Answers Question
+ * D: Get all questions from this particular category
+ * E: Get One Question
+ * F: Get all questions
+ * G: Favorite a question
  ***********************************************/
 /**********************************************
  * A: Get all questions from this particular friend
@@ -384,7 +393,7 @@ app.get("/api/question/:questionId", function (incoming, outgoing, next) {
 });
 
 /**********************************************
- * Get all questions
+ * F: Get all questions
  * ==================================
  ***********************************************/
 app.get("/api/question", function (incoming, outgoing, next) {
@@ -395,13 +404,45 @@ app.get("/api/question", function (incoming, outgoing, next) {
         })
         .catch(next);
 });
+/**********************************************
+ * G: Favorite a question
+ * ==================================
+ ***********************************************/
+app.post("/api/favoritequestion", function (incoming, outgoing, next) {
+    knex("user_fav_question")
+        .count("id")
+        .first()
+        .then(function (total) {
+            let id = Number(total.count) + 1;
+            console.log(id);
+            console.log(incoming.body);
+            let newFavQuestionObject = {
+                id: id,
+                user_id: incoming.body.user_id,
+                question_id: incoming.body.question_id,
+            };
+            knex("user_fav_question")
+                .insert(newFavQuestionObject)
+                .then((eachRow) => {
+                    console.log(eachRow);
+                });
+        });
+});
+/**********************************************
+ * Get all favorite questions
+ * ==================================
+ ***********************************************/
+app.get("/api/user_fav_question", function (incoming, outgoing, next) {
+    knex("user_fav_question")
+        .select("id", "user_id", "question_id")
+        .then((eachQuestion) => {
+            outgoing.status(200).json(eachQuestion);
+        })
+        .catch(next);
+});
 
 /**********************************************
  * 2: Question Ends Here
- * ==================================
- ***********************************************/
-/**********************************************
- *
  * ==================================
  ***********************************************/
 
@@ -438,6 +479,14 @@ app.get("/api/question", function (incoming, outgoing, next) {
  * 6.
  ***********************************************/
 
+/**********************************************
+ * Sign Up Get and Post (user_table)
+ * ==================================
+ ***********************************************/
+
+app.get("/signup", function (incoming, outgoing, next) {
+    outgoing.render("signup");
+});
 app.post("/signup", function (incoming, outgoing, next) {
     console.log(incoming.body);
     let totalNumber;
@@ -459,84 +508,14 @@ app.post("/signup", function (incoming, outgoing, next) {
                 .insert(newBody)
                 .then((eachRow) => {
                     console.log("Added user: ", eachRow);
-                    outgoing.redirect("/", { user_id: user_id });
+                    outgoing.redirect("/");
                 })
                 .catch(next);
         })
         .catch(next);
-    /**********************************************
-     * The submit method works, but only if I pass in an id
-     * ==================================
-     * How do I just get it to increment by one?
-     ***********************************************/
-});
-
-app.get("/signup", function (incoming, outgoing, next) {
-    outgoing.render("signup");
 });
 /**********************************************
- * 0:
- * ==================================
- ***********************************************/
-/**********************************************
- * After login, users will be able to see their home page, which is a list of all their friends
- * ==================================
- ***********************************************/
-
-/**********************************************
- * See Friend's Page
- * ==================================
- * # TODO: Link the game
- ***********************************************/
-app.get("/api/friend/:friend_id", function (incoming, outgoing, next) {
-    let friend_id = incoming.params.friend_id;
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .where("id", friend_id)
-        .then((eachFriend) => {
-            console.log("Each friend: ", eachFriend);
-            outgoing.render("getFriend", { friend: eachFriend[0] });
-        })
-        .catch(next);
-});
-
-/**********************************************
- * Get all friends for this particular user
- * ==================================
- ***********************************************/
-app.get("/home/:user_id", (incoming, outgoing, next) => {
-    let id = incoming.params.user_id;
-
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .where("user_id", id)
-        .then((eachFriend) => {
-            let friend_id = user_friend_col1;
-            console.log("friend_id: ", friend_id);
-            console.log("Each friend: ", eachFriend);
-            outgoing.render("home", {
-                user_id: incoming.params.user_id,
-                user_friend: eachFriend,
-            });
-        })
-        .catch(next);
-});
-/**********************************************
- * Login page
+ * 1: Login Get And Post
  * ==================================
  ***********************************************/
 app.get("/login", (incoming, outgoing, next) => {
@@ -574,38 +553,112 @@ app.post("/login", (incoming, outgoing, next) => {
 });
 
 /**********************************************
- * Add this question to answered
+ * Get and Post Home Page ("/home/user_id")
  * ==================================
  ***********************************************/
-app.post("/play/:categoryString/:user_id/:friend_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    // get data
+const emoji = {
+    athletic: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
+    chillFriend:
+        "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1",
+    homie: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
+    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
+    family: "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1",
+    colleague: "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1",
+    bestFriend:
+        "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1",
+    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
+    significantOther:
+        "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1",
+};
+
+/**********************************************
+ * Get: After login, users will be able to see their home page, which is a list of all their friends
+ * ==================================
+ ***********************************************/
+app.get("/home/:user_id", (incoming, outgoing, next) => {
+    let id = incoming.params.user_id;
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("user_id", id)
+        .then((eachFriend) => {
+            let friend_id = user_friend_col1;
+            console.log("friend_id: ", friend_id);
+            console.log("Each friend: ", eachFriend);
+            outgoing.render("home", {
+                user_id: incoming.params.user_id,
+                user_friend: eachFriend,
+            });
+        })
+        .catch(next);
+});
+
+/**********************************************
+ * Post: On Home Page, users can click on "play button", which will lead them to the "categories/user_id/friend_id" page
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Get and Post Categories Page ("/categories/user_id/friend_id")
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Getting categories page
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * Getting the categories page, which then will pass in the user_id and friend_id information - then it will lead to
+ * 1: "/play/work/user_id/friend_id"
+ * 2: "/play/love/user_id/friend_id"
+ * 3: "/play/friends/user_id/friend_id"
+ * 4: "/play/family/user_id/friend_id"
+ * ==================================
+ ***********************************************/
+app.get("/categories/:user_id/:friend_id", (incoming, outgoing, next) => {
     let user_id = incoming.params.user_id;
-    let questionId = incoming.params.questionId;
+    let friend_id = incoming.params.friend_id;
     console.log("User Id: ", user_id);
-    console.log("Question Id: ", questionId);
-    let newFavQuestion = {
-        id: 6,
-        user_id: user_id,
-        question_id: questionId,
-    };
-    knex("user_fav_question")
-        .insert(newFavQuestion)
-        .then(console.log("inserted"));
+    console.log("Friend id: ", friend_id);
+    outgoing.render("categories", {
+        information: {
+            user_id: user_id,
+            friend_id: friend_id,
+        },
+    });
+});
+app.get("/categories", (incoming, outgoing, next) => {
+    outgoing.render("categories", {
+        information: { user_id: 1, friend_id: 1 },
+    });
+});
+
+/**********************************************
+ * Getting all questions via
+ * 1: "/play/work/user_id/friend_id"
+ * 2: "/play/love/user_id/friend_id"
+ * 3: "/play/friends/user_id/friend_id"
+ * 4: "/play/family/user_id/friend_id"
+ * 5: "/favorites/user_id/friend_id"
+ * ==================================
+ ***********************************************/
+
+app.get("/favorites/:user_id/:friend_id", function (incoming, outgoing, next) {
+    //
 });
 /**********************************************
  * Get all questions from this category
  * ==================================
- * Current Category and Id's:
- * Friends: 1
- * Work: 2
- * Family: 3
- * Love: 4
- * All: 5
- * Favorites: 6
+ * user_fav_question table
+ *  id
+ *  user_id
+ *  question_id
  ***********************************************/
 app.get("/play/:categoryString/:user_id/:friend_id", function (
     incoming,
@@ -631,6 +684,7 @@ app.get("/play/:categoryString/:user_id/:friend_id", function (
             let newObject = eachQuestion;
             for (let i = 0; i < newObject.length; i++) {
                 newObject[i].user_id = user_id;
+                newObject[i].friend_id = friend_id;
             }
             outgoing.status(200).render("question", {
                 question: newObject,
@@ -643,25 +697,70 @@ app.get("/play/:categoryString/:user_id/:friend_id", function (
 });
 
 /**********************************************
- * Getting categories page
+ * Add this question to answered
  * ==================================
  ***********************************************/
+app.post("/api/markasdone", function (incoming, outgoing, next) {
+    // get data
+    let body = incoming.body;
+    console.log("Data: ", incoming.data);
 
-app.get("/categories/:user_id/:friend_id", (incoming, outgoing, next) => {
-    let user_id = incoming.params.user_id;
+    console.log("Body of ", body);
+    knex("user_friend_all_questions")
+        .count("id")
+        .first()
+        .then(function (total) {
+            let numRows = Number(total.count) + 1;
+            let newObject = {
+                id: numRows,
+                user_id: incoming.body.user_id,
+                user_friend_id: incoming.body.friend_id,
+                question_id: incoming.body.question_id,
+                answered: true,
+            };
+            knex("user_friend_all_questions")
+                .insert(newObject)
+                .then((eachRow) => {
+                    console.log("Added: ", eachRow);
+                });
+        });
+    outgoing.send("good");
+});
+
+/**********************************************
+ * Options on the question page: can favorite question
+ * Pass in the values user id, friend id and question id into the javascript file
+ *
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * See Friend's Page
+ * ==================================
+ * # TODO: Link the game
+ ***********************************************/
+app.get("/api/friend/:friend_id", function (incoming, outgoing, next) {
     let friend_id = incoming.params.friend_id;
-    console.log("User Id: ", user_id);
-    console.log("Friend id: ", friend_id);
-    outgoing.render("categories", {
-        information: {
-            user_id: user_id,
-            friend_id: friend_id,
-        },
-    });
+    knex.from(user_friend)
+        .select(
+            user_friend_col1,
+            user_friend_col2,
+            user_friend_col3,
+            user_friend_col4,
+            user_friend_col5,
+            user_friend_col6
+        )
+        .where("id", friend_id)
+        .then((eachFriend) => {
+            console.log("Each friend: ", eachFriend);
+            outgoing.render("getFriend", { friend: eachFriend[0] });
+        })
+        .catch(next);
 });
-app.get("/categories", (incoming, outgoing, next) => {
-    outgoing.render("categories", { user_id: 1 });
-});
+
+/**********************************************
+ * Get all friends for this particular user
+ * ==================================
+ ***********************************************/
 
 /**********************************************
  * Getting profile page
@@ -768,3 +867,32 @@ app.use(require("./config/helpers/error_middleware").all);
 app.listen(3001, () => {
     console.log("Application listening to port 3001!!");
 });
+
+/**********************************************
+ *  Data File Structure
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * user_table
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * user_friend
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * user_friend
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * user_friend
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * user_friend
+ * ==================================
+ ***********************************************/
+/**********************************************
+ * user_friend
+ * ==================================
+ ***********************************************/

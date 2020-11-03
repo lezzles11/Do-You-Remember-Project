@@ -1,298 +1,36 @@
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Home</title>
-    <link href="product.css" rel="stylesheet">
-  </head>
-
-  <body>
-
-
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-      <div class="col-md-5 p-lg-5 mx-auto my-5">
-        <h1 class="display-4 font-weight-normal">the coolest people I know</h1>
-        <p class="lead font-weight-normal">Now, try to render all the user's friends here</p>
-        <a href="/{{user_id}}/addfriend">
-        <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
-                    </button>
-                    </a>
-        
-      </div>
-      <div class="product-device box-shadow d-none d-md-block"></div>
-      <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+            <h1 class="display-4 font-weight-normal">the coolest people I know</h1>
+            <p class="lead font-weight-normal">maximize</p>
+            <a href="/{{user_id}}/addfriend">
+                <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
+                </button>
+            </a>
+        </div>
+        <div class="product-device box-shadow d-none d-md-block"></div>
+        <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
     </div>
-{{!-- beginning of first row --}}
-<div>
-    <h1>hELLO</h1>
- {{#each user_friend}}
- <div class="card">
-   <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">
-
- {{this.name}} {{this.emoji}} </h2>
-    <p class="lead"> 
- {{this.wishful_city}}
- {{this.favorite_memory}}</p>
- </div>
-  <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-             <img src="https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1" class="img-fluid z-depth-1"/>
-        </div>
- </div>
- {{!-- #TODO: Why isn't the a href workingggggg
- 
- /**********************************************
- * PADS
- * ==================================
- * Plan (research): 
- * Act: 
- * Double Check: 
- * Self Reflect: 
- ***********************************************/
- 
-  --}}
- {{!-- problemo --}}
- <a href="/categories/{{this.user_id}}/{{this.id}}">
-          <button type="button" class="btn btn-outline-dark waves-effect">Play 
-                      </button>
-                      </a>
-      </div>
-
-{{/each}}
-
-</div>
-
-
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Sam O'Shaughnessy</h2>
-          <p class="lead">And an even wittier subheading.</p> 
-        </div>
-
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"><img src="https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1" class="img-fluid  z-depth-1"/></div>
-      </div>
-    </div>
-{{!-- end of first row --}}
-
-{{!-- beginning of second row --}}
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">Janice Chow</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-             <img src="https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1" class="img-fluid z-depth-1"/>
-        </div>
-      </div>
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Sam O'Shaughnessy</h2>
-          <p class="lead">And an even wittier subheading.</p> 
-        </div>
-
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"><img src="https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1" class="img-fluid  z-depth-1"/></div>
-      </div>
-    </div>
-{{!-- end of second row --}}
-
-
-{{!-- beginning of third row --}}
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">
-          <button type="button" class="btn btn-outline-dark waves-effect">Play
-                      </button> with Janice Chow</h2>
-          <p class="lead">And an even wittier subheading.</p>
-          
-        </div>
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-             <img src="https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1" class="img-fluid z-depth-1"/>
-        </div>
-      </div>
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Sam O'Shaughnessy</h2>
-          <p class="lead">And an even wittier subheading.</p> 
-        </div>
-
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"><img src="https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1" class="img-fluid  z-depth-1"/></div>
-      </div>
-    </div>
-{{!-- end of row --}}
-
-{{!-- beginning of row --}}
-    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-      <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-        <div class="my-3 py-3">
-          <h2 class="display-5">Janice Chow</h2>
-          <p class="lead">And an even wittier subheading.</p>
-        </div>
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-             <img src="https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1" class="img-fluid z-depth-1"/>
-        </div>
-      </div>
-      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-        <div class="my-3 p-3">
-          <h2 class="display-5">Sam O'Shaughnessy</h2>
-          <p class="lead">And an even wittier subheading.</p> 
-        </div>
-
-        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"><img src="https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1" class="img-fluid  z-depth-1"/></div>
-      </div>
-    </div>
-{{!-- end of row --}}
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script>
-  </body>
-</html>
-
-
-{{!-- END OF APPLE PAGE --}}
-
-
-{{!-- beginning of container --}}
-<div class="container my-5">
-
-  <!-- Section: Block Content -->
-  <section class="team-section">
-
+    {{#each user_friend}}
     <div class="card">
-      <div class="card-header white d-flex justify-content-between">
-        <p class="h5-responsive font-weight-bold mb-0">the coolest people I know</p>
-        <ul class="list-unstyled d-flex align-items-center mb-0">
-          <li><span class="badge badge-danger">8 New Members</span></li>
-          <li><i class="far fa-window-minimize fa-sm pl-3"></i></li>
-          <li><i class="fas fa-times fa-sm pl-3"></i></li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <div class="row pt-4">
-          <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-            <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
+        <div class="card-body">
+                <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+                    <div class="my-3 py-3">
+                        <h2 class="display-5">
+                            {{this.name}} {{this.emoji}} </h2>
+                        <p class="lead">
+                            {{this.wishful_city}}
+                            {{this.favorite_memory}}</p>
+                    </div>
+                    <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+                        <img src="https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1" class="img-fluid z-depth-1" />
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                <a href="/categories/{{this.user_id}}/{{this.id}}">
+                    <button type="button" class="btn btn-outline-dark waves-effect">Play
+                    </button>
+                </a>
+                </div>
             </div>
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Alan Turing</h6>
-              <p class="text-muted mb-0"><small>Today</small></p>
-            </div>
-          </div>
-{{!-- column start --}}
-          <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-
-{{!--  --}}
-            {{!-- <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
-            </div>
-
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Tom Johnson</h6>
-              <p class="text-muted mb-0"><small>Yesterday</small></p>
-            </div>
-
-            {{!--  --}}
-          </div> --}}
-
-        {{#each user_friend}}
-              <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
-            </div>
-
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">
-                  {{name}} </h6>
-                  
-              <h5>{{emoji}} {{wishful_city}} {{favorite_memory}} </h5>
-              <p class="text-muted mb-0"><small>Yesterday</small></p>
-            </div>
-            {{!--  --}}
-          </div>
-          {{/each}}
-          {{!-- column end --}}
-          <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-            <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
-            </div>
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Alex Laurie</h6>
-              <p class="text-muted mb-0"><small>29 Nov</small></p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-            <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
-            </div>
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Nathalie Fry</h6>
-              <p class="text-muted mb-0"><small>29 Nov</small></p>
-            </div>
-          </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-            <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
-            </div>
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Emma Lovelace</h6>
-              <p class="text-muted mb-0"><small>28 Nov</small></p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-            <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
-            </div>
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Joanna Thompson</h6>
-              <p class="text-muted mb-0"><small>27 Nov</small></p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-            <div class="avatar white text-center">
-              <img src="https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1" class="img-fluid rounded-circle z-depth-1"/>
-            </div>
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Billy Turner</h6>
-              <p class="text-muted mb-0"><small>26 Nov</small></p>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-            <div class="avatar white text-center">
-              <svg width="10em" height="10em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-</svg>
-            </div>
-            <div class="text-center mt-2">
-              <h6 class="font-weight-bold pt-2 mb-0">Veronica Smith</h6>
-              <p class="text-muted mb-0"><small>26 Nov</small></p>
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="card-footer white text-center py-3">
-        <a href="#!">View All Users</a>
-      </div>
-    </div>
-
-  </section>
-  <!-- Section: Block Content -->
-
-</div>
-{{!-- end of container --}}
+    {{/each}}

@@ -1,9 +1,13 @@
 
-User Id: {{user_id}}
-Friend Id: {{friend_id}}
-{{question.user_id}}
+<nav class="navbar sticky-top navbar-light blue lighten-4">
+
+<a href="/categories/{{user_id}}/{{friend_id}}">
+<button type="button" class="navbar-brand white btn btn-outline-dark waves-effect">Pick another category
+            </button>
+             </a>
+</nav>
+<a href="">
   {{#each question}}
- user id: 
 
   <!--Section: Content-->
   <section class="text-center">
@@ -23,17 +27,31 @@ Friend Id: {{friend_id}}
 
       <p class="mb-4">
          {{this.question_string}}
-       user_id: {{this.user_id}}
       </p>
 
       <!-- Interactions -->
       <div class="social-buttons smooth-scroll">
        {{!-- Submit form --}}
   
-        <form id="favoriteQuestionForm">
-        <button type="submit" name="favorite" value={{this.id}} id="favorite" class="btn btn-outline-dark waves-effect">Favorite
+        <div >
+            <form id="favQuestionForm" > 
+            <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
+             <input type="hidden" value={{this.user_id}} name="questionform_user_id" id="questionform_user_id" />
+             <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
+        <button type="submit" name="favorite" value={{this.id}} class="btn btn-outline-dark waves-effect favoriteQuestionForm">Favorite
                     </button>
-        </form>
+                    </form>
+        </div>
+
+            <div >
+            <form id="markAsDone" > 
+            <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
+             <input type="hidden" value={{this.user_id}} name="questionform_user_id" id="questionform_user_id" />
+             <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
+        <button type="submit" name="favorite" value={{this.id}} class="btn btn-outline-dark waves-effect favoriteQuestionForm">Mask as Done
+                    </button>
+                    </form>
+        </div>
       </div>
       <!-- Interactions -->
       
