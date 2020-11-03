@@ -21,16 +21,34 @@
                             {{this.wishful_city}}
                             {{this.favorite_memory}}</p>
                     </div>
+                    {{!-- Questions Answered --}}
+            
+                <div class="row justify-content-center">
+                    Questions Answered: 
+                </div>
+
+                {{!-- Questions Answered --}}
                     <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
+                        
+                
                         <img src="https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1" class="img-fluid z-depth-1" />
                     </div>
                 </div>
+           
+
+
+                {{!-- Button Row --}}
                 <div class="row justify-content-center">
+                 
                 <a href="/categories/{{this.user_id}}/{{this.id}}">
                     <button type="button" class="btn btn-outline-dark waves-effect">Play
                     </button>
                 </a>
                 </div>
+                {{!-- End of Button Row --}}
+
+                </div>
             </div>
         </div>
+        
     {{/each}}

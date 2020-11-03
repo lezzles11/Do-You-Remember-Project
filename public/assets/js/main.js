@@ -44,7 +44,7 @@ $("#favQuestionForm").on("click", function (event) {
     let user_id = $("#questionform_user_id").val();
     let friend_id = $("#questionform_friend_id").val();
     let question_id = $("#questionform_question_id").val();
-    alert("this works!" + question_id);
+    alert("Added to Favorite Question Category!");
     let favQuestion = {
         user_id: user_id,
         friend_id: friend_id,
@@ -80,7 +80,8 @@ $("#markAsDone").on("click", function (event) {
     let user_id = $("#questionform_user_id").val();
     let friend_id = $("#questionform_friend_id").val();
     let question_id = $("#questionform_question_id").val();
-    alert("this works!" + question_id);
+    alert("Successfully marked as done! Your relationship just progressed!!");
+    console.log("Could be cool to add an animation here");
     let markAsDoneObject = {
         user_id: user_id,
         friend_id: friend_id,

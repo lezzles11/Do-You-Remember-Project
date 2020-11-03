@@ -9,6 +9,7 @@ const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const basicAuth = require("express-basic-auth");
+const { json } = require("body-parser");
 
 const knex = require("knex")({
     client: "postgresql",
@@ -739,8 +740,36 @@ app.get("/categories", (incoming, outgoing, next) => {
  ***********************************************/
 
 app.get("/favorites/:user_id/:friend_id", function (incoming, outgoing, next) {
-    //
+    let user_id = Number(incoming.params.user_id);
+    let friend_id = Number(incoming.params.friend_id);
+    console.log(user_id);
+    knex.select("question.id", "question_string")
+        .from("question")
+        .join("user_fav_question", function () {
+            this.on("question.id", "=", "user_fav_question.question_id").onIn(
+                "user_fav_question.user_id",
+                user_id
+            );
+        })
+        .then((eachRow) => {
+            let newObject = eachRow;
+            for (let i = 0; i < newObject.length; i++) {
+                newObject[i].user_id = user_id;
+                newObject[i].friend_id = friend_id;
+            }
+            console.log(newObject);
+            outgoing.render("question", {
+                user_id: user_id,
+                friend_id: friend_id,
+                question: newObject,
+            });
+        })
+        .catch(next);
+
+    // QUERY TO SELECT ALL FAVORITE QUESTIONS
+    // render questions
 });
+
 /**********************************************
  * Get all questions from this category
  * ==================================
