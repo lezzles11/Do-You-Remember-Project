@@ -7,7 +7,9 @@ const express = require("express");
 const app = express();
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const basicAuth = require("express-basic-auth");
+
 const knex = require("knex")({
     client: "postgresql",
     connection: {
@@ -17,8 +19,17 @@ const knex = require("knex")({
     },
 });
 
-require("dotenv").config();
+/**********************************************
+ * Serving Static Files
+ * ==================================
+ * - Make sure that the static folder comes before your routes
+ * - When a request comes in, the static layer takes the URL, appends it to the folder, and sees if that file exists
+ * - E.g., if you request "/content/style.css" in your script tag, the middleware will look at "public/content/style.css"
+ ***********************************************/
+app.use(express.static("public"));
 
+require("dotenv").config();
+app.use(morgan("dev"));
 app.engine(
     "handlebars",
     handlebars({
@@ -26,7 +37,6 @@ app.engine(
     })
 );
 app.set("view engine", "handlebars");
-app.use(express.static("public"));
 
 app.use(
     bodyParser.urlencoded({
@@ -46,6 +56,9 @@ app.use(bodyParser.json());
 
 /**********************************************
  * * Controllers are used to define how the user interacts with your routes - connecting routes to database here **
+ *
+ * Important Things to know
+ * - Order matters (express will work through them one at a time until it finds one that decides that it can handle the request)
  * ==================================
  * 1. Declare routers
  * 2. Declare the database
@@ -82,6 +95,10 @@ let question_col4 = "photo_url";
  ***********************************************/
 /**********************************************
  * Get All Users Method
+ * ==================================
+ ***********************************************/
+/**********************************************
+ *
  * ==================================
  ***********************************************/
 app.use("/api/user", function (incoming, outgoing, next) {
@@ -556,20 +573,6 @@ app.post("/login", (incoming, outgoing, next) => {
  * Get and Post Home Page ("/home/user_id")
  * ==================================
  ***********************************************/
-const emoji = {
-    athletic: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
-    chillFriend:
-        "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1",
-    homie: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
-    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
-    family: "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1",
-    colleague: "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1",
-    bestFriend:
-        "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1",
-    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
-    significantOther:
-        "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1",
-};
 /**********************************************
  * Get: After login, users will be able to see their home page, which is a list of all their friends
  * ==================================
@@ -597,12 +600,84 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
         })
         .catch(next);
 });
+
+const emoji = {
+    athletic: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
+    chillFriend:
+        "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1",
+    homie: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
+    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
+    family: "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1",
+    colleague: "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1",
+    bestFriend:
+        "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1",
+    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
+    significantOther:
+        "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1",
+};
+
+/**********************************************
+ * Get add friend form page
+ * ==================================
+ ***********************************************/
 /**********************************************
  * Add Friend
  * ==================================
- ***********************************************/
+ * app.post("/:user_id/addfriendform", function (incoming, outgoing, next) {
+    console.log("Add friend method works");
+    let user_id = incoming.params.user_id;
 
- 
+    let body = incoming.body;
+    console.log("body: ", body);
+    let newFriend = {
+        id: 10,
+        user_id: user_id,
+        name: incoming.body.name,
+        emoji: incoming.body.emoji,
+        wishful_city: incoming.body.wishful_city,
+        favorite_memory: incoming.body.favorite_memory,
+    };
+    console.log("Body: ", newFriend);
+    knex("user_friend")
+        .insert(newFriend)
+        .then((eachFriend) => {
+            console.log("Adding new friend: ", eachFriend);
+            outgoing.redirect("/home/" + user_id);
+        })
+        .catch(next);
+});
+ ***********************************************/
+app.get("/addfriend/:user_id", function (incoming, outgoing, next) {
+    let user_id = incoming.params.user_id;
+    outgoing.render("addFriend", { user_id: user_id });
+});
+app.post("/addfriend/:user_id", function (incoming, outgoing, next) {
+    let user_id = incoming.params.user_id;
+    // HANDLE THE EMOJI HERE
+    // TODO: HANDLE EMOJI HERE (if they submit a specific word, you can associate it with an url here)
+    knex("user_friend")
+        .count("id")
+        .first()
+        .then(function (total) {
+            let newId = Number(total.count) + 1;
+            let newFriend = {
+                id: newId,
+                user_id: user_id,
+                name: incoming.body.name,
+                emoji: incoming.body.emoji,
+                wishful_city: incoming.body.wishful_city,
+                favorite_memory: incoming.body.favorite_memory,
+            };
+            console.log("New Friend: ", newFriend);
+            knex("user_friend")
+                .insert(newFriend)
+                .then((eachRow) => {
+                    console.log("Added friend: ", eachRow);
+                    outgoing.redirect(`/home/${user_id}`);
+                });
+        })
+        .catch(next);
+});
 /**********************************************
  * Get Form Page Route
  * ==================================
