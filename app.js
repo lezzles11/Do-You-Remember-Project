@@ -570,7 +570,6 @@ const emoji = {
     significantOther:
         "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1",
 };
-
 /**********************************************
  * Get: After login, users will be able to see their home page, which is a list of all their friends
  * ==================================
@@ -598,6 +597,21 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
         })
         .catch(next);
 });
+/**********************************************
+ * Add Friend
+ * ==================================
+ ***********************************************/
+
+ 
+/**********************************************
+ * Get Form Page Route
+ * ==================================
+ ***********************************************/
+
+/**********************************************
+ * Post Form Page Route
+ * ==================================
+ ***********************************************/
 
 /**********************************************
  * Post: On Home Page, users can click on "play button", which will lead them to the "categories/user_id/friend_id" page
@@ -728,41 +742,6 @@ app.post("/api/markasdone", function (incoming, outgoing, next) {
 });
 
 /**********************************************
- * Options on the question page: can favorite question
- * Pass in the values user id, friend id and question id into the javascript file
- *
- * ==================================
- ***********************************************/
-/**********************************************
- * See Friend's Page
- * ==================================
- * # TODO: Link the game
- ***********************************************/
-app.get("/api/friend/:friend_id", function (incoming, outgoing, next) {
-    let friend_id = incoming.params.friend_id;
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .where("id", friend_id)
-        .then((eachFriend) => {
-            console.log("Each friend: ", eachFriend);
-            outgoing.render("getFriend", { friend: eachFriend[0] });
-        })
-        .catch(next);
-});
-
-/**********************************************
- * Get all friends for this particular user
- * ==================================
- ***********************************************/
-
-/**********************************************
  * Getting profile page
  * ==================================
  ***********************************************/
@@ -770,62 +749,11 @@ app.get("/profile", function (incoming, outgoing, next) {
     outgoing.render("userprofile", { user_id: 1 });
 });
 /**********************************************
- * Getting question page
- * ==================================
- ***********************************************/
-app.get("/question", function (incoming, outgoing, next) {
-    outgoing.render("question", {
-        user_id: 1,
-        question: [
-            {
-                id: 1,
-                category_id: 4,
-                question_string:
-                    "What do you want more of in this relationship?",
-                photo_url:
-                    "https://www.cerclemagazine.com/wp-content/uploads/2017/10/316_N-Atlantic-Ocean-Cliffs-of-Moher-1989.jpg",
-            },
-            {
-                id: 2,
-                category_id: 4,
-                question_string:
-                    "What do you less pressure of in this relationship?",
-                photo_url:
-                    "https://www.cerclemagazine.com/wp-content/uploads/2017/10/316_N-Atlantic-Ocean-Cliffs-of-Moher-1989.jpg",
-            },
-        ],
-    });
-});
-/**********************************************
  * Getting about page
  * ==================================
  ***********************************************/
 app.get("/about", function (incoming, outgoing, next) {
     outgoing.render("about", { user_id: 1 });
-});
-
-/**********************************************
- * Getting home page
- * ==================================
- * 1. Check for authorization
- * 2. If authorized, then get the
- ***********************************************/
-
-app.get("/api/profile/:user_id", function (incoming, outgoing, next) {
-    console.log(incoming.params.user_id);
-    let getUserByIdQuery = knex
-        .from("user_table")
-        .select("id", "email", "password", "spotify_id", "spotify_access_token")
-        .where("id", incoming.params.user_id);
-    getUserByIdQuery
-        .then((user) => {
-            console.log(user);
-            outgoing.render("userProfile", {
-                user: user[0],
-                user_id: incoming.params.user_id,
-            });
-        })
-        .catch(next);
 });
 
 app.get("/error", function (incoming, outgoing, next) {
@@ -842,7 +770,7 @@ app.get("/", function (incoming, outgoing, next) {
         console.log("User to authorize: ", checkUser);
         outgoing.render("home", { index: checkUser, user_id: user_id });
     } else {
-        outgoing.render("index", { user_id: 1 });
+        outgoing.render("index");
     }
 });
 app.get("/", function (incoming, outgoing, next) {
