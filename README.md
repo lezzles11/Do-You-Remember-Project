@@ -6,9 +6,9 @@ The purpose of this repository is to follow along with the current cohort's week
 
 ## End Goal
 
-Now "success" is a relative term and may vary from person to person.
+Success merely means "excellence in a given field." At origin, the word is neutral about what it might be applied to.
 
-I determined that a "successful" application to mean the following:
+Can be excellent at building this specific application
 
 -   Good coding practices: comments
 -   Setting sprints
@@ -383,3 +383,108 @@ user_fav_question {
     -   [ ] getCategoriesRoute("/api/friend/", (incoming, outgoing))
 -   Service Method Names:
     -   [ ] markAsFavoriteQuestionService(user, ques)
+
+To Do:
+
+-   Finished most routers and services
+-   Finished layouts
+-   Finished data backend
+-   Finished the routes
+-
+
+Current To Dos:
+
+-   Can't press more than one button at a time (on question page)
+    -   Potential Solution:
+        -   Check JQuery book
+        -
+-   Associate emoji with picture on the home page
+
+    -   Potential Solution:
+
+-   See how many questions you have answered with that user
+    -   Write out the SQL query first
+    -   get the total count of the ids in user_answered
+    -   get the total count of all the questions
+    -   render that on the page
+
+Hard To Dos:
+
+-   Implement authorization for the application
+
+    -   Check the previous example on github
+    -   Github download it, play with it, then try to implement authorization on your application
+
+-   Implement spotify passport.js
+
+    -   Check out an example on github
+    -   Github download it, play with it, then try to implement authorization on your application
+
+-   Write route tests
+
+    -   Check out supertest application
+
+-   Write data tests
+    -   Check out an example on github
+    -   Github download it
+    -   Play with it
+    -   Try to implement it
+
+Soft To Dos:
+
+-   Change the navbar to white on the question page and the category page
+
+    -   Look at an example on mdbootstrap or getbootstrap
+    -   Implement accordingly
+
+-   Implement authorization
+
+-   Write the about description
+-   Write the add friend description
+-   Write the rules description
+
+-   Images of each picture
+
+    -   Put each picture on dropbox, giving it an id
+    -   Then copy all of urls and put it in the seed data accordingly
+
+-   Ripples when you press favorite
+
+    -   Check out the ripples example on code pen / the previous jquery example with anubhav was asking you about it
+    -   Implement the ripple
+
+-   Ripples when you press done
+-   Thickness of friend reflects the
+
+Versioning Upgrades:
+
+-   Be able to edit friend
+
+    -   Create form page to edit friend - the user id and friend id should be in the params
+    -   Upon submission, collect the params, and then update the friend accordingly
+
+-   Be able to see profile page
+
+    -   Make sure profile page can render the data well first
+    -   Reroute the play button to profile/userid/friendid
+    -   Be able to see picture
+
+-   Create theme table -> can change theme
+
+    -   Create different outlines for the different themes that you have
+    -   Theme would encompass:
+        -   Question page
+        -   Category page
+        -   Profile page
+
+-   Create spotify_friend table -> can associate spotify account
+
+    -   Create spotify_playlist table
+        -   Id
+        -   User Id
+        -   Create spotify playlist with that friend
+
+-   Be able to create a story together with the friend
+    -   Create a story table
+    -   That could replace the current user_friend table
+    -

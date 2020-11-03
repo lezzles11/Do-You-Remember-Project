@@ -34,16 +34,15 @@
  * CURRENT PROBLEM: Not being able to
  * ==================================
  ***********************************************/
-
-$("#favQuestionForm").on("click", function (event) {
+console.log("THE MAIN.JS FILE LOADS");
+$(".favQuestionForm").on("submit", function (event) {
     event.preventDefault();
 
     console.log("Favorite Question Form Submit Form Button Pressed");
-    console.log(event.target);
+    let user_id = event.target[0].value;
+    let friend_id = event.target[1].value;
+    let question_id = event.target[2].value;
 
-    let user_id = $("#questionform_user_id").val();
-    let friend_id = $("#questionform_friend_id").val();
-    let question_id = $("#questionform_question_id").val();
     alert("Added to Favorite Question Category!");
     let favQuestion = {
         user_id: user_id,
@@ -58,7 +57,7 @@ $("#favQuestionForm").on("click", function (event) {
     $.ajax({
         type: "POST",
         url: "/api/favoritequestion",
-        body: favQuestion,
+        data: favQuestion,
         success: function () {
             console.log("data sent!");
         },
@@ -71,15 +70,14 @@ $("#favQuestionForm").on("click", function (event) {
     });
 });
 
-$("#markAsDone").on("click", function (event) {
+$(".markAsDone").on("submit", function (event) {
     event.preventDefault();
-
     console.log("Favorite Question Form Submit Form Button Pressed");
     console.log(event.target);
+    let user_id = event.target[0].value;
+    let friend_id = event.target[1].value;
+    let question_id = event.target[2].value;
 
-    let user_id = $("#questionform_user_id").val();
-    let friend_id = $("#questionform_friend_id").val();
-    let question_id = $("#questionform_question_id").val();
     alert("Successfully marked as done! Your relationship just progressed!!");
     console.log("Could be cool to add an animation here");
     let markAsDoneObject = {
@@ -88,7 +86,6 @@ $("#markAsDone").on("click", function (event) {
         question_id: question_id,
         answered: true,
     };
-
     console.log("Mark As Done Button Object Is Clicked: ", markAsDoneObject);
     $.ajax({
         type: "POST",

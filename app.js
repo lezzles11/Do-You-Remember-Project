@@ -427,6 +427,7 @@ app.get("/api/question", function (incoming, outgoing, next) {
  * ==================================
  ***********************************************/
 app.post("/api/favoritequestion", function (incoming, outgoing, next) {
+    console.log(incoming);
     knex("user_fav_question")
         .count("id")
         .first()

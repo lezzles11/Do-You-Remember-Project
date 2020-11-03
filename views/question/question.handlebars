@@ -72,7 +72,7 @@
                 {{!-- Submit form --}}
 
                 <div class="col">
-                    <form id="favQuestionForm" method="POST">
+                    <form class="favQuestionForm" >
                         <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
                         <input type="hidden" value={{this.user_id}} name="questionform_user_id" id="questionform_user_id" />
                         <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
@@ -80,13 +80,12 @@
                         </button>
                     </form>
                 </div>
-
                 <div class="col">
-                    <form id="markAsDone" method="POST">
+                    <form class="markAsDone">
                         <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
-                        <input type="hidden" value={{this.user_id}} name="questionform_user_id" id="questionform_user_id" />
+                        <input type="hidden" value={{this.user_id}} name="user_id" id="questionform_user_id" />
                         <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
-                        <button type="submit" name="favorite" value={{this.id}} class="btn btn-outline-dark waves-effect favoriteQuestionForm">Add Point
+                         <button type="submit" name="makeAsDone" value={{this.id}} class="btn btn-outline-dark waves-effect markAsDone">Mark as Done
                         </button>
                     </form>
                 </div>
