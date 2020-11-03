@@ -1,7 +1,7 @@
     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
         <div class="col-md-5 p-lg-5 mx-auto my-5">
             <h1 class="display-4 font-weight-normal">the coolest people I know</h1>
-            <p class="lead font-weight-normal">userid: {{user_id}}</p>
+
             <a href="/addfriend/{{user_id}}">
                 <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
                 </button>
@@ -24,7 +24,7 @@
                     {{!-- Questions Answered --}}
             
                 <div class="row justify-content-center">
-                    Questions Answered: 
+                    Answered Questions: {{this.allAnsweredQuestions}}
                 </div>
 
                 {{!-- Questions Answered --}}

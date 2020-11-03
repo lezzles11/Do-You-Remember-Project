@@ -18,7 +18,8 @@
     "handlebars": "^4.7.6",
     "knex": "^0.21.6",
     "morgan": "^1.10.0",
-    "pg": "^8.4.1"
+    "pg": "^8.4.1",
+    "supertest": "^6.0.0"
   },
   "devDependencies": {
     "prettier": "2.1.2"

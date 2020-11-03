@@ -503,7 +503,7 @@ app.get("/api/user_fav_question", function (incoming, outgoing, next) {
  ***********************************************/
 
 app.get("/signup", function (incoming, outgoing, next) {
-    outgoing.render("signup");
+    outgoing.render("account/signup");
 });
 app.post("/signup", function (incoming, outgoing, next) {
     console.log(incoming.body);
@@ -539,7 +539,7 @@ app.post("/signup", function (incoming, outgoing, next) {
 app.get("/login", (incoming, outgoing, next) => {
     console.log("Login button pressed");
     console.log("Login post method: ", incoming.body);
-    outgoing.render("login");
+    outgoing.render("account/login");
 });
 app.post("/login", (incoming, outgoing, next) => {
     console.log("Login route post: ", incoming.body);
@@ -580,6 +580,7 @@ app.post("/login", (incoming, outgoing, next) => {
  ***********************************************/
 app.get("/home/:user_id", (incoming, outgoing, next) => {
     let id = incoming.params.user_id;
+
     knex.from(user_friend)
         .select(
             user_friend_col1,
@@ -592,8 +593,21 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
         .where("user_id", id)
         .then((eachFriend) => {
             let friend_id = user_friend_col1;
-            console.log("friend_id: ", friend_id);
-            console.log("Each friend: ", eachFriend);
+
+            // #TODO: Trying to render the number of questions answered between two users
+            // let answered_questions;
+            // knex("user_friend_all_questions")
+            //     .select("id")
+            //     .where({ user_id: id, user_friend_id: friend_id })
+            //     .then((allAnsweredQuestions) => {
+            //         answered_questions = allAnsweredQuestions;
+            //     });
+            // console.log("friend_id: ", friend_id);
+            // console.log("Each friend: ", eachFriend);
+            // for (let i = 0; i < eachFriend.length; i++) {
+            //     eachFriend[i].answeredQuestions = allAnsweredQuestions;
+            // }
+
             outgoing.render("home", {
                 user_id: incoming.params.user_id,
                 user_friend: eachFriend,
@@ -716,7 +730,7 @@ app.get("/categories/:user_id/:friend_id", (incoming, outgoing, next) => {
     let friend_id = incoming.params.friend_id;
     console.log("User Id: ", user_id);
     console.log("Friend id: ", friend_id);
-    outgoing.render("categories", {
+    outgoing.render("question/categories", {
         information: {
             user_id: user_id,
             friend_id: friend_id,
@@ -758,7 +772,7 @@ app.get("/favorites/:user_id/:friend_id", function (incoming, outgoing, next) {
                 newObject[i].friend_id = friend_id;
             }
             console.log(newObject);
-            outgoing.render("question", {
+            outgoing.render("question/question", {
                 user_id: user_id,
                 friend_id: friend_id,
                 question: newObject,
@@ -804,7 +818,7 @@ app.get("/play/:categoryString/:user_id/:friend_id", function (
                 newObject[i].user_id = user_id;
                 newObject[i].friend_id = friend_id;
             }
-            outgoing.status(200).render("question", {
+            outgoing.status(200).render("question/question", {
                 question: newObject,
                 categoryString: categoryString,
                 user_id: user_id,
