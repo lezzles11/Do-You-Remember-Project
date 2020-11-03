@@ -730,12 +730,18 @@ app.get("/categories/:user_id/:friend_id", (incoming, outgoing, next) => {
     let friend_id = incoming.params.friend_id;
     console.log("User Id: ", user_id);
     console.log("Friend id: ", friend_id);
-    outgoing.render("question/categories", {
-        information: {
-            user_id: user_id,
-            friend_id: friend_id,
-        },
-    });
+
+    let friend_name = knex("user_friend")
+        .select("name")
+        .where({ id: friend_id })
+        .then((eachRow) => {
+            console.log(eachRow);
+            outgoing.render("question/categories", {
+                friend_name: eachRow[0].name,
+                user_id: user_id,
+                friend_id: friend_id,
+            });
+        });
 });
 app.get("/categories", (incoming, outgoing, next) => {
     outgoing.render("categories", {
