@@ -373,6 +373,45 @@ app.delete("/api/friend/:friend_id", function (incoming, outgoing, next) {
         .catch(next);
 });
 
+app.get("/deletefriend/:user_id/:friend_id", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let user_id = incoming.params.user_id;
+    let friend_id = incoming.params.friend_id;
+    console.log("User Id: ", user_id);
+    console.log("Friend Id: ", friend_id);
+
+    knex("user_friend")
+        .where({ id: friend_id })
+        .del()
+        .then((eachFriend) => {
+            console.log("Deleted friend: ", eachFriend);
+            outgoing.redirect(`/home/${user_id}`);
+        })
+        .catch(next);
+});
+app.delete("/deletefriend/:user_id/:friend_id", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let user_id = incoming.params.user_id;
+    let friend_id = incoming.params.friend_id;
+    console.log("User Id: ", user_id);
+    console.log("Friend Id: ", friend_id);
+
+    knex("user_friend")
+        .where({ id: friend_id })
+        .del()
+        .then((eachFriend) => {
+            console.log("Deleted friend: ", eachFriend);
+            outgoing.redirect(`/home/${user_id}`);
+        })
+        .catch(next);
+});
+
 app.get("/:user_id/addfriend", function (incoming, outgoing, next) {
     console.log("User Id: ", incoming.params.user_id);
     outgoing.render("addFriend", {
