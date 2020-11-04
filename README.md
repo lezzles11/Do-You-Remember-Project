@@ -408,11 +408,12 @@ Current To Dos:
 
     -   Solution: Pass in via option / select
 
--   [ ] See how many questions you have answered with that user
+-   [ x ] See how many questions you have answered with that user
 
     -   [ ] Write out the SQL query first
     -   [ ] get the total count of the ids in user_answered
     -   [ ] get the total count of all the questions
+    -   [ ] Did a complex forloop - just try things and move slow
     -   [ ] render that on the page
 
 -   [ ] Add log out page

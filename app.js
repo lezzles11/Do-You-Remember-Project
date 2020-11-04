@@ -14,6 +14,9 @@ const flash = require("express-flash");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const basicAuth = require("express-basic-auth");
+
+const CheckEmailAndPassword = require("./config/auth/CheckEmailAndPassword");
 const port = 3000;
 // This makes sure that you get all assets from the public folder
 const knex = require("knex")({
@@ -68,31 +71,14 @@ app.use(cookieParser("secretsauce"));
  * 2. Deserialize a user
  * This will be stored in config/auth/passport.js
  ***********************************************/
-
-function findById(id, callback, next) {
-    process.nextTick(function () {
-        knex("user_table")
-            .select("*")
-            .where({ id: id })
-            .then((eachUser) => {
-                console.log("Able to find by id");
-                console.log(eachUser);
-                callback(null, eachUser);
-            });
-    });
-}
-// function findByEmail(email, callback, next) {
-//     process.nextTick( function () {
-//         knex( "user_table" )
-//             .select( "*" )
-//             .where( { email: email } )
-//             .then( ( eachUser ) => {
-//                 console.log( "Able to find by id" );
-//                 console.log( eachUser );
-//                 callback( null, eachUser );
-//             } )
-//     }
-// }
+app.use(
+    basicAuth({
+        authorizeAsync: true,
+        authorizer: CheckEmailAndPassword(knex),
+        challenge: true,
+        realm: "do you remember",
+    })
+);
 
 // Tell Express that we are using Passport as an authentication Middleware
 app.use(passport.initialize());
@@ -835,33 +821,6 @@ const emoji = {
  * Get add friend form page
  * ==================================
  ***********************************************/
-/**********************************************
- * Add Friend
- * ==================================
- * app.post("/:user_id/addfriendform", function (incoming, outgoing, next) {
-    console.log("Add friend method works");
-    let user_id = incoming.params.user_id;
-
-    let body = incoming.body;
-    console.log("body: ", body);
-    let newFriend = {
-        id: 10,
-        user_id: user_id,
-        name: incoming.body.name,
-        emoji: eachFriend[i].emoji,
-        wishful_city: incoming.body.wishful_city,
-        favorite_memory: incoming.body.favorite_memory,
-    };
-    console.log("Body: ", newFriend);
-    knex("user_friend")
-        .insert(newFriend)
-        .then((eachFriend) => {
-            console.log("Adding new friend: ", eachFriend);
-            outgoing.redirect("/home/" + user_id);
-        })
-        .catch(next);
-});
- ***********************************************/
 app.get("/addfriend/:user_id", function (incoming, outgoing, next) {
     let user_id = incoming.params.user_id;
     outgoing.render("addFriend", { user_id: user_id });
@@ -1086,16 +1045,24 @@ app.get("/error", function (incoming, outgoing, next) {
  * ==================================
  ***********************************************/
 app.get("/", function (incoming, outgoing, next) {
+    console.log("User: ", incoming.auth.user);
     if (incoming.auth) {
-        let checkUser = incoming.auth.user;
-        console.log("User to authorize: ", checkUser);
-        outgoing.render("home", { index: checkUser, user_id: user_id });
+        let userEmail = incoming.auth.user;
+        console.log(userEmail);
+        knex("user_table")
+            .select("id")
+            .where({ email: userEmail })
+            .then((eachUser) => {
+                let id = eachUser[0].id;
+                outgoing.redirect(`/home/${id}`);
+            });
     } else {
         outgoing.render("index");
     }
 });
 app.get("/", function (incoming, outgoing, next) {
-    outgoing.render("index", { user_id: 1 });
+    console.log(incoming.auth.user);
+    outgoing.render("index", { user_id: incoming.auth });
 });
 
 /**********************************************
