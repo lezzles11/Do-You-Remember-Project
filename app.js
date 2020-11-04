@@ -749,6 +749,15 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
         .where("user_id", user_id)
         .then((eachFriend) => {
             for (let i = 0; i < eachFriend.length; i++) {
+                let friend_id = eachFriend[i].id;
+                let user_id = eachFriend[i].user_id;
+                knex("user_friend_all_questions")
+                    .count("id")
+                    .first()
+                    .where({ user_id: user_id, user_friend_id: friend_id })
+                    .then((total) => {
+                        eachFriend[i].answered_questions = total.count;
+                    });
                 if (eachFriend[i].emoji === "homie") {
                     eachFriend[i].url =
                         "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1";
@@ -772,46 +781,44 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
                         "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1";
                 }
             }
+
             outgoing.render("home", {
                 user_id: user_id,
                 user_friend: eachFriend,
             });
-            // console.log("User_id: ", user_id);
-            // let friend_id = Number(user_friend_col1);
-            // console.log("Friend_Id: ", friend_id);
-            // knex("user_friend_all_questions")
-            //     .count("id")
-            //     .first()
-            //     .where({
-            //         user_id: user_id,
-            //         user_friend_id: friend_id,
-            //     })
-            //     .then((total) => {
-            // let answered = total.count;
-            // knex("question")
-            //     .count("id")
-            //     .first()
-            //     .then((questionCount) => {
-            //         for (let i = 0; i < eachFriend.length; i++) {
-            //             eachFriend[i].answered_questions = answered;
-            //             eachFriend[i].total_questions = questionCount;
-            //         }
-
-            // });
         })
         .catch(next);
 });
 
-app.get("/checkthis", function (incoming, outgoing, next) {
+app.get("/api/user_friend_all_questions/:user_id/:friend_id", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let user_id = incoming.params.user_id;
+    let friend_id = incoming.params.friend_id;
     knex("user_friend_all_questions")
         .count("id")
         .first()
-        .where({ user_id: 2, user_friend_id: 5 })
+        .where({ user_id: user_id, user_friend_id: friend_id })
         .then((total) => {
             console.log(total.count);
             outgoing.send(total.count);
         });
 });
+
+app.get("/api/questioncount", function (incoming, outgoing, next) {
+    knex("question")
+        .count("id")
+        .first()
+        .then(function (total) {
+            let newId = Number(total.count) + 1;
+            console.log("Total Count: ", newId);
+            outgoing.send(newId);
+        })
+        .catch(next);
+});
+
 const emoji = {
     homie: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
     newFriend: "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1",
