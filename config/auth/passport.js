@@ -1,5 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+
 const knex = require("knex")({
     client: "postgresql",
     connection: {
@@ -8,5 +9,3 @@ const knex = require("knex")({
         password: "orange",
     },
 });
-
-module.exports = (app) => {};

@@ -69,26 +69,51 @@ app.use(cookieParser("secretsauce"));
  * This will be stored in config/auth/passport.js
  ***********************************************/
 
+function findById(id, callback, next) {
+    process.nextTick(function () {
+        knex("user_table")
+            .select("*")
+            .where({ id: id })
+            .then((eachUser) => {
+                console.log("Able to find by id");
+                console.log(eachUser);
+                callback(null, eachUser);
+            });
+    });
+}
+// function findByEmail(email, callback, next) {
+//     process.nextTick( function () {
+//         knex( "user_table" )
+//             .select( "*" )
+//             .where( { email: email } )
+//             .then( ( eachUser ) => {
+//                 console.log( "Able to find by id" );
+//                 console.log( eachUser );
+//                 callback( null, eachUser );
+//             } )
+//     }
+// }
+
+// Tell Express that we are using Passport as an authentication Middleware
 app.use(passport.initialize());
+
+//
 app.use(passport.session());
 
+// Tell passport which strategy we are using and how the strategy is set up. As you can see we pass it three parameters, (email, password, done). Done in this case is a callback. The other two are generated through user input we will extract this input during a form submission and use the information to authenticate the user (providing the user exists).
 passport.use(
-    "passport-auth",
+    "local-login",
     new LocalStrategy(async (email, password, done) => {
         try {
             let users = await knex("user_table").where({ email: email });
             if (users.length == 0) {
-                return done(null, false, {
-                    message: "Incorrect credentials.",
-                });
+                return done(null, false, { message: "Incorrect credentials." });
             }
             let user = users[0];
             if (user.password === password) {
                 return done(null, user);
             } else {
-                return done(null, false, {
-                    message: "Incorrect credentials.",
-                });
+                return done(null, false, { message: "Incorrect credentials." });
             }
         } catch (err) {
             return done(err);
@@ -108,6 +133,13 @@ passport.deserializeUser(async (id, done) => {
     let user = users[0];
     return done(null, user);
 });
+function isLoggedIn(incoming, outgoing, next) {
+    if (incoming.isAuthenticated()) {
+        return next();
+    }
+
+    outgoing.redirect("/login"); // or redirect to '/signup'
+}
 
 /**********************************************
  * * Controllers are used to define how the user interacts with your routes - connecting routes to database here **
@@ -551,35 +583,74 @@ app.get("/api/user_fav_question", function (incoming, outgoing, next) {
  * 5.
  * 6.
  ***********************************************/
-
-// #TODO: How do you get the id?
-// In the regular login method, it redirects the user to /home/${id} grabbed by the knex query
-
 app.get("/login", function (incoming, outgoing, next) {
-    passport.authenticate("passport-auth", function (error, user, information) {
-        if (error) {
-            return next(error);
-        }
-        if (!user) {
-            return outgoing.render("account/login");
-        }
-        outgoing.logIn(user, function (error) {
-            if (error) {
-                return next(error);
-            }
-            return outgoing.redirect("/home/" + user.id);
-        });
-    })(incoming, outgoing, next);
+    outgoing.render("account/login");
 });
-app.post(
-    "/login",
-    passport.authenticate("passport-auth", {
-        successRedirect: "/",
-        failureRedirect: "/testpassport",
-        successFlash: { message: "Welcome back" },
-        failureFlash: true,
-    })
-);
+
+app.post("/login", (incoming, outgoing, next) => {
+    console.log("Login route post: ", incoming.body);
+    // Get one user method
+    let getUserByEmailQuery = knex
+        .from("user_table")
+        .select("id", "email", "password", "spotify_id", "spotify_access_token")
+        .where("email", incoming.body.email);
+    getUserByEmailQuery
+        .then((eachRow) => {
+            console.log(eachRow[0]);
+            let id = eachRow[0].id;
+            let email = eachRow[0].email;
+            let password = eachRow[0].password;
+            if (
+                email == incoming.body.email &&
+                password == incoming.body.password
+            ) {
+                console.log(id);
+                outgoing.status(200);
+                outgoing.redirect(`/home/${id}`);
+            } else {
+                outgoing.redirect("error", {
+                    message: "it's not the correct username or password",
+                });
+            }
+        })
+        .catch(next);
+});
+
+// app.get("/login", function (incoming, outgoing, next) {
+//     passport.authenticate("local-login", function (error, user, information) {
+//         if (error) {
+//             return next(error);
+//         }
+//         if (!user) {
+//             return outgoing.render("account/login");
+//         }
+//         outgoing.logIn(user, function (error) {
+//             if (error) {
+//                 return next(error);
+//             }
+//             return outgoing.redirect("/home/" + user.id);
+//         });
+//     })(incoming, outgoing, next);
+// });
+
+// app.post(
+//     "/login",
+//     passport.authenticate("local-login", {
+//         failureRedirect: "/error",
+
+//         function(incoming, outgoing) {
+//             let email = incoming.body.email;
+//             knex("user_table")
+//                 .select("*")
+//                 .where({ email: email })
+//                 .then((eachUser) => {
+//                     console.log(eachUser);
+//                     let id = eachUser[0].id;
+//                     outgoing.redirect(`/home/${id}`);
+//                 });
+//         },
+//     })
+// );
 
 /**********************************************
  * Sign Up Get and Post (user_table)
@@ -850,8 +921,7 @@ app.get("/categories/:user_id/:friend_id", (incoming, outgoing, next) => {
     let friend_id = incoming.params.friend_id;
     console.log("User Id: ", user_id);
     console.log("Friend id: ", friend_id);
-
-    let friend_name = knex("user_friend")
+    knex("user_friend")
         .select("name")
         .where({ id: friend_id })
         .then((eachRow) => {
@@ -1024,18 +1094,17 @@ app.get("/", function (incoming, outgoing, next) {
 /**********************************************
  * Start server
  ***********************************************/
+
+app.use(require("./config/helpers/error_middleware").all);
 // app.use("/", userRouter);
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
+app.use(function (incoming, outgoing, next) {
+    outgoing.header("Access-Control-Allow-Origin", "*");
+    outgoing.header(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
     );
     next();
 });
-
-app.use(require("./config/helpers/error_middleware").all);
-
 app.listen(3001, () => {
     console.log("Application listening to port 3001!!");
 });

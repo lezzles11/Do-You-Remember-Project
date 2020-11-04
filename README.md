@@ -396,7 +396,7 @@ Current To Dos:
 
 -   [ x ] Getting access to javascript files
 
-    -   /assets instead of ./assets
+    -   Sam: /assets instead of ./assets
 
 -   [ x ] Can't press more than one button at a time (on question page)
 
@@ -405,6 +405,8 @@ Current To Dos:
         -   sean: make sure that you add and remove class, rather than id
 
 -   [ x ] Associate emoji with picture on the home page
+
+    -   Solution: Pass in via option / select
 
 -   [ ] See how many questions you have answered with that user
 
@@ -417,10 +419,11 @@ Current To Dos:
 
 Hard To Dos:
 
--   [ ] Implement authorization for the application
+-   [ x ] Implement authorization for the application
 
     -   Check the previous example on github
     -   Github download it, play with it, then try to implement authorization on your application
+    -   Initial error: not sure how to redirect after login (needed to access /home/id) - turns out just needed to read documentation
 
 -   [ ] Implement spotify passport.js
 
@@ -441,8 +444,7 @@ Soft To Dos:
 
 -   [ ] Home page, change the sign up / login button to match the blue on the picture
 -   [ ] Login button on home page - change to yellow or red outline
--   [ ] Spotify png 
-
+-   [ ] Spotify png
 
 -   [ x ] Change the navbar to white on the question page and the category page
 
