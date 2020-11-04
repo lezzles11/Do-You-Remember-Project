@@ -1060,10 +1060,6 @@ app.get("/", function (incoming, outgoing, next) {
         outgoing.render("index");
     }
 });
-app.get("/", function (incoming, outgoing, next) {
-    console.log(incoming.auth.user);
-    outgoing.render("index", { user_id: incoming.auth });
-});
 
 /**********************************************
  * Start server
