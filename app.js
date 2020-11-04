@@ -608,6 +608,10 @@ app.get("/api/user_fav_question", function (incoming, outgoing, next) {
  * 5.
  * 6.
  ***********************************************/
+
+app.get("/index", function (incoming, outgoing, next) {
+    outgoing.render("index");
+});
 app.get("/login", function (incoming, outgoing, next) {
     outgoing.render("account/login");
 });
