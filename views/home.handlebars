@@ -10,9 +10,12 @@
         <div class="product-device box-shadow d-none d-md-block"></div>
         <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
     </div>
+    <h1>
     {{#each user_friend}}
     <div class="card">
         <div class="card-body">
+            {{this.answered_questions}}
+            {{this.total_questions}}
                 <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
                     <div class="my-3 py-3">
                         <h2 class="display-5">
@@ -31,7 +34,7 @@
                     <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
                         
                 
-                        <img src="https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1" class="img-fluid z-depth-1" />
+                        <img src={{this.url}} class="img-fluid z-depth-1" />
                     </div>
                 </div>
            

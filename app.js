@@ -8,9 +8,14 @@ const app = express();
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const basicAuth = require("express-basic-auth");
-const { json } = require("body-parser");
-
+const cookieParser = require("cookie-parser");
+const compression = require("compression");
+const flash = require("express-flash");
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const port = 3000;
+// This makes sure that you get all assets from the public folder
 const knex = require("knex")({
     client: "postgresql",
     connection: {
@@ -19,7 +24,6 @@ const knex = require("knex")({
         database: "doyouremember",
     },
 });
-
 /**********************************************
  * Serving Static Files
  * ==================================
@@ -28,7 +32,6 @@ const knex = require("knex")({
  * - E.g., if you request "/content/style.css" in your script tag, the middleware will look at "public/content/style.css"
  ***********************************************/
 app.use(express.static("public"));
-
 require("dotenv").config();
 app.use(morgan("dev"));
 app.engine(
@@ -38,22 +41,73 @@ app.engine(
     })
 );
 app.set("view engine", "handlebars");
-
 app.use(
     bodyParser.urlencoded({
         extended: false,
     })
 );
 app.use(bodyParser.json());
+let sessionConfiguration = {
+    secret: "secretsauce",
+    resave: false,
+    saveUninitialized: true,
+    // cookie: {maxAge: 1800000}
+    cookie: { secure: true },
+};
+sessionConfiguration.cookie.secure = false;
+app.use(flash());
+app.use(session(sessionConfiguration));
 
-// app.use(
-//     basicAuth({
-//         authorizer: usernamePasswordCheck,
-//         challenge: true,
-//         authorizeAsync: true,
-//         realm: "My Application",
-//     })
-// );
+app.use(cookieParser("secretsauce"));
+
+/**********************************************
+ * Passport Strategy:
+ * ==================================
+ * The purpose of this section is to ensure configure passport-local to validate an incoming username and password against list of users
+ * 1. Serialize a user
+ * 2. Deserialize a user
+ * This will be stored in config/auth/passport.js
+ ***********************************************/
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+    "passport-auth",
+    new LocalStrategy(async (email, password, done) => {
+        try {
+            let users = await knex("user_table").where({ email: email });
+            if (users.length == 0) {
+                return done(null, false, {
+                    message: "Incorrect credentials.",
+                });
+            }
+            let user = users[0];
+            if (user.password === password) {
+                return done(null, user);
+            } else {
+                return done(null, false, {
+                    message: "Incorrect credentials.",
+                });
+            }
+        } catch (err) {
+            return done(err);
+        }
+    })
+);
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    let users = await knex("user_table").where({ id: id });
+    if (users.length == 0) {
+        return done(new Error(`Wrong user id ${id}`));
+    }
+    let user = users[0];
+    return done(null, user);
+});
 
 /**********************************************
  * * Controllers are used to define how the user interacts with your routes - connecting routes to database here **
@@ -498,6 +552,35 @@ app.get("/api/user_fav_question", function (incoming, outgoing, next) {
  * 6.
  ***********************************************/
 
+// #TODO: How do you get the id?
+// In the regular login method, it redirects the user to /home/${id} grabbed by the knex query
+
+app.get("/login", function (incoming, outgoing, next) {
+    passport.authenticate("passport-auth", function (error, user, information) {
+        if (error) {
+            return next(error);
+        }
+        if (!user) {
+            return outgoing.render("account/login");
+        }
+        outgoing.logIn(user, function (error) {
+            if (error) {
+                return next(error);
+            }
+            return outgoing.redirect("/home/" + user.id);
+        });
+    })(incoming, outgoing, next);
+});
+app.post(
+    "/login",
+    passport.authenticate("passport-auth", {
+        successRedirect: "/",
+        failureRedirect: "/testpassport",
+        successFlash: { message: "Welcome back" },
+        failureFlash: true,
+    })
+);
+
 /**********************************************
  * Sign Up Get and Post (user_table)
  * ==================================
@@ -537,39 +620,40 @@ app.post("/signup", function (incoming, outgoing, next) {
  * 1: Login Get And Post
  * ==================================
  ***********************************************/
-app.get("/login", (incoming, outgoing, next) => {
-    console.log("Login button pressed");
-    console.log("Login post method: ", incoming.body);
-    outgoing.render("account/login");
-});
-app.post("/login", (incoming, outgoing, next) => {
-    console.log("Login route post: ", incoming.body);
-    // Get one user method
-    let getUserByEmailQuery = knex
-        .from("user_table")
-        .select("id", "email", "password", "spotify_id", "spotify_access_token")
-        .where("email", incoming.body.email);
-    getUserByEmailQuery
-        .then((eachRow) => {
-            console.log(eachRow[0]);
-            let id = eachRow[0].id;
-            let email = eachRow[0].email;
-            let password = eachRow[0].password;
-            if (
-                email == incoming.body.email &&
-                password == incoming.body.password
-            ) {
-                console.log(id);
-                outgoing.status(200);
-                outgoing.redirect(`/home/${id}`);
-            } else {
-                outgoing.redirect("error", {
-                    message: "it's not the correct username or password",
-                });
-            }
-        })
-        .catch(next);
-});
+
+// app.get("/login", (incoming, outgoing, next) => {
+//     console.log("Login button pressed");
+//     console.log("Login post method: ", incoming.body);
+//     outgoing.render("account/login");
+// });
+// app.post("/login", (incoming, outgoing, next) => {
+//     console.log("Login route post: ", incoming.body);
+//     // Get one user method
+//     let getUserByEmailQuery = knex
+//         .from("user_table")
+//         .select("id", "email", "password", "spotify_id", "spotify_access_token")
+//         .where("email", incoming.body.email);
+//     getUserByEmailQuery
+//         .then((eachRow) => {
+//             console.log(eachRow[0]);
+//             let id = eachRow[0].id;
+//             let email = eachRow[0].email;
+//             let password = eachRow[0].password;
+//             if (
+//                 email == incoming.body.email &&
+//                 password == incoming.body.password
+//             ) {
+//                 console.log(id);
+//                 outgoing.status(200);
+//                 outgoing.redirect(`/home/${id}`);
+//             } else {
+//                 outgoing.redirect("error", {
+//                     message: "it's not the correct username or password",
+//                 });
+//             }
+//         })
+//         .catch(next);
+// });
 
 /**********************************************
  * Get and Post Home Page ("/home/user_id")
@@ -580,7 +664,7 @@ app.post("/login", (incoming, outgoing, next) => {
  * ==================================
  ***********************************************/
 app.get("/home/:user_id", (incoming, outgoing, next) => {
-    let id = incoming.params.user_id;
+    let user_id = incoming.params.user_id;
 
     knex.from(user_friend)
         .select(
@@ -591,43 +675,80 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
             user_friend_col5,
             user_friend_col6
         )
-        .where("user_id", id)
+        .where("user_id", user_id)
         .then((eachFriend) => {
-            let friend_id = user_friend_col1;
-
-            // #TODO: Trying to render the number of questions answered between two users
-            // let answered_questions;
-            // knex("user_friend_all_questions")
-            //     .select("id")
-            //     .where({ user_id: id, user_friend_id: friend_id })
-            //     .then((allAnsweredQuestions) => {
-            //         answered_questions = allAnsweredQuestions;
-            //     });
-            // console.log("friend_id: ", friend_id);
-            // console.log("Each friend: ", eachFriend);
-            // for (let i = 0; i < eachFriend.length; i++) {
-            //     eachFriend[i].answeredQuestions = allAnsweredQuestions;
-            // }
-
+            for (let i = 0; i < eachFriend.length; i++) {
+                if (eachFriend[i].emoji === "homie") {
+                    eachFriend[i].url =
+                        "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1";
+                } else if (eachFriend[i].emoji === "dear") {
+                    eachFriend[i].url =
+                        "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1";
+                } else if (eachFriend[i].emoji === "family") {
+                    eachFriend[i].url =
+                        "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1";
+                } else if (eachFriend[i].emoji === "colleague") {
+                    eachFriend[i].url =
+                        "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1";
+                } else if (eachFriend[i].emoji === "bestFriend") {
+                    eachFriend[i].url =
+                        "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1";
+                } else if (eachFriend[i].emoji === "significantOther") {
+                    eachFriend[i].url =
+                        "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1";
+                } else {
+                    eachFriend[i].url =
+                        "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1";
+                }
+            }
             outgoing.render("home", {
-                user_id: incoming.params.user_id,
+                user_id: user_id,
                 user_friend: eachFriend,
             });
+            // console.log("User_id: ", user_id);
+            // let friend_id = Number(user_friend_col1);
+            // console.log("Friend_Id: ", friend_id);
+            // knex("user_friend_all_questions")
+            //     .count("id")
+            //     .first()
+            //     .where({
+            //         user_id: user_id,
+            //         user_friend_id: friend_id,
+            //     })
+            //     .then((total) => {
+            // let answered = total.count;
+            // knex("question")
+            //     .count("id")
+            //     .first()
+            //     .then((questionCount) => {
+            //         for (let i = 0; i < eachFriend.length; i++) {
+            //             eachFriend[i].answered_questions = answered;
+            //             eachFriend[i].total_questions = questionCount;
+            //         }
+
+            // });
         })
         .catch(next);
 });
 
+app.get("/checkthis", function (incoming, outgoing, next) {
+    knex("user_friend_all_questions")
+        .count("id")
+        .first()
+        .where({ user_id: 2, user_friend_id: 5 })
+        .then((total) => {
+            console.log(total.count);
+            outgoing.send(total.count);
+        });
+});
 const emoji = {
-    athletic: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
-    chillFriend:
-        "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1",
     homie: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
+    newFriend: "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1",
     dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
     family: "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1",
     colleague: "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1",
     bestFriend:
         "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1",
-    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
     significantOther:
         "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1",
 };
@@ -649,7 +770,7 @@ const emoji = {
         id: 10,
         user_id: user_id,
         name: incoming.body.name,
-        emoji: incoming.body.emoji,
+        emoji: eachFriend[i].emoji,
         wishful_city: incoming.body.wishful_city,
         favorite_memory: incoming.body.favorite_memory,
     };
@@ -669,8 +790,6 @@ app.get("/addfriend/:user_id", function (incoming, outgoing, next) {
 });
 app.post("/addfriend/:user_id", function (incoming, outgoing, next) {
     let user_id = incoming.params.user_id;
-    // HANDLE THE EMOJI HERE
-    // TODO: HANDLE EMOJI HERE (if they submit a specific word, you can associate it with an url here)
     knex("user_friend")
         .count("id")
         .first()
@@ -923,29 +1042,5 @@ app.listen(3001, () => {
 
 /**********************************************
  *  Data File Structure
- * ==================================
- ***********************************************/
-/**********************************************
- * user_table
- * ==================================
- ***********************************************/
-/**********************************************
- * user_friend
- * ==================================
- ***********************************************/
-/**********************************************
- * user_friend
- * ==================================
- ***********************************************/
-/**********************************************
- * user_friend
- * ==================================
- ***********************************************/
-/**********************************************
- * user_friend
- * ==================================
- ***********************************************/
-/**********************************************
- * user_friend
  * ==================================
  ***********************************************/

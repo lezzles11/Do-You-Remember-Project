@@ -394,37 +394,44 @@ To Do:
 
 Current To Dos:
 
--   Can't press more than one button at a time (on question page)
+-   [ x ] Getting access to javascript files
+
+    -   /assets instead of ./assets
+
+-   [ x ] Can't press more than one button at a time (on question page)
+
     -   Potential Solution:
         -   Check JQuery book
-        -
--   Associate emoji with picture on the home page
+        -   sean: make sure that you add and remove class, rather than id
 
-    -   Potential Solution:
+-   [ x ] Associate emoji with picture on the home page
 
--   See how many questions you have answered with that user
-    -   Write out the SQL query first
-    -   get the total count of the ids in user_answered
-    -   get the total count of all the questions
-    -   render that on the page
+-   [ ] See how many questions you have answered with that user
+
+    -   [ ] Write out the SQL query first
+    -   [ ] get the total count of the ids in user_answered
+    -   [ ] get the total count of all the questions
+    -   [ ] render that on the page
+
+-   [ ] Add log out page
 
 Hard To Dos:
 
--   Implement authorization for the application
+-   [ ] Implement authorization for the application
 
     -   Check the previous example on github
     -   Github download it, play with it, then try to implement authorization on your application
 
--   Implement spotify passport.js
+-   [ ] Implement spotify passport.js
 
     -   Check out an example on github
     -   Github download it, play with it, then try to implement authorization on your application
 
--   Write route tests
+-   [ ] Write route tests
 
     -   Check out supertest application
 
--   Write data tests
+-   [ ] Write data tests
     -   Check out an example on github
     -   Github download it
     -   Play with it
@@ -432,44 +439,44 @@ Hard To Dos:
 
 Soft To Dos:
 
--   Change the navbar to white on the question page and the category page
+-   [ ] Home page, change the sign up / login button to match the blue on the picture
+-   [ ] Login button on home page - change to yellow or red outline
+-   [ ] Spotify png 
 
-    -   Look at an example on mdbootstrap or getbootstrap
-    -   Implement accordingly
 
--   Implement authorization
+-   [ x ] Change the navbar to white on the question page and the category page
 
--   Write the about description
--   Write the add friend description
--   Write the rules description
+-   [ ] Write the about description
+-   [ ] Write the add friend description
+-   [ ] Write the rules description
 
--   Images of each picture
+-   [ ] Images of each picture
 
     -   Put each picture on dropbox, giving it an id
     -   Then copy all of urls and put it in the seed data accordingly
 
--   Ripples when you press favorite
+-   [ ] Ripples when you press favorite
 
-    -   Check out the ripples example on code pen / the previous jquery example with anubhav was asking you about it
-    -   Implement the ripple
+    -   [ ] Check out the ripples example on code pen / the previous jquery example with anubhav was asking you about it
+    -   [ ] Implement the ripple
 
--   Ripples when you press done
--   Thickness of friend reflects the
+-   [ ] Ripples when you press done
+-   [ ] Thickness of friend reflects the
 
 Versioning Upgrades:
 
--   Be able to edit friend
+-   [ ] Be able to edit friend
 
     -   Create form page to edit friend - the user id and friend id should be in the params
     -   Upon submission, collect the params, and then update the friend accordingly
 
--   Be able to see profile page
+-   [ ] Be able to see profile page
 
     -   Make sure profile page can render the data well first
     -   Reroute the play button to profile/userid/friendid
     -   Be able to see picture
 
--   Create theme table -> can change theme
+-   [ ] Create theme table -> can change theme
 
     -   Create different outlines for the different themes that you have
     -   Theme would encompass:
@@ -477,14 +484,13 @@ Versioning Upgrades:
         -   Category page
         -   Profile page
 
--   Create spotify_friend table -> can associate spotify account
+-   [ ] Create spotify_friend table -> can associate spotify account
 
     -   Create spotify_playlist table
         -   Id
         -   User Id
         -   Create spotify playlist with that friend
 
--   Be able to create a story together with the friend
+-   [ ] Be able to create a story together with the friend
     -   Create a story table
     -   That could replace the current user_friend table
-    -
