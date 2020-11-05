@@ -1,111 +1,117 @@
 <div>
 
     <style>
-      .map-container {
-        overflow: hidden;
-        position: relative;
-        height: 0;
-      }
+        .map-container {
+            overflow: hidden;
+            position: relative;
+            height: 0;
+        }
 
-      .map-container iframe {
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-      }
-  .hm-gradient {
-    background: linear-gradient(40deg, rgba(0,51,199,.3), rgba(209,149,249,.3));
-  }
-  .heading {
-    margin: 0 6rem;
-    font-size: 3.8rem;
-    font-weight: 700;
-    color: #5d4267;
-  }
-  .subheading {
-    margin: 2.5rem 6rem;
-    color: #bcb2c0;
-  }
-  .btn.btn-margin {
-    margin-left: 6rem;
-    margin-top: 3rem;
-  }
-  .btn.btn-lily {
-    background: linear-gradient(40deg, rgba(0,51,199,.7), rgba(209,149,249,.7));
-    color: #fff;
-  }
-  .title {
-    margin-top: 6rem;
-    margin-bottom: 2rem;
-    color: #5d4267;
-  }
-  .subtitle {
-    color: #bcb2c0;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-bottom: 6rem;
-  }
+        .map-container iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
 
-</style>
+        .hm-gradient {
+            background: linear-gradient(40deg, rgba(0, 51, 199, .3), rgba(209, 149, 249, .3));
+        }
 
-<!-- Main navigation -->
+        .heading {
+            margin: 0 6rem;
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: #5d4267;
+        }
 
+        .subheading {
+            margin: 2.5rem 6rem;
+            color: #bcb2c0;
+        }
 
+        .btn.btn-margin {
+            margin-left: 6rem;
+            margin-top: 3rem;
+        }
 
-  <!-- Intro -->
-  <section class="view">
+        .btn.btn-lily {
+            background: linear-gradient(40deg, rgba(0, 51, 199, .7), rgba(209, 149, 249, .7));
+            color: #fff;
+        }
 
-    <div class="row">
+        .title {
+            margin-top: 6rem;
+            margin-bottom: 2rem;
+            color: #5d4267;
+        }
 
-      <div class="col-md-6">
-         <div class="d-flex flex-column justify-content-center align-items-center h-100">
-<form class="text-center border border-light p-5" action="/signup" method="POST">
+        .subtitle {
+            color: #bcb2c0;
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-bottom: 6rem;
+        }
+    </style>
 
-    <p class="h4 mb-4">let's get started</p>
-    <button type="button" class="btn btn-fb"><i class="fab fa-facebook-f pr-1"></i> Spotify</button>
-<br/>
-<br/>
-    <!-- Name -->
-    <input type="text" id="email" name="email" class="form-control mb-4" placeholder="Email">
-   
-
-   
-    <!-- Password -->
-    <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
-   
-    <!-- Copy -->
-    <div class="custom-control custom-checkbox mb-4">
-        <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
-        <label class="custom-control-label" for="defaultContactFormCopy">start with low expectations</label>
-    </div>
-
-    <!-- Send button -->
-    <button id="addUserButton" class="btn btn-outline-dark waves-effect" type="submit">alright</button>
-
-</form>
-</div>
-<!-- Default form contact -->
-{{!-- END OF FORM --}}
+    <!-- Main navigation -->
 
 
 
-      </div>
+    <!-- Intro -->
+    <section class="view">
 
-      <div class="col-md-6">
+        <div class="row">
 
-        <div class="view">
-          <img src="https://images.pexels.com/photos/325045/pexels-photo-325045.jpeg" class="img-fluid" alt="smaple image">
-          <div class="mask flex-center hm-gradient">
-          </div>
+            <div class="col-md-6">
+                <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                    <form class="text-center border border-light p-5" action="/signup" method="POST">
+
+                        <p class="h4 mb-4">let's get started</p>
+                        <button type="button" class="btn btn-fb"><i class="fab fa-facebook-f pr-1"></i> Spotify</button>
+                        <br />
+                        <br />
+                        <!-- Name -->
+                        <input type="text" id="email" name="email" class="form-control mb-4" placeholder="Email">
+
+
+
+                        <!-- Password -->
+                        <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
+
+                        <!-- Copy -->
+                        <div class="custom-control custom-checkbox mb-4">
+                            <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
+                            <label class="custom-control-label" for="defaultContactFormCopy">start with low expectations</label>
+                        </div>
+
+                        <!-- Send button -->
+                        <button id="addUserButton" class="btn btn-outline-dark waves-effect" type="submit">alright</button>
+
+                    </form>
+                </div>
+                <!-- Default form contact -->
+                {{!-- END OF FORM --}}
+
+
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="view">
+                    <img src="https://images.pexels.com/photos/325045/pexels-photo-325045.jpeg" class="img-fluid" alt="smaple image">
+                    <div class="mask flex-center hm-gradient">
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
-      </div>
+    </section>
+    <!-- Intro -->
 
-    </div>
-
-  </section>
-  <!-- Intro -->
-
-<!-- Main navigation -->
+    <!-- Main navigation -->
 </div>

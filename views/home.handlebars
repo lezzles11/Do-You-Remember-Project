@@ -2,47 +2,47 @@
     <div class="container my-5 py-5 z-depth-1">
 
 
-  <!--Section: Content-->
-  <section class="dark-grey-text text-center">
-    
-    <h3 class="font-weight-bold pt-5 pb-2">the coolest people I know</h3>
+        <!--Section: Content-->
+        <section class="dark-grey-text text-center">
 
-    <div class="row mx-3">
-      <div class="col-md-4 px-4 mb-4">
+            <h3 class="font-weight-bold pt-5 pb-2">the coolest people I know</h3>
 
-        <div class="view">
-          <img src="https://mdbootstrap.com/img/illustrations/drawkit-drawing-man-colour.svg" class="img-fluid" alt="smaple image">
-        </div>
+            <div class="row mx-3">
+                <div class="col-md-4 px-4 mb-4">
 
-      </div>
-     <div class="col-md-4 px-4 mb-4">
+                    <div class="view">
+                        <img src="https://mdbootstrap.com/img/illustrations/drawkit-drawing-man-colour.svg" class="img-fluid" alt="smaple image">
+                    </div>
 
-        <div class="view">
-          <img src="https://mdbootstrap.com/img/illustrations/drawkit-phone-conversation-colour.svg" class="img-fluid" alt="sample image">
-        </div>
+                </div>
+                <div class="col-md-4 px-4 mb-4">
 
-      </div>
-      <div class="col-md-4 px-4 mb-4">
+                    <div class="view">
+                        <img src="https://mdbootstrap.com/img/illustrations/drawkit-phone-conversation-colour.svg" class="img-fluid" alt="sample image">
+                    </div>
 
-        <div class="view">
-          <img src="https://mdbootstrap.com/img/illustrations/app-user-colour.svg" class="img-fluid" alt="smaple image">
-        </div>
+                </div>
+                <div class="col-md-4 px-4 mb-4">
 
-      </div>
-    </div>   <a href="/addfriend/{{user_id}}">
+                    <div class="view">
+                        <img src="https://mdbootstrap.com/img/illustrations/app-user-colour.svg" class="img-fluid" alt="smaple image">
+                    </div>
+
+                </div>
+            </div> <a href="/addfriend/{{user_id}}">
                 <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
                 </button>
             </a>
 
-  </section>
-  <!--Section: Content-->
+        </section>
+        <!--Section: Content-->
 
 
-</div>
+    </div>
     {{!-- End Block --}}
     {{#each user_friend}}
-    <div class="card">
-        <div class="card-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
                     <div class="my-3 py-3">
                         <h2 class="display-5">
@@ -52,40 +52,40 @@
                             {{this.favorite_memory}}</p>
                     </div>
                     {{!-- Questions Answered --}}
-            
-                <div class="row justify-content-center">
-                    Answered Questions: 
-            {{this.answered_questions}} / 187
-                </div>
 
-                {{!-- Questions Answered --}}
+                    <div class="row justify-content-center">
+                        Answered Questions:
+                        {{this.answered_questions}} / 187
+                    </div>
+
+                    {{!-- Questions Answered --}}
                     <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-                        
-                
+
+
                         <img src={{this.url}} class="img-fluid z-depth-1" />
                     </div>
                 </div>
-           
+
 
 
                 {{!-- Button Row --}}
                 <div class="row justify-content-center">
-                 
-                <a href="/categories/{{this.user_id}}/{{this.id}}">
-                    <button type="button" class="btn btn-outline-dark waves-effect">Play
-                    </button>
-                </a>
 
-                {{!-- Can't quite delete the friend - violates the foreign key constraint for user_friend_all_questions--}}
-                  {{!-- <a href="/deletefriend/{{this.user_id}}/{{this.id}}">
+                    <a href="/categories/{{this.user_id}}/{{this.id}}">
+                        <button type="button" class="btn btn-outline-dark waves-effect">Play
+                        </button>
+                    </a>
+
+                    {{!-- Can't quite delete the friend - violates the foreign key constraint for user_friend_all_questions--}}
+                    {{!-- <a href="/deletefriend/{{this.user_id}}/{{this.id}}">
                     {{!-- <button type="button" class="btn btn-outline-dark waves-effect">Delete Friend
                     </button>
-                </a> --}} 
+                </a> --}}
                 </div>
                 {{!-- End of Button Row --}}
 
-                </div>
             </div>
         </div>
-        
+        </div>
+
     {{/each}}

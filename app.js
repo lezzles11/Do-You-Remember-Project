@@ -119,6 +119,7 @@ passport.deserializeUser(async (id, done) => {
     let user = users[0];
     return done(null, user);
 });
+
 function isLoggedIn(incoming, outgoing, next) {
     if (incoming.isAuthenticated()) {
         return next();
@@ -537,25 +538,43 @@ app.get("/api/question", function (incoming, outgoing, next) {
  * G: Favorite a question
  * ==================================
  ***********************************************/
-app.post("/api/favoritequestion", function (incoming, outgoing, next) {
-    console.log(incoming);
+app.post("/favoritequestion/:user_id/:question_id", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let user_id = incoming.params.user_id;
+    let question_id = incoming.params.question_id;
+    console.log("User id: ", user_id);
+    console.log("Question id: ", question_id);
     knex("user_fav_question")
-        .count("id")
-        .first()
-        .then(function (total) {
-            let id = Number(total.count) + 1;
-            console.log(id);
-            console.log(incoming.body);
-            let newFavQuestionObject = {
-                id: id,
-                user_id: incoming.body.user_id,
-                question_id: incoming.body.question_id,
-            };
-            knex("user_fav_question")
-                .insert(newFavQuestionObject)
-                .then((eachRow) => {
-                    console.log(eachRow);
-                });
+        .select("user_id", "question_id")
+        .where({ user_id: user_id, question_id: question_id })
+        .then((eachObject) => {
+            console.log("Does the object exist?");
+            console.log(eachObject);
+            if (eachObject.length >= 1) {
+                console.log("Question already exists");
+                outgoing.send("question already exists");
+            } else {
+                knex("user_fav_question")
+                    .count("id")
+                    .first()
+                    .then(function (total) {
+                        let id = Number(total.count) + 1;
+                        console.log(id);
+                        let newFavQuestionObject = {
+                            id: id,
+                            user_id: user_id,
+                            question_id: question_id,
+                        };
+                        knex("user_fav_question")
+                            .insert(newFavQuestionObject)
+                            .then((eachRow) => {
+                                console.log(eachRow);
+                            });
+                    });
+            }
         });
 });
 /**********************************************
@@ -765,7 +784,6 @@ app.post("/signup", function (incoming, outgoing, next) {
  ***********************************************/
 app.get("/home/:user_id", (incoming, outgoing, next) => {
     let user_id = incoming.params.user_id;
-
     knex.from(user_friend)
         .select(
             user_friend_col1,
@@ -1016,7 +1034,6 @@ app.get("/play/:categoryString/:user_id/:friend_id", function (
     knex.from("question")
         .select(question_col1, question_col2, question_col3, question_col4)
         .where("category_id", categoryQuery)
-
         .then((eachQuestion) => {
             let newObject = eachQuestion;
             for (let i = 0; i < newObject.length; i++) {
@@ -1041,7 +1058,6 @@ app.post("/api/markasdone", function (incoming, outgoing, next) {
     // get data
     let body = incoming.body;
     console.log("Data: ", incoming.data);
-
     console.log("Body of ", body);
     knex("user_friend_all_questions")
         .count("id")

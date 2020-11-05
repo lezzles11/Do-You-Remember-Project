@@ -56,7 +56,7 @@ $(".favQuestionForm").on("submit", function (event) {
     console.log("LET'S SEND THIS TO AXIOS AFTER~~");
     $.ajax({
         type: "POST",
-        url: "/api/favoritequestion",
+        url: `/favoritequestion/${user_id}/${question_id}`,
         data: favQuestion,
         success: function () {
             console.log("data sent!");

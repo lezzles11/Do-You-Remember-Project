@@ -1,7 +1,6 @@
 <div class="container">
     <h1>Edit Person</h1>
     <form id="editForm" data-id="{{friends.id}}">
-        <!--Form-->
         <div class="card wow fadeInRight" data-wow-delay="0.3s">
             <div class="card-body z-depth-2">
                 <!--Header-->
@@ -11,8 +10,6 @@
                     </h3>
                     <hr>
                 </div>
-                <!--Body-->
-                {{!-- Label Stare --}}
                 <div class="md-form">
                     <i class="fas fa-user prefix grey-text"></i>
                     <input placeholder="Name" type="text" id="name" name="name" class="form-control">
@@ -58,6 +55,7 @@
     </form>
     {{!-- end of form --}}
 </div>
+
 <script>
     $("editForm").on("submit", (event) => {
             event.preventDefault()
