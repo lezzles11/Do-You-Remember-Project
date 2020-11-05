@@ -15,10 +15,35 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const basicAuth = require("express-basic-auth");
-
 const CheckEmailAndPassword = require("./config/auth/CheckEmailAndPassword");
+const cors = require("cors");
+const request = require("request");
+const queryString = require("queryString");
 const port = 3000;
+let SPOTIFY_STATE = "spotify_auth_state";
 // This makes sure that you get all assets from the public folder
+
+// transforms emoji to url
+function getUrl(emoji) {
+    let url = "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1";
+    if (emoji === "homie") {
+        url = "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1";
+    } else if (emoji === "dear") {
+        url = "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1";
+    } else if (emoji === "family") {
+        url = "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1";
+    } else if (emoji === "colleague") {
+        url = "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1";
+    } else if (emoji === "significantOther") {
+        url =
+            "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1";
+    } else {
+        url = "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1";
+    }
+    return url;
+}
+
+// knex connection
 const knex = require("knex")({
     client: "postgresql",
     connection: {
@@ -35,8 +60,13 @@ const knex = require("knex")({
  * - E.g., if you request "/content/style.css" in your script tag, the middleware will look at "public/content/style.css"
  ***********************************************/
 app.use(express.static("public"));
+
+// package that allows us to access process.env.variableName (in .env file)
 require("dotenv").config();
+
 app.use(morgan("dev"));
+
+// set handlebars engine
 app.engine(
     "handlebars",
     handlebars({
@@ -44,12 +74,16 @@ app.engine(
     })
 );
 app.set("view engine", "handlebars");
+
+// set up body parser
 app.use(
     bodyParser.urlencoded({
         extended: false,
     })
 );
 app.use(bodyParser.json());
+
+// create session
 let sessionConfiguration = {
     secret: "secretsauce",
     resave: false,
@@ -60,7 +94,6 @@ let sessionConfiguration = {
 sessionConfiguration.cookie.secure = false;
 app.use(flash());
 app.use(session(sessionConfiguration));
-
 app.use(cookieParser("secretsauce"));
 
 /**********************************************
@@ -82,8 +115,6 @@ app.use(
 
 // Tell Express that we are using Passport as an authentication Middleware
 app.use(passport.initialize());
-
-//
 app.use(passport.session());
 
 // Tell passport which strategy we are using and how the strategy is set up. As you can see we pass it three parameters, (email, password, done). Done in this case is a callback. The other two are generated through user input we will extract this input during a form submission and use the information to authenticate the user (providing the user exists).
@@ -106,11 +137,9 @@ passport.use(
         }
     })
 );
-
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
-
 passport.deserializeUser(async (id, done) => {
     let users = await knex("user_table").where({ id: id });
     if (users.length == 0) {
@@ -119,7 +148,6 @@ passport.deserializeUser(async (id, done) => {
     let user = users[0];
     return done(null, user);
 });
-
 function isLoggedIn(incoming, outgoing, next) {
     if (incoming.isAuthenticated()) {
         return next();
@@ -127,7 +155,6 @@ function isLoggedIn(incoming, outgoing, next) {
 
     outgoing.redirect("/login"); // or redirect to '/signup'
 }
-
 /**********************************************
  * * Controllers are used to define how the user interacts with your routes - connecting routes to database here **
  *
@@ -175,6 +202,15 @@ let question_col4 = "photo_url";
  *
  * ==================================
  ***********************************************/
+// app.use("/", userRouter);
+app.use(function (incoming, outgoing, next) {
+    outgoing.header("Access-Control-Allow-Origin", "*");
+    outgoing.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
 app.use("/api/user", function (incoming, outgoing, next) {
     let getAllUsersQuery = knex
         .from("user_table")
@@ -229,7 +265,6 @@ app.put("/api/user/:user_id", function (incoming, outgoing, next) {
  * Delete User
  * ==================================
  ***********************************************/
-
 app.delete("/api/user/:user_id", function (incoming, outgoing, next) {
     console.log(incoming.params.user_id);
     console.log("Delete User Method");
@@ -373,7 +408,6 @@ app.delete("/api/friend/:friend_id", function (incoming, outgoing, next) {
         })
         .catch(next);
 });
-
 app.get("/deletefriend/:user_id/:friend_id", function (
     incoming,
     outgoing,
@@ -412,7 +446,6 @@ app.delete("/deletefriend/:user_id/:friend_id", function (
         })
         .catch(next);
 });
-
 app.get("/:user_id/addfriend", function (incoming, outgoing, next) {
     console.log("User Id: ", incoming.params.user_id);
     outgoing.render("addFriend", {
@@ -631,8 +664,23 @@ app.get("/api/user_fav_question", function (incoming, outgoing, next) {
 app.get("/index", function (incoming, outgoing, next) {
     outgoing.render("index");
 });
+
 app.get("/login", function (incoming, outgoing, next) {
     outgoing.render("account/login");
+});
+
+app.get("/spotify", function (incoming, outgoing, next) {
+    let scopes = "user-read-recently-played";
+    // #TODO: Add more scopes later
+    outgoing.redirect(
+        "https://accounts.spotify.com/authorize" +
+            "?response_type=code" +
+            "&client_id=" +
+            process.env.SPOTIFY_CLIENT_ID +
+            (scopes ? "&scope=" + encodeURIComponent(scopes) : "") +
+            "&redirect_uri=" +
+            encodeURIComponent(process.env.BASE_URL + "/home")
+    );
 });
 
 app.post("/login", (incoming, outgoing, next) => {
@@ -645,7 +693,7 @@ app.post("/login", (incoming, outgoing, next) => {
     getUserByEmailQuery
         .then((eachRow) => {
             console.log(eachRow[0]);
-            let id = eachRow[0].id;
+            let user_id = eachRow[0].id;
             let email = eachRow[0].email;
             let password = eachRow[0].password;
             if (
@@ -654,7 +702,7 @@ app.post("/login", (incoming, outgoing, next) => {
             ) {
                 console.log(id);
                 outgoing.status(200);
-                outgoing.redirect(`/home/${id}`);
+                outgoing.redirect(`/home/${user_id}`);
             } else {
                 outgoing.redirect("error", {
                     message: "it's not the correct username or password",
@@ -664,42 +712,6 @@ app.post("/login", (incoming, outgoing, next) => {
         .catch(next);
 });
 
-// app.get("/login", function (incoming, outgoing, next) {
-//     passport.authenticate("local-login", function (error, user, information) {
-//         if (error) {
-//             return next(error);
-//         }
-//         if (!user) {
-//             return outgoing.render("account/login");
-//         }
-//         outgoing.logIn(user, function (error) {
-//             if (error) {
-//                 return next(error);
-//             }
-//             return outgoing.redirect("/home/" + user.id);
-//         });
-//     })(incoming, outgoing, next);
-// });
-
-// app.post(
-//     "/login",
-//     passport.authenticate("local-login", {
-//         failureRedirect: "/error",
-
-//         function(incoming, outgoing) {
-//             let email = incoming.body.email;
-//             knex("user_table")
-//                 .select("*")
-//                 .where({ email: email })
-//                 .then((eachUser) => {
-//                     console.log(eachUser);
-//                     let id = eachUser[0].id;
-//                     outgoing.redirect(`/home/${id}`);
-//                 });
-//         },
-//     })
-// );
-
 /**********************************************
  * Sign Up Get and Post (user_table)
  * ==================================
@@ -708,6 +720,7 @@ app.post("/login", (incoming, outgoing, next) => {
 app.get("/signup", function (incoming, outgoing, next) {
     outgoing.render("account/signup");
 });
+
 app.post("/signup", function (incoming, outgoing, next) {
     console.log(incoming.body);
     let totalNumber;
@@ -740,40 +753,6 @@ app.post("/signup", function (incoming, outgoing, next) {
  * ==================================
  ***********************************************/
 
-// app.get("/login", (incoming, outgoing, next) => {
-//     console.log("Login button pressed");
-//     console.log("Login post method: ", incoming.body);
-//     outgoing.render("account/login");
-// });
-// app.post("/login", (incoming, outgoing, next) => {
-//     console.log("Login route post: ", incoming.body);
-//     // Get one user method
-//     let getUserByEmailQuery = knex
-//         .from("user_table")
-//         .select("id", "email", "password", "spotify_id", "spotify_access_token")
-//         .where("email", incoming.body.email);
-//     getUserByEmailQuery
-//         .then((eachRow) => {
-//             console.log(eachRow[0]);
-//             let id = eachRow[0].id;
-//             let email = eachRow[0].email;
-//             let password = eachRow[0].password;
-//             if (
-//                 email == incoming.body.email &&
-//                 password == incoming.body.password
-//             ) {
-//                 console.log(id);
-//                 outgoing.status(200);
-//                 outgoing.redirect(`/home/${id}`);
-//             } else {
-//                 outgoing.redirect("error", {
-//                     message: "it's not the correct username or password",
-//                 });
-//             }
-//         })
-//         .catch(next);
-// });
-
 /**********************************************
  * Get and Post Home Page ("/home/user_id")
  * ==================================
@@ -782,6 +761,14 @@ app.post("/signup", function (incoming, outgoing, next) {
  * Get: After login, users will be able to see their home page, which is a list of all their friends
  * ==================================
  ***********************************************/
+app.get("/home", (incoming, outgoing, next) => {
+    let code = incoming.query.code;
+    let state = incoming.query.state;
+    console.log("Code: ", code);
+    console.log("State: ", state);
+    outgoing.render("home");
+});
+
 app.get("/home/:user_id", (incoming, outgoing, next) => {
     let user_id = incoming.params.user_id;
     knex.from(user_friend)
@@ -804,35 +791,14 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
                     .where({ user_id: user_id, user_friend_id: friend_id })
                     .then((total) => {
                         eachFriend[i].answered_questions = total.count;
+                        eachFriend[i].url = getUrl(eachFriend[i].emoji);
+                        console.log(getUrl);
+                        outgoing.render("home", {
+                            user_id: user_id,
+                            user_friend: eachFriend,
+                        });
                     });
-                if (eachFriend[i].emoji === "homie") {
-                    eachFriend[i].url =
-                        "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1";
-                } else if (eachFriend[i].emoji === "dear") {
-                    eachFriend[i].url =
-                        "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1";
-                } else if (eachFriend[i].emoji === "family") {
-                    eachFriend[i].url =
-                        "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1";
-                } else if (eachFriend[i].emoji === "colleague") {
-                    eachFriend[i].url =
-                        "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1";
-                } else if (eachFriend[i].emoji === "bestFriend") {
-                    eachFriend[i].url =
-                        "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1";
-                } else if (eachFriend[i].emoji === "significantOther") {
-                    eachFriend[i].url =
-                        "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1";
-                } else {
-                    eachFriend[i].url =
-                        "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1";
-                }
             }
-
-            outgoing.render("home", {
-                user_id: user_id,
-                user_friend: eachFriend,
-            });
         })
         .catch(next);
 });
@@ -886,6 +852,7 @@ app.get("/addfriend/:user_id", function (incoming, outgoing, next) {
     let user_id = incoming.params.user_id;
     outgoing.render("addFriend", { user_id: user_id });
 });
+
 app.post("/addfriend/:user_id", function (incoming, outgoing, next) {
     let user_id = incoming.params.user_id;
     knex("user_friend")
@@ -994,17 +961,14 @@ app.get("/favorites/:user_id/:friend_id", function (incoming, outgoing, next) {
                 newObject[i].user_id = user_id;
                 newObject[i].friend_id = friend_id;
             }
-            console.log(newObject);
-            outgoing.render("question/question", {
+            console.log("My favorite questions: ", newObject);
+            outgoing.render("question/favQuestion", {
                 user_id: user_id,
                 friend_id: friend_id,
                 question: newObject,
             });
         })
         .catch(next);
-
-    // QUERY TO SELECT ALL FAVORITE QUESTIONS
-    // render questions
 });
 
 /**********************************************
@@ -1054,7 +1018,14 @@ app.get("/play/:categoryString/:user_id/:friend_id", function (
  * Add this question to answered
  * ==================================
  ***********************************************/
-app.post("/api/markasdone", function (incoming, outgoing, next) {
+app.post("/markasdone/:user_id/:friend_id/:question_id", function (
+    incoming,
+    outgoing,
+    next
+) {
+    let user_id = incoming.params.user_id;
+    let friend_id = incoming.params.friend_id;
+    let question_id = incoming.params.question_id;
     // get data
     let body = incoming.body;
     console.log("Data: ", incoming.data);
@@ -1066,9 +1037,9 @@ app.post("/api/markasdone", function (incoming, outgoing, next) {
             let numRows = Number(total.count) + 1;
             let newObject = {
                 id: numRows,
-                user_id: incoming.body.user_id,
-                user_friend_id: incoming.body.friend_id,
-                question_id: incoming.body.question_id,
+                user_id: user_id,
+                user_friend_id: friend_id,
+                question_id: question_id,
                 answered: true,
             };
             knex("user_friend_all_questions")
@@ -1125,15 +1096,7 @@ app.get("/", function (incoming, outgoing, next) {
  ***********************************************/
 
 app.use(require("./config/helpers/error_middleware").all);
-// app.use("/", userRouter);
-app.use(function (incoming, outgoing, next) {
-    outgoing.header("Access-Control-Allow-Origin", "*");
-    outgoing.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
+
 app.listen(3001, () => {
     console.log("Application listening to port 3001!!");
 });

@@ -89,7 +89,7 @@ $(".markAsDone").on("submit", function (event) {
     console.log("Mark As Done Button Object Is Clicked: ", markAsDoneObject);
     $.ajax({
         type: "POST",
-        url: "/api/markasdone",
+        url: `/markasdone/${user_id}/${friend_id}/${question_id}`,
         data: markAsDoneObject,
         success: function () {
             console.log("data sent!");
