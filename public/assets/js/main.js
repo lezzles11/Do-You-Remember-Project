@@ -102,3 +102,7 @@ $(".markAsDone").on("submit", function (event) {
         },
     });
 });
+
+$(document).ready(function () {
+    $(".ripples").ripples("show");
+});

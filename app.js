@@ -81,20 +81,22 @@ app.use(
         extended: false,
     })
 );
-app.use(bodyParser.json());
 
 // create session
 let sessionConfiguration = {
     secret: "secretsauce",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     // cookie: {maxAge: 1800000}
     cookie: { secure: true },
 };
+
 sessionConfiguration.cookie.secure = false;
+app.use(bodyParser.json());
+app.use(cors());
 app.use(flash());
 app.use(session(sessionConfiguration));
-app.use(cookieParser("secretsauce"));
+app.use(cookieParser());
 
 /**********************************************
  * Passport Strategy:
@@ -203,14 +205,7 @@ let question_col4 = "photo_url";
  * ==================================
  ***********************************************/
 // app.use("/", userRouter);
-app.use(function (incoming, outgoing, next) {
-    outgoing.header("Access-Control-Allow-Origin", "*");
-    outgoing.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
+
 app.use("/api/user", function (incoming, outgoing, next) {
     let getAllUsersQuery = knex
         .from("user_table")
@@ -669,18 +664,37 @@ app.get("/login", function (incoming, outgoing, next) {
     outgoing.render("account/login");
 });
 
+var generateRandomString = function (length) {
+    var text = "";
+    var possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+};
+
+var stateKey = "spotify_auth_state";
 app.get("/spotify", function (incoming, outgoing, next) {
+    var state = generateRandomString(16);
+    outgoing.cookie(stateKey, state);
     let scopes = "user-read-recently-played";
     // #TODO: Add more scopes later
     outgoing.redirect(
-        "https://accounts.spotify.com/authorize" +
-            "?response_type=code" +
-            "&client_id=" +
-            process.env.SPOTIFY_CLIENT_ID +
-            (scopes ? "&scope=" + encodeURIComponent(scopes) : "") +
-            "&redirect_uri=" +
-            encodeURIComponent(process.env.BASE_URL + "/home")
+        "https://accounts.spotify.com/authorize?" +
+            queryString.stringify({
+                response_type: "code",
+                client_id: process.env.SPOTIFY_CLIENT_ID,
+                scope: scopes,
+                redirect_uri: process.env.BASE_URL,
+                state: state,
+            })
     );
+});
+// Redirect uri
+app.get("/spotify/callback", function (incoming, outgoing, next) {
+    // create a new account here, perhaps
 });
 
 app.post("/login", (incoming, outgoing, next) => {
@@ -1063,7 +1077,20 @@ app.get("/profile", function (incoming, outgoing, next) {
  * ==================================
  ***********************************************/
 app.get("/about", function (incoming, outgoing, next) {
-    outgoing.render("about", { user_id: 1 });
+    outgoing.render("about", {
+        user_id: 1,
+        philosopher: [
+            {
+                name: "Ibn Sina",
+                date: "2020-01-01",
+                printedDate: "1000 A.D.",
+                image:
+                    "https://www.dropbox.com/s/v0z49npumxafid4/ibn-sina.jpg?raw=1",
+                description:
+                    "Ibn Sina was a successful doctor in Persia (modern day Iran) that believed that everyone had two parts to themselves: a part that everyone could see and another part - which he called the soul - often times, we only see a little bit of someone - we may know someone from their behaviors, but we don't really get a full picture of who they really are.",
+            },
+        ],
+    });
 });
 
 app.get("/error", function (incoming, outgoing, next) {
@@ -1075,7 +1102,6 @@ app.get("/error", function (incoming, outgoing, next) {
  * ==================================
  ***********************************************/
 app.get("/", function (incoming, outgoing, next) {
-    console.log("User: ", incoming.auth.user);
     if (incoming.auth) {
         let userEmail = incoming.auth.user;
         console.log(userEmail);
@@ -1085,12 +1111,14 @@ app.get("/", function (incoming, outgoing, next) {
             .then((eachUser) => {
                 let id = eachUser[0].id;
                 outgoing.redirect(`/home/${id}`);
-            });
+            })
+            .catch(next);
     } else {
         outgoing.render("index");
     }
 });
 
+app.get("/logout", function (incoming, outgoing, next) {});
 /**********************************************
  * Start server
  ***********************************************/

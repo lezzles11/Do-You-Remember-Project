@@ -115,12 +115,17 @@
     <div class="col-lg-8 mx-auto">
 
         <ol class="timeline">
+
+            {{#each philosopher}}
             <li class="timeline-element">
-                <h5 class="font-weight-bold dark-grey-text mb-3">Launched our website</h5>
-                <p class="grey-text font-small"><time datetime="2017-02-08">08 Feb 2017</time></p>
-                <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda ullam adipisci reiciendis porro natus laudantium similique.
-                    Explicabo amet ipsum fugiat aliquam alias.</p>
+                <h5 class="font-weight-bold dark-grey-text mb-3">{{this.name}}</h5>
+                <p class="grey-text font-small"><time datetime={{this.date}}>{{this.printedDate}}</time></p>
+                 <p><img class="img-fluid z-depth-1-half rounded" src={{this.image}} alt="..."></p>
+                <p class="text-muted">
+                    {{this.description}}
+                </p>
             </li>
+            {{/each}}
 
             <li class="timeline-element">
                 <h5 class="font-weight-bold dark-grey-text mb-3">Got the first 100 users</h5>

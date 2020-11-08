@@ -497,3 +497,18 @@ Versioning Upgrades:
 -   [ ] Be able to create a story together with the friend
     -   Create a story table
     -   That could replace the current user_friend table
+
+#### Starting a Project
+
+-   How can you start a project?
+-   How to use github
+    -   How to push / pull
+    -   Merge
+    -   Making a backup 
+-   Working with a group
+    -   How to assign tasks
+    -   How to work together with other developers
+    -   Setting expectations for code
+    -   What it looks like
+    -   Roles
+    -   
