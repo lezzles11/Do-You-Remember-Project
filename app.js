@@ -182,10 +182,8 @@ let question_col1 = "id";
 let question_col2 = "category_id";
 let question_col3 = "question_string";
 let question_col4 = "photo_url";
-/**********************************************
- * ALL JSON DATA API ROUTES HERE START HERE
- * ==================================
- ***********************************************/
+
+
 /**********************************************
  * TABLE OF CONTENTS
  * ==================================
@@ -193,19 +191,11 @@ let question_col4 = "photo_url";
  * 1: Friend (post, get one, get all, edit, delete)
  * 2: Question (get all questions from this friend, get all from category, add to favorite)
  ***********************************************/
+
 /**********************************************
  * 0: User (post, get one, get all, edit, delete)
  * ==================================
  ***********************************************/
-/**********************************************
- * Get All Users Method
- * ==================================
- ***********************************************/
-/**********************************************
- *
- * ==================================
- ***********************************************/
-// app.use("/", userRouter);
 
 app.use("/api/user", function (incoming, outgoing, next) {
     let getAllUsersQuery = knex
