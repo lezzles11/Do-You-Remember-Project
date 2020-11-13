@@ -1,8 +1,21 @@
-# Weekly Assignment Three :rocket:
+# Do You Remember :rocket:
 
 ## Purpose :dark_sunglasses:
 
-The purpose of this repository is to follow along with the current cohort's weekly assignment - to be explicit about the steps in creating a fullstack web application, and to model the potential difficulties one could run into.
+The purpose of this application is to help build better conversations between people. 
+
+### User Stories
+
+- [ x ] As a user, I can create a new friend, which will include an emoji and a favorite memory. 
+- [ x ] As a user, I can access a list of questions for each person, and keep track of answered questions. 
+- [ x ] As a user, I will be able to favorite specific questions. 
+- [ x ] As a user, I will be able to choose from a list of categories - in which I can eventually choose questions to answer from. 
+- [ x ] As a user, I will be able to see a list of rules / norms after clicking on a specific category.
+- [ x ] As a user, I will be able to see a list of questions answered with that person. 
+
+# Screenshots
+
+<img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105290/2a183f3a-63ae-11e5-9380-50d9f6d8afd6.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105284/26aa7ad4-63ae-11e5-88b7-bc523a095c9f.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105288/28698fae-63ae-11e5-8ba7-a62360a8e8a7.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105290/2a183f3a-63ae-11e5-9380-50d9f6d8afd6.png" width="45%"></img> 
 
 ## End Goal
 
