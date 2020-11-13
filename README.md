@@ -12,8 +12,19 @@ The purpose of this application is to help build better conversations between pe
 - [ x ] As a user, I will be able to choose from a list of categories - in which I can eventually choose questions to answer from. 
 - [ x ] As a user, I will be able to see a list of rules / norms after clicking on a specific category.
 - [ x ] As a user, I will be able to see a list of questions answered with that person. 
+- [ x ] Users will be able to signup and login
+- [ x ] Users will be able to edit their information
+- [ x ] Users will be able to delete their account
+- [ x ] Users will be able to add a new friend
+- [ x ] Users will be able to edit a friend
+- [ x ] Users will be able to delete a friend
+- [ x ] Users will be able to get a friend's profile
+- [ x ] Users will be able to click on play, upon landing on friend profile page.
+- [ x ] Users will be able to choose a category after clicking play.
+- [ x ] Users will first land on rules page, then commence with the question of that category.
+- [ x ] Users will be able to favorite a particular question.
 
-# Screenshots
+### Screenshots
 
 <img src="https://www.dropbox.com/s/s2weeld6z3y1g5h/cover.png?raw=1" width="45%"></img> 
 <img src="https://www.dropbox.com/s/4l08d0yttz8atwn/addfriend.png?raw=1" width="45%"></img> 
@@ -25,6 +36,59 @@ The purpose of this application is to help build better conversations between pe
 ### Where it fits :paperclip:
 
 -   [ x ] ![SQL Diagram](./sql.png)
+```
+user {
+    id
+    email
+    password
+    spotify_id
+    spotify_access_token
+    timestamp
+}
+```
+
+category table
+
+```
+category {
+    id
+    name
+    timestamp
+}
+```
+
+```
+user_friend {
+    id
+    user_id (foreign)
+    name
+    emoji
+    wishful_city
+    fav_memory
+    timestamp
+}
+```
+
+```
+question {
+    id
+    category_id
+    question_string
+    photo_url
+    timestamp
+}
+```
+
+```
+user_friend_all_questions {
+    id
+    user_id
+    user_friend_id
+    question_id
+    answered
+    timestamp
+}
+```
 
 #### Common Errors
 
@@ -123,27 +187,15 @@ Documentation:
 
 [Jest](https://jestjs.io/)
 
-#### Contributing :round_pushpin:
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-Not sure how? Learn [Github](https://www.youtube.com/watch?v=3RjQznt-8kE&list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR)
-Please make sure to update tests as appropriate.
-
-#### License :memo:
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
-To Do List
-
-Purpose:
-To set up the backend routes (just to make sure that it can communicate with the backend)
-
-Need to test the kind of data that is going into and out of the backend
-
-SIGNUP
-
 Element:
+PSEUDO CODE
 
+To Do:
+
+-   Finished most routers and services
+-   Finished layouts
+-   Finished data backend
+-   Finished the routes
 -   [ x] Open postgres
 -   [x ] Create migration files
 -   [ x] Create seed files
@@ -155,242 +207,6 @@ Element:
 -   [ x] Create and verify user_fav_question table
 -   [ x] Create and verify user_friend_all_questions table
 
-PSEUDO CODE
-
--   [ ] User Table
-
-    -   [ ] UserService class
-
-        -   [ ] Add user (signup)
-
-            -   [x ] Service: addUserService(user)
-                -   [x ] Incoming data: user object
-                -   [ x] throw new error otherwise
-                -   [ x] Knex command works
-                -   [xx ] Postgres check
-
-### User Stories
-
--   [ ] Users will be able to signup and login
--   [ ] Users will be able to edit their information
--   [ ] Users will be able to delete their account
-
-## Main Characters
-
-user {
-id
-email
-password
-facebook_id
-facebook_access_token
-spotify_id
-spotify_access_token
-timestamp
-}
-
-##### OUTLINE OF ESSAY
-
--   Router Methods:
-
-    -   [ x ] getAllUsersRoute("/api/user", (incoming, outgoing))
-    -   [ x ] getUserRoute("api/user/:user_id", (incoming, outgoing))
-    -   [ x ] addUserRoute("/signup", (incoming, outgoing))
-    -   [ x ] editUserRoute("api/user/:id", (incoming, outgoing))
-    -   [ x ] deleteUserRoute("api/user/:id", (incoming, outgoing))
-
--   Service Method Names:
-    -   [ x ] getAllUsersService()
-    -   [ x ] getUserService(id, user)
-    -   [ x ] addUserService(user)
-    -   [ x ] editUserService(id, user)
-    -   [ x ] deleteUserService (id, user)
-
-#### User Stories
-
--   Users will be able to add a new friend
--   Users will be able to edit a friend
--   Users will be able to delete a friend
--   Users will be able to get a friend's profile
-
-#### Setting of Story
-
-user_table table
-
-```
-user_table {
-    id
-    email
-    password
-    spotify_id
-    spotify_access_token
-    timestamp
-}
-```
-
-user_friend table
-
-```
-user_friend {
-    id
-    user_id (foreign)
-    name
-    emoji
-    wishful_city
-    fav_memory
-    timestamp
-}
-```
-
-#### Outline of Story
-
--   Router Methods:
-
-    -   [ x ] getAllFriendsRoute("api/friend")
-    -   [ x ] addFriendRoute("/api/friend/", (incoming, outgoing))
-    -   [ x ] getFriendRoute("/api/friend/:id", (incoming, outgoing))
-    -   [ x ] editFriendRoute("/api/friend/:id", (incoming, outgoing))
-    -   [ x ] deleteFriendRoute("/api/friend/:id", (incoming, outgoing))
-
--   Service Method Names:
-    -   [ x ] getAllFriendsService(user)
-    -   [ x ] addFriendService(friend, user)
-    -   [ x ] getFriendService(friend_id, user)
-    -   [ x ] editFriendService(friend_id, friend, user)
-    -   [ x ] deleteFriendService(friend_id, user)
-
-### User Stories
-
--   Users will be able to click on play, upon landing on friend profile page.
--   Users will be able to choose a category after clicking play.
--   Users will first land on rules page, then commence with the question of that category.
--   Users will be able to favorite a particular question.
--   Users will be able to click on next, and upon doing so, activate that specific question as answered.
-
-## Main Characters
-
-```
-user {
-    id
-    email
-    password
-    spotify_id
-    spotify_access_token
-    timestamp
-}
-```
-
-category table
-
-```
-category {
-    id
-    name
-    timestamp
-}
-```
-
-```
-user_friend {
-    id
-    user_id (foreign)
-    name
-    emoji
-    wishful_city
-    fav_memory
-    timestamp
-}
-```
-
-```
-question {
-    id
-    category_id
-    question_string
-    photo_url
-    timestamp
-}
-```
-
-```
-user_friend_all_questions {
-    id
-    user_id
-    user_friend_id
-    question_id
-    answered
-    timestamp
-}
-```
-
-##### Essay Outline
-
--   Router Methods:
-
-    -   [ ] getAllQuestionsRoute("/api/questions/")
-    -   [ ] router.get("api/category/:categoryId/:questionId", this.getQuestionFromCategoryRoute.bind(this))
-    -   [ ] getAllQuestionsFromCategoryRoute("/api/questions/:category", (incoming, outgoing))
-        -   incoming data: incoming.query.category, incoming.body.friend, incoming.auth.user
-        -   outgoing: outgoing.json(an array of questions?)
-    -   [ ] getQuestionRoute("/api/question/:id", (incoming, outgoing))
-    -   [ ] editQuestionRoute("/api/question/:id", (incoming, outgoing))
-
--   Service Method Names:
-    -   [ ] getAllQuestionsService
-        -   get all questions
-    -   [ ] getAllQuestionsFromCategoryService(category, friend, user)
-        -   loop through user_friend_all_questions
-        -   return all that are marked answered: false
-    -   [ ] getQuestionService(id)
-        -   Return that question
-
-#### Outline of Story
-
--   Users will be able to favorite a particular question.
-
-```
-user {
-    id
-    email
-    password
-    spotify_id
-    spotify_access_token
-    timestamp
-}
-```
-
-```
-question {
-    id
-    category_id
-    question_string
-    photo_url
-    timestamp
-}
-```
-
-```
-user_fav_question {
-    id
-    user_id (foreign)
-    question_id (foreign)
-    timestamp
-}
-```
-
-##### Essay OUtline
-
--   Router Methods:
-    -   [ ] getCategoriesRoute("/api/friend/", (incoming, outgoing))
--   Service Method Names:
-    -   [ ] markAsFavoriteQuestionService(user, ques)
-
-To Do:
-
--   Finished most routers and services
--   Finished layouts
--   Finished data backend
--   Finished the routes
--
 
 Current To Dos:
 
