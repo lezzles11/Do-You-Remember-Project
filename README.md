@@ -35,7 +35,7 @@ The purpose of this application is to help build better conversations between pe
 
 ### Where it fits :paperclip:
 
--   [ x ] ![SQL Diagram](./sql.png)
+![SQL Diagram](./sql.png)
 ```
 user {
     id
@@ -46,9 +46,6 @@ user {
     timestamp
 }
 ```
-
-category table
-
 ```
 category {
     id
@@ -56,7 +53,6 @@ category {
     timestamp
 }
 ```
-
 ```
 user_friend {
     id
@@ -68,7 +64,6 @@ user_friend {
     timestamp
 }
 ```
-
 ```
 question {
     id
@@ -78,7 +73,6 @@ question {
     timestamp
 }
 ```
-
 ```
 user_friend_all_questions {
     id
@@ -105,34 +99,6 @@ npm install
 ```
 node app.js
 ```
-
-### How it works :open_book:
-
--   [ x ] Handlebars
-    -   [ x ] Categories
-    -   [ x ] Profile
-    -   [ x ] Question
-    -   [ x ]  About
-
--   [ ] Model
-    -   [x ] friends.json
-    -   [ x] orders.json
-    -   [ x] questions_family.json
-    -   [x ] questions_friends.json
-    -   [x ] questions_love.json
-    -   [ x] questions_work.json
-        -   The question
-        -   [x ] Grab modal from the MDBootstrap
-        -   [x ] See if you can have an arrow that just clicks through a bunch of data points, like a modal sort of thing?
-        -   [ x] You also want to add a button to see if you can favorite the question
-        -   [ x] Create that for every page
-    -   [x ] categories.json
-        -   [ ] Will be linked to the modal, so technically there might not be a question page
-    -   [ ] users.json
-        -   This will contain the list of authorized users
-
--   [ ] Postgres
-
 ## Backend
 
 | Done? | Method | Table                     |                       Route                        |                     How it works                      | How it fits                                            |
@@ -182,52 +148,8 @@ Documentation:
 
 [Jest](https://jestjs.io/)
 
-Element:
-PSEUDO CODE
 
-To Do:
-
--   Finished most routers and services
--   Finished layouts
--   Finished data backend
--   Finished the routes
--   [ x] Open postgres
--   [x ] Create migration files
--   [ x] Create seed files
--   [ ] Render the data onto index.handlebars
--   [ x] Create and verify user table
--   [ x] Create and verify user_friend table
--   [ x] Create and verify category table
--   [ x] Create and verify question table
--   [ x] Create and verify user_fav_question table
--   [ x] Create and verify user_friend_all_questions table
-
-
-Current To Dos:
-
--   [ x ] Getting access to javascript files
-
-    -   Sam: /assets instead of ./assets
-
--   [ x ] Can't press more than one button at a time (on question page)
-
-    -   Potential Solution:
-        -   Check JQuery book
-        -   sean: make sure that you add and remove class, rather than id
-
--   [ x ] Associate emoji with picture on the home page
-
-    -   Solution: Pass in via option / select
-
--   [ x ] See how many questions you have answered with that user
-
-    -   [ ] Write out the SQL query first
-    -   [ ] get the total count of the ids in user_answered
-    -   [ ] get the total count of all the questions
-    -   [ ] Did a complex forloop - just try things and move slow
-    -   [ ] render that on the page
-
--   [ ] Add log out page
+### Ongoing To Dos
 
 Hard To Dos:
 
