@@ -156,11 +156,6 @@ node app.js
 | x     |        | user_friend_all_questions |           /api/user_friend_all_questions           |                                                       |                                                        |
 |       |        | user_friend_all_questions |                                                    |                                                       |                                                        |
 
-### User Stories :telescope:
-
-1. Users will be able to look through the various examples and understand how to develop a web application well.
-2. Users will be able to follow along the checklist and accurately complete the web application.
-
 ## Sprint :athletic_shoe:
 
 | Done? | Component                                 | Priority | Estimated Time | Actual Time |
