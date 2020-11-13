@@ -15,25 +15,22 @@ The purpose of this application is to help build better conversations between pe
 
 # Screenshots
 
-<img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105290/2a183f3a-63ae-11e5-9380-50d9f6d8afd6.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105284/26aa7ad4-63ae-11e5-88b7-bc523a095c9f.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105288/28698fae-63ae-11e5-8ba7-a62360a8e8a7.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="45%"></img> <img src="https://cloud.githubusercontent.com/assets/4307137/10105290/2a183f3a-63ae-11e5-9380-50d9f6d8afd6.png" width="45%"></img> 
+<img src="https://www.dropbox.com/s/s2weeld6z3y1g5h/cover.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/4l08d0yttz8atwn/addfriend.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/nev5oyor7d5zbs0/about1.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/5uwizse3bhbs5e1/home1.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/d4en28gwngvw73z/categories.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/5iuy2va3g6ndqya/home2.png?raw=1" width="45%"></img> 
 
-## End Goal
+### Where it fits :paperclip:
 
-Success merely means "excellence in a given field." At origin, the word is neutral about what it might be applied to.
-
-Can be excellent at building this specific application
-
--   Good coding practices: comments
--   Setting sprints
--   Debug well
--   Really understand the fullstack web application process
+-   [ x ] ![SQL Diagram](./sql.png)
 
 #### Common Errors
 
 ##### Testing Routes
 
 -   [ ] When testing routes, make sure you type in http instead of https, as https has the certificate (and has a layer of additional security that HTTP does not have)
--   [ ]
 
 ### How to run this package
 
@@ -47,15 +44,11 @@ node app.js
 
 ### How it works :open_book:
 
--   [ ] Handlebars
-    -   [ ] Categories
-    -   [ ] Profile
-    -   [ ] Question
-    -   [ ] About
-    -   [ ]
--   [ ] Controller:
-
-    -   [ ] Router
+-   [ x ] Handlebars
+    -   [ x ] Categories
+    -   [ x ] Profile
+    -   [ x ] Question
+    -   [ x ]  About
 
 -   [ ] Model
     -   [x ] friends.json
@@ -74,12 +67,6 @@ node app.js
     -   [ ] users.json
         -   This will contain the list of authorized users
 
-### Where it fits :paperclip:
-
--   [ ] Fullstack Application Web Development
--   [ ] Model-View-Controller
--   [ ] Data Manipulation
--   [ ] ![SQL Diagram](./sql.png)
 -   [ ] Postgres
 
 ## Backend
