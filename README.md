@@ -1,29 +1,97 @@
-# Weekly Assignment Three :rocket:
+# Do You Remember :rocket:
 
 To DO
 - A bar 
 - Emoji 
 ## Purpose :dark_sunglasses:
 
-The purpose of this repository is to follow along with the current cohort's weekly assignment - to be explicit about the steps in creating a fullstack web application, and to model the potential difficulties one could run into.
+The purpose of this application is to help build better conversations between people. 
 
-## End Goal
+### User Stories
 
-Success merely means "excellence in a given field." At origin, the word is neutral about what it might be applied to.
+- [ x ] As a user, I can create a new friend, which will include an emoji and a favorite memory. 
+- [ x ] As a user, I can access a list of questions for each person, and keep track of answered questions. 
+- [ x ] As a user, I will be able to favorite specific questions. 
+- [ x ] As a user, I will be able to choose from a list of categories - in which I can eventually choose questions to answer from. 
+- [ x ] As a user, I will be able to see a list of rules / norms after clicking on a specific category.
+- [ x ] As a user, I will be able to see a list of questions answered with that person. 
+- [ x ] Users will be able to signup and login
+- [ x ] Users will be able to edit their information
+- [ x ] Users will be able to delete their account
+- [ x ] Users will be able to add a new friend
+- [ x ] Users will be able to edit a friend
+- [ x ] Users will be able to delete a friend
+- [ x ] Users will be able to get a friend's profile
+- [ x ] Users will be able to click on play, upon landing on friend profile page.
+- [ x ] Users will be able to choose a category after clicking play.
+- [ x ] Users will first land on rules page, then commence with the question of that category.
+- [ x ] Users will be able to favorite a particular question.
 
-Can be excellent at building this specific application
+### Screenshots
 
--   Good coding practices: comments
--   Setting sprints
--   Debug well
--   Really understand the fullstack web application process
+<img src="https://www.dropbox.com/s/s2weeld6z3y1g5h/cover.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/4l08d0yttz8atwn/addfriend.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/nev5oyor7d5zbs0/about1.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/5uwizse3bhbs5e1/home1.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/d4en28gwngvw73z/categories.png?raw=1" width="45%"></img> 
+<img src="https://www.dropbox.com/s/5iuy2va3g6ndqya/home2.png?raw=1" width="45%"></img> 
+
+### Where it fits :paperclip:
+
+![SQL Diagram](./sql.png)
+```
+user {
+    id
+    email
+    password
+    spotify_id
+    spotify_access_token
+    timestamp
+}
+```
+```
+category {
+    id
+    name
+    timestamp
+}
+```
+```
+user_friend {
+    id
+    user_id (foreign)
+    name
+    emoji
+    wishful_city
+    fav_memory
+    timestamp
+}
+```
+```
+question {
+    id
+    category_id
+    question_string
+    photo_url
+    timestamp
+}
+```
+```
+user_friend_all_questions {
+    id
+    user_id
+    user_friend_id
+    question_id
+    answered
+    timestamp
+}
+```
 
 #### Common Errors
 
 ##### Testing Routes
 
 -   [ ] When testing routes, make sure you type in http instead of https, as https has the certificate (and has a layer of additional security that HTTP does not have)
--   [ ]
 
 ### How to run this package
 
@@ -34,44 +102,6 @@ npm install
 ```
 node app.js
 ```
-
-### How it works :open_book:
-
--   [ ] Handlebars
-    -   [ ] Categories
-    -   [ ] Profile
-    -   [ ] Question
-    -   [ ] About
-    -   [ ]
--   [ ] Controller:
-
-    -   [ ] Router
-
--   [ ] Model
-    -   [x ] friends.json
-    -   [ x] orders.json
-    -   [ x] questions_family.json
-    -   [x ] questions_friends.json
-    -   [x ] questions_love.json
-    -   [ x] questions_work.json
-        -   The question
-        -   [x ] Grab modal from the MDBootstrap
-        -   [x ] See if you can have an arrow that just clicks through a bunch of data points, like a modal sort of thing?
-        -   [ x] You also want to add a button to see if you can favorite the question
-        -   [ x] Create that for every page
-    -   [x ] categories.json
-        -   [ ] Will be linked to the modal, so technically there might not be a question page
-    -   [ ] users.json
-        -   This will contain the list of authorized users
-
-### Where it fits :paperclip:
-
--   [ ] Fullstack Application Web Development
--   [ ] Model-View-Controller
--   [ ] Data Manipulation
--   [ ] ![SQL Diagram](./sql.png)
--   [ ] Postgres
-
 ## Backend
 
 | Done? | Method | Table                     |                       Route                        |                     How it works                      | How it fits                                            |
@@ -94,11 +124,6 @@ node app.js
 | x     | GET    | user_friend_all_questions | /api/user_friend_all_questions/:user_id/:friend_id |    Get all the questions between a user and friend    | See all the answered questions between user and friend |
 | x     |        | user_friend_all_questions |           /api/user_friend_all_questions           |                                                       |                                                        |
 |       |        | user_friend_all_questions |                                                    |                                                       |                                                        |
-
-### User Stories :telescope:
-
-1. Users will be able to look through the various examples and understand how to develop a web application well.
-2. Users will be able to follow along the checklist and accurately complete the web application.
 
 ## Sprint :athletic_shoe:
 
@@ -126,300 +151,8 @@ Documentation:
 
 [Jest](https://jestjs.io/)
 
-#### Contributing :round_pushpin:
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-Not sure how? Learn [Github](https://www.youtube.com/watch?v=3RjQznt-8kE&list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR)
-Please make sure to update tests as appropriate.
-
-#### License :memo:
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
-To Do List
-
-Purpose:
-To set up the backend routes (just to make sure that it can communicate with the backend)
-
-Need to test the kind of data that is going into and out of the backend
-
-SIGNUP
-
-Element:
-
--   [ x] Open postgres
--   [x ] Create migration files
--   [ x] Create seed files
--   [ ] Render the data onto index.handlebars
--   [ x] Create and verify user table
--   [ x] Create and verify user_friend table
--   [ x] Create and verify category table
--   [ x] Create and verify question table
--   [ x] Create and verify user_fav_question table
--   [ x] Create and verify user_friend_all_questions table
-
-PSEUDO CODE
-
--   [ ] User Table
-
-    -   [ ] UserService class
-
-        -   [ ] Add user (signup)
-
-            -   [x ] Service: addUserService(user)
-                -   [x ] Incoming data: user object
-                -   [ x] throw new error otherwise
-                -   [ x] Knex command works
-                -   [xx ] Postgres check
-
-### User Stories
-
--   [ ] Users will be able to signup and login
--   [ ] Users will be able to edit their information
--   [ ] Users will be able to delete their account
-
-## Main Characters
-
-user {
-id
-email
-password
-facebook_id
-facebook_access_token
-spotify_id
-spotify_access_token
-timestamp
-}
-
-##### OUTLINE OF ESSAY
-
--   Router Methods:
-
-    -   [ x ] getAllUsersRoute("/api/user", (incoming, outgoing))
-    -   [ x ] getUserRoute("api/user/:user_id", (incoming, outgoing))
-    -   [ x ] addUserRoute("/signup", (incoming, outgoing))
-    -   [ x ] editUserRoute("api/user/:id", (incoming, outgoing))
-    -   [ x ] deleteUserRoute("api/user/:id", (incoming, outgoing))
-
--   Service Method Names:
-    -   [ x ] getAllUsersService()
-    -   [ x ] getUserService(id, user)
-    -   [ x ] addUserService(user)
-    -   [ x ] editUserService(id, user)
-    -   [ x ] deleteUserService (id, user)
-
-#### User Stories
-
--   Users will be able to add a new friend
--   Users will be able to edit a friend
--   Users will be able to delete a friend
--   Users will be able to get a friend's profile
-
-#### Setting of Story
-
-user_table table
-
-```
-user_table {
-    id
-    email
-    password
-    spotify_id
-    spotify_access_token
-    timestamp
-}
-```
-
-user_friend table
-
-```
-user_friend {
-    id
-    user_id (foreign)
-    name
-    emoji
-    wishful_city
-    fav_memory
-    timestamp
-}
-```
-
-#### Outline of Story
-
--   Router Methods:
-
-    -   [ x ] getAllFriendsRoute("api/friend")
-    -   [ x ] addFriendRoute("/api/friend/", (incoming, outgoing))
-    -   [ x ] getFriendRoute("/api/friend/:id", (incoming, outgoing))
-    -   [ x ] editFriendRoute("/api/friend/:id", (incoming, outgoing))
-    -   [ x ] deleteFriendRoute("/api/friend/:id", (incoming, outgoing))
-
--   Service Method Names:
-    -   [ x ] getAllFriendsService(user)
-    -   [ x ] addFriendService(friend, user)
-    -   [ x ] getFriendService(friend_id, user)
-    -   [ x ] editFriendService(friend_id, friend, user)
-    -   [ x ] deleteFriendService(friend_id, user)
-
-### User Stories
-
--   Users will be able to click on play, upon landing on friend profile page.
--   Users will be able to choose a category after clicking play.
--   Users will first land on rules page, then commence with the question of that category.
--   Users will be able to favorite a particular question.
--   Users will be able to click on next, and upon doing so, activate that specific question as answered.
-
-## Main Characters
-
-```
-user {
-    id
-    email
-    password
-    spotify_id
-    spotify_access_token
-    timestamp
-}
-```
-
-category table
-
-```
-category {
-    id
-    name
-    timestamp
-}
-```
-
-```
-user_friend {
-    id
-    user_id (foreign)
-    name
-    emoji
-    wishful_city
-    fav_memory
-    timestamp
-}
-```
-
-```
-question {
-    id
-    category_id
-    question_string
-    photo_url
-    timestamp
-}
-```
-
-```
-user_friend_all_questions {
-    id
-    user_id
-    user_friend_id
-    question_id
-    answered
-    timestamp
-}
-```
-
-##### Essay Outline
-
--   Router Methods:
-
-    -   [ ] getAllQuestionsRoute("/api/questions/")
-    -   [ ] router.get("api/category/:categoryId/:questionId", this.getQuestionFromCategoryRoute.bind(this))
-    -   [ ] getAllQuestionsFromCategoryRoute("/api/questions/:category", (incoming, outgoing))
-        -   incoming data: incoming.query.category, incoming.body.friend, incoming.auth.user
-        -   outgoing: outgoing.json(an array of questions?)
-    -   [ ] getQuestionRoute("/api/question/:id", (incoming, outgoing))
-    -   [ ] editQuestionRoute("/api/question/:id", (incoming, outgoing))
-
--   Service Method Names:
-    -   [ ] getAllQuestionsService
-        -   get all questions
-    -   [ ] getAllQuestionsFromCategoryService(category, friend, user)
-        -   loop through user_friend_all_questions
-        -   return all that are marked answered: false
-    -   [ ] getQuestionService(id)
-        -   Return that question
-
-#### Outline of Story
-
--   Users will be able to favorite a particular question.
-
-```
-user {
-    id
-    email
-    password
-    spotify_id
-    spotify_access_token
-    timestamp
-}
-```
-
-```
-question {
-    id
-    category_id
-    question_string
-    photo_url
-    timestamp
-}
-```
-
-```
-user_fav_question {
-    id
-    user_id (foreign)
-    question_id (foreign)
-    timestamp
-}
-```
-
-##### Essay OUtline
-
--   Router Methods:
-    -   [ ] getCategoriesRoute("/api/friend/", (incoming, outgoing))
--   Service Method Names:
-    -   [ ] markAsFavoriteQuestionService(user, ques)
-
-To Do:
-
--   Finished most routers and services
--   Finished layouts
--   Finished data backend
--   Finished the routes
--
-
-Current To Dos:
-
--   [ x ] Getting access to javascript files
-
-    -   Sam: /assets instead of ./assets
-
--   [ x ] Can't press more than one button at a time (on question page)
-
-    -   Potential Solution:
-        -   Check JQuery book
-        -   sean: make sure that you add and remove class, rather than id
-
--   [ x ] Associate emoji with picture on the home page
-
-    -   Solution: Pass in via option / select
-
--   [ x ] See how many questions you have answered with that user
-
-    -   [ ] Write out the SQL query first
-    -   [ ] get the total count of the ids in user_answered
-    -   [ ] get the total count of all the questions
-    -   [ ] Did a complex forloop - just try things and move slow
-    -   [ ] render that on the page
-
--   [ ] Add log out page
+### Ongoing To Dos
 
 Hard To Dos:
 
