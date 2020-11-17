@@ -3,6 +3,7 @@
  * ==================================
  * Think of this file as your main outline - should always be open
  ***********************************************/
+const getUrl = require("./views/helpers/getUrl");
 const philosopher = require("./model/content/philosopher");
 const express = require("express");
 const app = express();
@@ -23,26 +24,6 @@ const queryString = require("queryString");
 const port = 3000;
 let SPOTIFY_STATE = "spotify_auth_state";
 // This makes sure that you get all assets from the public folder
-
-// transforms emoji to url
-function getUrl(emoji) {
-    let url = "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1";
-    if (emoji === "homie") {
-        url = "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1";
-    } else if (emoji === "dear") {
-        url = "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1";
-    } else if (emoji === "family") {
-        url = "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1";
-    } else if (emoji === "colleague") {
-        url = "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1";
-    } else if (emoji === "significantOther") {
-        url =
-            "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1";
-    } else {
-        url = "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1";
-    }
-    return url;
-}
 
 // knex connection
 const knex = require("knex")({
@@ -795,13 +776,16 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
                 for (let i = 0; i < eachFriend.length; i++) {
                     let friend_id = eachFriend[i].id;
                     let user_id = eachFriend[i].user_id;
+
                     knex("user_friend_all_questions")
                         .count("id")
                         .first()
                         .where({ user_id: user_id, user_friend_id: friend_id })
                         .then((total) => {
+                            let percent = Math.round((total.count / 187) * 100);
                             eachFriend[i].answered_questions = total.count;
                             eachFriend[i].url = getUrl(eachFriend[i].emoji);
+                            eachFriend[i].percent = percent;
                             console.log(getUrl);
                             outgoing.render("home", {
                                 user_id: user_id,

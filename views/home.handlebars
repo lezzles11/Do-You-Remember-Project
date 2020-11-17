@@ -1,60 +1,70 @@
-
-    <div class="container my-5 py-5 z-depth-1">
-        <section class="dark-grey-text text-center">
-            <h3 class="font-weight-bold pt-5 pb-2">the coolest people I know</h3>
-            <div class="row mx-3">
-                <div class="col-md-4 px-4 mb-4">
-                    <div class="view">
-                        <img src="https://mdbootstrap.com/img/illustrations/drawkit-drawing-man-colour.svg" class="img-fluid" alt="smaple image">
-                    </div>
+<div class="container my-5 py-5 z-depth-1">
+    <section class="dark-grey-text text-center">
+        <h3 class="font-weight-bold pt-5 pb-2">the coolest people I know</h3>
+        <div class="row mx-3">
+            <div class="col-md-4 px-4 mb-4">
+                <div class="view">
+                    <img src="https://mdbootstrap.com/img/illustrations/drawkit-drawing-man-colour.svg" class="img-fluid" alt="sample image">
                 </div>
-                <div class="col-md-4 px-4 mb-4">
-                    <div class="view">
-                        <img src="https://mdbootstrap.com/img/illustrations/drawkit-phone-conversation-colour.svg" class="img-fluid" alt="sample image">
-                    </div>
+            </div>
+            <div class="col-md-4 px-4 mb-4">
+                <div class="view">
+                    <img src="https://mdbootstrap.com/img/illustrations/drawkit-phone-conversation-colour.svg" class="img-fluid" alt="sample image">
                 </div>
-                <div class="col-md-4 px-4 mb-4">
+            </div>
+            <div class="col-md-4 px-4 mb-4">
 
-                    <div class="view">
-                        <img src="https://mdbootstrap.com/img/illustrations/app-user-colour.svg" class="img-fluid" alt="smaple image">
-                    </div>
-
+                <div class="view">
+                    <img src="https://mdbootstrap.com/img/illustrations/app-user-colour.svg" class="img-fluid" alt="smaple image">
                 </div>
-            </div> <a href="/addfriend/{{user_id}}">
-                <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
-                </button>
-            </a>
 
-        </section>
-        <!--Section: Content-->
+            </div>
+        </div> <a href="/addfriend/{{user_id}}">
+            <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
+            </button>
+        </a>
+
+    </section>
+    <!--Section: Content-->
 
 
-    </div>
-    <div class="container">
-        <div class="row">
-            {{#each user_friend}}
-                <div class="col-lg-4 col-sm-6 mb-5">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-5 avatar w-100 white d-flex justify-content-center align-items-center">
-                            <img src={{this.url}} class="img-fluid rounded-circle z-depth-1" />
-                        </div>
-                        <div class="col-7">
-                            <h6 class="font-weight-bold pt-2">{{this.name}} {{this.emoji}}</h6>
+</div>
+<div class="container">
+    <div class="row">
+        {{#each user_friend}}
+            <div class="col-lg-4 col-sm-6 mb-5">
+                <div class="row d-flex align-items-center">
+                    <div class="col-5 avatar w-100 white d-flex justify-content-center align-items-center">
+                        <img src={{this.url}} class="img-fluid rounded-circle z-depth-1" style="height: 200px; padding: 10px" />
+                    </div>
+                    <div class="col-7">
+                        <h6 class="font-weight-bold pt-2">{{this.name}} </h6>
+                            {{!-- {{this.emoji}} --}}
+                        <p class="text-muted">
+                            {{#if this.wishful_city}}
+                           Wishful City: {{this.wishful_city}}
+                           {{/if}}
+                           <br/>
+                            {{#if this.favorite_memory}}
+                           Favorite Memory: {{this.favorite_memory}}
+                           {{/if}}
+                            <br /><br />
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: {{this.percent}}%" aria-valuenow={{this.percent}} aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                             <p class="text-muted">
-                                {{this.wishful_city}}
-                                {{this.favorite_memory}}
-                                <br /><br />
-                                Answered Questions:<br />
-                                {{this.answered_questions}} / 187
+                                {{this.answered_questions}} / 187 points
                             </p>
-                            <a href="/categories/{{this.user_id}}/{{this.id}}">
-                                <button type="button" class="btn btn-outline-dark waves-effect">Play
-                                </button>
-                            </a>
-                        </div>
+
+                        </p>
+                        <a href="/categories/{{this.user_id}}/{{this.id}}">
+                            <button type="button" class="btn btn-outline-dark waves-effect">Play
+                            </button>
+                        </a>
                     </div>
                 </div>
+            </div>
 
-            {{/each}}
-        </div>
+        {{/each}}
     </div>
+</div>
