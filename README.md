@@ -1,5 +1,8 @@
 # Weekly Assignment Three :rocket:
 
+To DO
+- A bar 
+- Emoji 
 ## Purpose :dark_sunglasses:
 
 The purpose of this repository is to follow along with the current cohort's weekly assignment - to be explicit about the steps in creating a fullstack web application, and to model the potential difficulties one could run into.

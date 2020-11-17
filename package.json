@@ -1,5 +1,5 @@
 {
-    "name": "Do You Remember",
+    "name": "do you remember",
     "version": "1.0.0",
     "description": "An application to foster better conversations",
     "main": "app.js",
@@ -25,6 +25,7 @@
         "handlebars": "^4.7.6",
         "knex": "^0.21.6",
         "morgan": "^1.10.0",
+        "netlify": "^4.9.0",
         "passport": "^0.4.1",
         "passport-local": "^1.0.0",
         "passport-spotify": "^1.1.0",

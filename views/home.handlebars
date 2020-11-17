@@ -1,4 +1,4 @@
-    {{!-- Block --}}
+
     <div class="container my-5 py-5 z-depth-1">
         <section class="dark-grey-text text-center">
             <h3 class="font-weight-bold pt-5 pb-2">the coolest people I know</h3>
@@ -30,53 +30,31 @@
 
 
     </div>
-    {{!-- End Block --}}
-    {{#each user_friend}}
-        <div class="card">
-            <div class="card-body">
-                <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                    <div class="my-3 py-3">
-                        <h2 class="display-5">
-                            {{this.name}} {{this.emoji}} </h2>
-                        <p class="lead">
-                            {{this.wishful_city}}
-                            {{this.favorite_memory}}</p>
-                    </div>
-                    {{!-- Questions Answered --}}
-
-                    <div class="row justify-content-center">
-                        Answered Questions:
-                        {{this.answered_questions}} / 187
-                    </div>
-
-                    {{!-- Questions Answered --}}
-                    <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-
-
-                        <img src={{this.url}} class="img-fluid z-depth-1" />
+    <div class="container">
+        <div class="row">
+            {{#each user_friend}}
+                <div class="col-lg-4 col-sm-6 mb-5">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-5 avatar w-100 white d-flex justify-content-center align-items-center">
+                            <img src={{this.url}} class="img-fluid rounded-circle z-depth-1" />
+                        </div>
+                        <div class="col-7">
+                            <h6 class="font-weight-bold pt-2">{{this.name}} {{this.emoji}}</h6>
+                            <p class="text-muted">
+                                {{this.wishful_city}}
+                                {{this.favorite_memory}}
+                                <br /><br />
+                                Answered Questions:<br />
+                                {{this.answered_questions}} / 187
+                            </p>
+                            <a href="/categories/{{this.user_id}}/{{this.id}}">
+                                <button type="button" class="btn btn-outline-dark waves-effect">Play
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-
-
-                {{!-- Button Row --}}
-                <div class="row justify-content-center">
-
-                    <a href="/categories/{{this.user_id}}/{{this.id}}">
-                        <button type="button" class="btn btn-outline-dark waves-effect">Play
-                        </button>
-                    </a>
-
-                    {{!-- Can't quite delete the friend - violates the foreign key constraint for user_friend_all_questions--}}
-                    {{!-- <a href="/deletefriend/{{this.user_id}}/{{this.id}}">
-                    {{!-- <button type="button" class="btn btn-outline-dark waves-effect">Delete Friend
-                    </button>
-                </a> --}}
-                </div>
-                {{!-- End of Button Row --}}
-
-            </div>
+            {{/each}}
         </div>
-        </div>
-
-    {{/each}}
+    </div>

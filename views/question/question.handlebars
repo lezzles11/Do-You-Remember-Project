@@ -15,12 +15,10 @@
         <h3 class="font-weight-bold pt-4 mb-4">How to Play</h3>
 
         <h5 class="font-weight-bold font-italic mb-5">Description here about purpose of game</h5>
-
         <div class="row mx-lg-5 mx-md-3">
-             <div class="col-md-4 mb-4">
-
+            <div class="col-md-4 mb-4">
                 <div class="view mb-5">
-                   <iframe src="https://open.spotify.com/embed/playlist/1uv6vTxRZnksTy04AX6TRx" width="150" height="200" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    <iframe src="https://open.spotify.com/embed/playlist/1uv6vTxRZnksTy04AX6TRx" width="150" height="200" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div>
 
                 <h5 class="font-weight-normal text-muted">1. Play music</h5>
@@ -54,55 +52,53 @@
 
 {{!-- JUMBOTRON ENDING --}}
 {{#each question}}
+  <div class="container my-5 py-5 z-depth-1">
 
     <!--Section: Content-->
-    <section class="text-center">
+    <section class="text-center px-md-5 mx-md-5 dark-grey-text">
 
-        <style>
-            @media (max-width: 767px) {
-                .social-buttons .btn {
-                    padding: 8px 15px;
-                    margin: 1px;
-                }
-            }
-        </style>
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center">
 
-        <!-- Featured image -->
-        <img src="https://www.cerclemagazine.com/wp-content/uploads/2017/10/316_N-Atlantic-Ocean-Cliffs-of-Moher-1989.jpg" class="img-fluid z-depth-1 rounded mb-4" alt="">
+        <!--Grid column-->
+        <div class="col-lg-7">
 
-        <p class="mb-4">
-            {{this.question_string}}
-        </p>
+          <p>{{this.question_string}}</p>
 
-        <!-- Interactions -->
-        <div class="row">
-            {{!-- Submit form --}}
+    <!--Section: Content-->
+<div class="row">
 
-            <div class="col">
-                <form class="favQuestionForm">
-                    <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
-                    <input type="hidden" value={{this.user_id}} name="questionform_user_id" id="questionform_user_id" />
-                    <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
-                    <button type="submit" name="favorite" value={{this.id}} class="ripples btn btn-outline-dark waves-effect favoriteQuestionForm">Favorite
-                    </button>
-                </form>
+
+                <div class="col">
+
+                                            <form class="favQuestionForm">
+                                                <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
+                                                <input type="hidden" value={{this.user_id}} name="questionform_user_id" id="questionform_user_id" />
+                                                <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
+                                                <button type="submit" name="favorite" value={{this.id}} class="btn btn-light-blue favoriteQuestionForm">Favorite
+                                                </button>
+                                            </form>
+
+                                        </div>
+                                        <div class="col">
+                                            <form class="markAsDone">
+                                                <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
+                                                <input type="hidden" value={{this.user_id}} name="user_id" id="questionform_user_id" />
+                                                <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
+                                                <button type="submit" name="makeAsDone" value={{this.id}} class="btn btn-light-blue markAsDone">Mark as Done
+                                                </button>
+                                            </form>
+
+                                        </div>
+            
             </div>
-            <div class="col">
-                <form class="markAsDone">
-                    <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
-                    <input type="hidden" value={{this.user_id}} name="user_id" id="questionform_user_id" />
-                    <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
-                    <button type="submit" name="makeAsDone" value={{this.id}} class="btn btn-outline-dark waves-effect markAsDone">Mark as Done
-                    </button>
-                </form>
-            </div>
+
         </div>
-        <!-- Interactions -->
+        <!--Grid column-->
 
-
+      </div>
+      <!--Grid row-->
     </section>
-    <!--Section: Content-->
-
-
-    </div><br /><br />
+    </div>
+        
 {{/each}}

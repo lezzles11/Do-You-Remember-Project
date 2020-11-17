@@ -15,7 +15,7 @@ const flash = require("express-flash");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const basicAuth = require("express-basic-auth");
+// const basicAuth = require("express-basic-auth");
 const CheckEmailAndPassword = require("./config/auth/CheckEmailAndPassword");
 const cors = require("cors");
 const request = require("request");
@@ -107,14 +107,14 @@ app.use(cookieParser());
  * 2. Deserialize a user
  * This will be stored in config/auth/passport.js
  ***********************************************/
-app.use(
-    basicAuth({
-        authorizeAsync: true,
-        authorizer: CheckEmailAndPassword(knex),
-        challenge: true,
-        realm: "do you remember",
-    })
-);
+// app.use(
+//     basicAuth({
+//         authorizeAsync: true,
+//         authorizer: CheckEmailAndPassword(knex),
+//         challenge: true,
+//         realm: "do you remember",
+//     })
+// );
 
 // Tell Express that we are using Passport as an authentication Middleware
 app.use(passport.initialize());
@@ -182,7 +182,6 @@ let question_col1 = "id";
 let question_col2 = "category_id";
 let question_col3 = "question_string";
 let question_col4 = "photo_url";
-
 
 /**********************************************
  * TABLE OF CONTENTS
@@ -705,8 +704,6 @@ app.post("/login", (incoming, outgoing, next) => {
                 email == incoming.body.email &&
                 password == incoming.body.password
             ) {
-                console.log(id);
-                outgoing.status(200);
                 outgoing.redirect(`/home/${user_id}`);
             } else {
                 outgoing.redirect("error", {
@@ -787,22 +784,28 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
         )
         .where("user_id", user_id)
         .then((eachFriend) => {
-            for (let i = 0; i < eachFriend.length; i++) {
-                let friend_id = eachFriend[i].id;
-                let user_id = eachFriend[i].user_id;
-                knex("user_friend_all_questions")
-                    .count("id")
-                    .first()
-                    .where({ user_id: user_id, user_friend_id: friend_id })
-                    .then((total) => {
-                        eachFriend[i].answered_questions = total.count;
-                        eachFriend[i].url = getUrl(eachFriend[i].emoji);
-                        console.log(getUrl);
-                        outgoing.render("home", {
-                            user_id: user_id,
-                            user_friend: eachFriend,
+            if (eachFriend.length > 0) {
+                for (let i = 0; i < eachFriend.length; i++) {
+                    let friend_id = eachFriend[i].id;
+                    let user_id = eachFriend[i].user_id;
+                    knex("user_friend_all_questions")
+                        .count("id")
+                        .first()
+                        .where({ user_id: user_id, user_friend_id: friend_id })
+                        .then((total) => {
+                            eachFriend[i].answered_questions = total.count;
+                            eachFriend[i].url = getUrl(eachFriend[i].emoji);
+                            console.log(getUrl);
+                            outgoing.render("home", {
+                                user_id: user_id,
+                                user_friend: eachFriend,
+                            });
                         });
-                    });
+                }
+            } else {
+                outgoing.render("home", {
+                    user_id: user_id,
+                });
             }
         })
         .catch(next);
@@ -1123,7 +1126,7 @@ app.get("/about", function (incoming, outgoing, next) {
                 image:
                     "https://www.dropbox.com/s/14d3odkv0x82voo/550px-Michel_de_Montaigne_1.jpg?raw=1",
                 description:
-                    "Michel De Montaigne was a French philosopher who was born in 1533. He came from a rich family and really enjoyed reading the various books he had in his tower. He thought you could learn a lot from doing simple things in life, such as growing vegetables or cleanin ga house. He got the opportunity to travel, which opened his eyes to how different people can act and behave in various enviornments. We may sometimes feel strange or different from the people around us because we might not be similar to them - thought we mgiht feel like we fit right in elsewhere. Then, he did an extremely interesting thing - he wrote a book about what it was like to be him. He wrote out all the things that he liked and found interesting and to his surprise, a lot of people also liked it. It was really only one out of a hundred that really enjoyed his writing - so it might not be people that lived around him, but he found out something extremely important: there are lots of people out there that can understand you - you might just not know them yet.",
+                    "Michel De Montaigne was a French philosopher who was born in 1533. He came from a rich family and really enjoyed reading the various books he had in his tower. He thought you could learn a lot from doing simple things in life, such as growing vegetables or cleaning a house. He got the opportunity to travel, which opened his eyes to how different people can act and behave in various environments. We may sometimes feel strange or different from the people around us because we might not be similar to them - thought we might feel like we fit right in elsewhere. Then, he did an extremely interesting thing - he wrote a book about what it was like to be him. He wrote out all the things that he liked and found interesting and to his surprise, a lot of people also liked it. It was really only one out of a hundred that really enjoyed his writing - so it might not be people that lived around him, but he found out something extremely important: there are lots of people out there that can understand you - you might just not know them yet.",
             },
             {
                 name: "Mary Wollstonecraft",
@@ -1132,7 +1135,7 @@ app.get("/about", function (incoming, outgoing, next) {
                 image:
                     "https://www.dropbox.com/s/pg34ibzf3xr5usn/p02kcm0t.jpg?raw=1",
                 description:
-                    "Mary Wollstonecraft was an Enlgish philosopher who was born in 1759. When she became older, her and her sisters opened a school, which caused quite a scandal, as people only thought that boys could get an education at the time. She was quite brave, too - and was not too worried about what other people thought of her. Mary was fascinated with how people spend money - she wanted people to really think before they spent their money. She felt like a lot of rich people spent money on things that they did not really like. It is not that she thought it was good to be poor - she liked wearing nice clothes and was happy from making money from the books that she wrote - she just wanted people to realize that nice and simple things can be very nice, too.",
+                    "Mary Wollstonecraft was an English philosopher who was born in 1759. When she became older, her and her sisters opened a school, which caused quite a scandal, as people only thought that boys could get an education at the time. She was quite brave, too - and was not too worried about what other people thought of her. Mary was fascinated with how people spend money - she wanted people to really think before they spent their money. She felt like a lot of rich people spent money on things that they did not really like. It is not that she thought it was good to be poor - she liked wearing nice clothes and was happy from making money from the books that she wrote - she just wanted people to realize that nice and simple things can be very nice, too.",
             },
             {
                 name: "Philosophy",
@@ -1172,7 +1175,11 @@ app.get("/", function (incoming, outgoing, next) {
     }
 });
 
-app.get("/logout", function (incoming, outgoing, next) {});
+app.get("/signout", function (incoming, outgoing, next) {
+    // delete incoming.session.authStatus;
+    incoming.logout();
+    outgoing.redirect("/");
+});
 /**********************************************
  * Start server
  ***********************************************/
