@@ -575,17 +575,23 @@ app.post("/favoritequestion/:user_id/:question_id", function (
                 console.log("Question already exists");
                 outgoing.send("question already exists");
             } else {
+                console.log("Question does not exist yet");
                 knex("user_fav_question")
                     .count("id")
                     .first()
                     .then(function (total) {
                         let id = Number(total.count) + 1;
-                        console.log(id);
+                        console.log("Question Id: ", id);
+                        let userid = parseInt(user_id);
+                        console.log("Number format: ", userid);
+                        let questionid = parseInt(question_id);
+                        console.log("Question Number format: ", questionid);
                         let newFavQuestionObject = {
                             id: id,
-                            user_id: user_id,
-                            question_id: question_id,
+                            user_id: userid,
+                            question_id: questionid,
                         };
+                        console.log(newFavQuestionObject);
                         knex("user_fav_question")
                             .insert(newFavQuestionObject)
                             .then((eachRow) => {
@@ -593,7 +599,8 @@ app.post("/favoritequestion/:user_id/:question_id", function (
                             });
                     });
             }
-        });
+        })
+        .catch(next);
 });
 /**********************************************
  * Get all favorite questions

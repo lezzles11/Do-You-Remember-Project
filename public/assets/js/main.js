@@ -39,9 +39,14 @@ $(".favQuestionForm").on("submit", function (event) {
     event.preventDefault();
 
     console.log("Favorite Question Form Submit Form Button Pressed");
-    let user_id = event.target[0].value;
-    let friend_id = event.target[1].value;
+    let friend_id = event.target[0].value;
+    let user_id = event.target[1].value;
     let question_id = event.target[2].value;
+
+    console.log("Friend Id: ", friend_id);
+
+    console.log("User Id: ", user_id);
+    console.log("Question Id: ", question_id);
 
     alert("Added to Favorite Question Category!");
     let favQuestion = {
@@ -74,8 +79,8 @@ $(".markAsDone").on("submit", function (event) {
     event.preventDefault();
     console.log("Favorite Question Form Submit Form Button Pressed");
     console.log(event.target);
-    let user_id = event.target[0].value;
-    let friend_id = event.target[1].value;
+    let friend_id = event.target[0].value;
+    let user_id = event.target[1].value;
     let question_id = event.target[2].value;
 
     alert("Successfully marked as done! Your relationship just progressed!!");
@@ -101,8 +106,4 @@ $(".markAsDone").on("submit", function (event) {
             );
         },
     });
-});
-
-$(document).ready(function () {
-    $(".ripples").ripples("show");
 });
