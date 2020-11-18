@@ -1,6 +1,6 @@
 <div class="container my-5 py-5 z-depth-1">
     <section class="dark-grey-text text-center">
-        <h3 class="font-weight-bold pt-5 pb-2">the coolest people I know</h3>
+        <h3 class="font-weight-bold pt-5 pb-2 font3">the coolest people I know</h3>
         <div class="row mx-3">
             <div class="col-md-4 px-4 mb-4">
                 <div class="view">
@@ -15,12 +15,12 @@
             <div class="col-md-4 px-4 mb-4">
 
                 <div class="view">
-                    <img src="https://mdbootstrap.com/img/illustrations/app-user-colour.svg" class="img-fluid" alt="smaple image">
+                    <img src="https://mdbootstrap.com/img/illustrations/app-user-colour.svg" class="img-fluid" alt="sample image">
                 </div>
 
             </div>
         </div> <a href="/addfriend/{{user_id}}">
-            <button type="button" class="btn btn-outline-dark waves-effect">Add Friend
+            <button type="button" class="btn btn-outline-dark waves-effect font3">Add Friend
             </button>
         </a>
 
@@ -35,18 +35,23 @@
             <div class="col-lg-4 col-sm-6 mb-5">
                 <div class="row d-flex align-items-center">
                     <div class="col-5 avatar w-100 white d-flex justify-content-center align-items-center">
-                        <img src={{this.url}} class="img-fluid rounded-circle z-depth-1" style="height: 200px; padding: 10px" />
+                        <img src={{this.url}} class="img-fluid rounded-circle z-depth-1" style="width: 100%; padding: 5px" />
                     </div>
-                    <div class="col-7">
-                        <h6 class="font-weight-bold pt-2">{{this.name}} </h6>
+                    <div class="col-7 font11">
+                        <h4 class="font-weight-bold pt-2 ">{{this.name}} </h4>
                             {{!-- {{this.emoji}} --}}
-                        <p class="text-muted">
+                        <p >
                             {{#if this.wishful_city}}
-                           Wishful City: {{this.wishful_city}}
+                         <span class="text-muted ">our city: </span>  <span>{{this.wishful_city}} <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sun" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.5 8a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z"/>
+  <path fill-rule="evenodd" d="M8.202.28a.25.25 0 0 0-.404 0l-.91 1.255a.25.25 0 0 1-.334.067L5.232.79a.25.25 0 0 0-.374.155l-.36 1.508a.25.25 0 0 1-.282.19l-1.532-.245a.25.25 0 0 0-.286.286l.244 1.532a.25.25 0 0 1-.189.282l-1.509.36a.25.25 0 0 0-.154.374l.812 1.322a.25.25 0 0 1-.067.333l-1.256.91a.25.25 0 0 0 0 .405l1.256.91a.25.25 0 0 1 .067.334L.79 10.768a.25.25 0 0 0 .154.374l1.51.36a.25.25 0 0 1 .188.282l-.244 1.532a.25.25 0 0 0 .286.286l1.532-.244a.25.25 0 0 1 .282.189l.36 1.508a.25.25 0 0 0 .374.155l1.322-.812a.25.25 0 0 1 .333.067l.91 1.256a.25.25 0 0 0 .405 0l.91-1.256a.25.25 0 0 1 .334-.067l1.322.812a.25.25 0 0 0 .374-.155l.36-1.508a.25.25 0 0 1 .282-.19l1.532.245a.25.25 0 0 0 .286-.286l-.244-1.532a.25.25 0 0 1 .189-.282l1.508-.36a.25.25 0 0 0 .155-.374l-.812-1.322a.25.25 0 0 1 .067-.333l1.256-.91a.25.25 0 0 0 0-.405l-1.256-.91a.25.25 0 0 1-.067-.334l.812-1.322a.25.25 0 0 0-.155-.374l-1.508-.36a.25.25 0 0 1-.19-.282l.245-1.532a.25.25 0 0 0-.286-.286l-1.532.244a.25.25 0 0 1-.282-.189l-.36-1.508a.25.25 0 0 0-.374-.155l-1.322.812a.25.25 0 0 1-.333-.067L8.203.28zM8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z"/>
+</svg></span>
                            {{/if}}
                            <br/>
                             {{#if this.favorite_memory}}
-                           Favorite Memory: {{this.favorite_memory}}
+                          
+                            <span class="text-muted"> favorite memory:</span>  <span>{{this.favorite_memory}} :)</span>
+                              
                            {{/if}}
                             <br /><br />
                             <div class="progress">
@@ -58,7 +63,7 @@
 
                         </p>
                         <a href="/categories/{{this.user_id}}/{{this.id}}">
-                            <button type="button" class="btn btn-outline-dark waves-effect">Play
+                            <button type="button" class="btn btn-outline-dark waves-effect font20">Play
                             </button>
                         </a>
                     </div>

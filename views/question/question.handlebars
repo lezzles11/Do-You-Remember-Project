@@ -1,58 +1,65 @@
 <nav class="navbar sticky-top navbar-light lighten-4">
     <a href="/categories/{{user_id}}/{{friend_id}}">
-        <button type="button" class="navbar-brand white btn btn-outline-dark waves-effect">Pick another category
+        <button type="button" class="navbar-brand white btn btn-outline-dark waves-effect font20">Pick another category
         </button>
     </a>
 </nav>
 
 
-{{!-- JUMBOTRON BEGINNING --}}
-<div class="container my-5 py-5 z-depth-1">
+{{!-- RULES BEGINNING --}}
+<div class="container mt-5 px-5 pt-5 pb-3 z-depth-1">
 
+  
+  <!--Section: Content-->
+  <section class="text-center dark-grey-text font4">
+    
+    <h6 class="font-weight-normal text-uppercase font-small grey-text mb-4">How to Play</h6>
+    <!-- Section heading -->
+    <h2 class="font-weight-bold">Let's Talk</h2>
+    <hr class="w-header my-4">
+    <!-- Section description -->
+    <p class="text-muted mx-auto mb-5">What draws us to other people is the drive to connect - to know that our excitements, anxieties, fears and upsets have echoes in the lives of others. However, most interactions are not typically conducted as such - we typically emphasize our successes, never allude to our own anxieties, agree with others constantly, keep it light, and rarely engage in earnest conversation. Do also bear in mind that even though your feelings might seem entirely unique to you, they belong to experiences that most of us do in fact share. One of the points of this exercise is to reveal to us how much we have in common, beneath the surface differences. <br/><br/>Enjoy the pleasures of feeling - at last - understood a little better. </p>
 
-    <!--Section: Content-->
-    <section class="dark-grey-text text-center">
-        <h3 class="font-weight-bold pt-4 mb-4">How to Play</h3>
-
-        <h5 class="font-weight-bold font-italic mb-5">Description here about purpose of game</h5>
-        <div class="row mx-lg-5 mx-md-3">
-            <div class="col-md-4 mb-4">
-                <div class="view mb-5">
-                    <iframe src="https://open.spotify.com/embed/playlist/1uv6vTxRZnksTy04AX6TRx" width="150" height="200" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                </div>
-
-                <h5 class="font-weight-normal text-muted">1. Play music</h5>
-
-            </div>
-            <div class="col-md-4 mb-4">
-
-                <div class="view mb-5">
-                    <img src="https://mdbootstrap.com/img/illustrations/undraw_grand_slam_0q5r.svg" class="img-fluid" alt="smaple image">
-                </div>
-
-                <h5 class="font-weight-normal text-muted">2. Answer with real honesty</h5>
-
-            </div>
-            <div class="col-md-4 mb-4">
-
-                <div class="view mb-5">
-                    <img src="https://mdbootstrap.com/img/illustrations/undraw_basketball_agx4.png" class="img-fluid" alt="smaple image">
-                </div>
-
-                <h5 class="font-weight-normal text-muted">3. Listen well - don't moralize, egg on, stay positive, and ask </h5>
-
-            </div>
+    <div class="row text-center d-flex justify-content-center">
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="view card-img-100 mx-auto mb-4">
+          <img src="https://mdbootstrap.com/img/illustrations/drawkit-drawing-man-colour.svg" class="img-fluid" alt="smaple image">
         </div>
+        <h5 class="font-weight-normal mb-4">For the Speaker</h5>
+        <p class="text-muted px-2 mb-lg-0">
+          Some questions here might feel a bit unfamiliar, or awkward. Remember, you're not being judged, just understood. This isn't an exam or interview - only answer what feels fun, interesting and important.
+        </p>
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="view card-img-100 mx-auto mb-4">
+          <img src="https://mdbootstrap.com/img/illustrations/drawkit-phone-conversation-colour.svg" class="img-fluid" alt="smaple image">
+        </div>
+        <h5 class="font-weight-normal mb-4">For the Listener</h5>
+        <p class="text-muted px-2 mb-lg-0">
+          When you're listening, your job doesn't end with the initial question you ask. It helps greatly to follow it up with smaller additional questions or comments such as, 'How did that make you feel?', 'Why do you think that might be?', 'I can imagine that...'. <br/>Bear in mind that much communication happens through the eyes and mouth; they are the true guides as to whether you are listening.
+        </p>
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="view card-img-100 mx-auto mb-4">
+          <img src="https://mdbootstrap.com/img/illustrations/app-user-colour.svg" class="img-fluid" alt="smaple image">
+        </div>
+        <h5 class="font-weight-normal mb-4">Talk with Depth and Sincerity</h5>
+        <p class="text-muted px-2 mb-md-0">
+          Each player should answer with real honesty. If the game is played properly, it should have moments of true sadness. Encountering the vulnerability of another person is one of the most helpful things that can happen to us - it normalizes our own troubles and allows us to understand the reality, rather than the facade of others. 
+        </p>
+      </div>
+    </div>
+    
+  </section>
+  <!--Section: Content-->
 
-    </section>
-    <!--Section: Content-->
 
+</div>      
 
-</div>
+{{!-- RULES ENDING --}}
 
-{{!-- JUMBOTRON ENDING --}}
 {{#each question}}
-  <div class="container my-5 py-5 z-depth-1">
+  <div class="font17 container my-5 py-5 z-depth-1">
 
     <!--Section: Content-->
     <section class="text-center px-md-5 mx-md-5 dark-grey-text">
@@ -76,7 +83,7 @@
                                                 <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
                                                 <input type="hidden" value={{this.user_id}} name="questionform_user_id" id="questionform_user_id" />
                                                 <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
-                                                <button type="submit" name="favorite" value={{this.id}} class="btn btn-light-blue favoriteQuestionForm">Favorite
+                                                <button type="submit" name="favorite" value={{this.id}} class="font20 btn btn-light-blue favoriteQuestionForm">Favorite
                                                 </button>
                                             </form>
 
@@ -86,7 +93,7 @@
                                                 <input type="hidden" value={{this.friend_id}} name="friend_id" id="questionform_friend_id" />
                                                 <input type="hidden" value={{this.user_id}} name="user_id" id="questionform_user_id" />
                                                 <input type="hidden" value={{this.id}} name="questionform_question_id" id="questionform_question_id" />
-                                                <button type="submit" name="makeAsDone" value={{this.id}} class="btn btn-light-blue markAsDone">Mark as Done
+                                                <button type="submit" name="makeAsDone" value={{this.id}} class="font20 btn btn-light-blue markAsDone">Mark as Done
                                                 </button>
                                             </form>
                                         </div>

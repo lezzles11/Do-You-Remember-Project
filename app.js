@@ -596,44 +596,6 @@ app.get("/api/user_fav_question", function (incoming, outgoing, next) {
         .catch(next);
 });
 
-/**********************************************
- * 2: Question Ends Here
- * ==================================
- ***********************************************/
-
-/**********************************************
- * ALL JSON DATA API ROUTES HERE END HERE
- * ==================================
- ***********************************************/
-
-/**********************************************
- *
- * ==================================
- ***********************************************/
-
-/**********************************************
- * ALL PAGE ROUTES BEGIN HERE
- * ==================================
- ***********************************************/
-/**********************************************
- * TABLE OF CONTENTS
- * ==================================
- * 0. Signup
- *  A: Sign up get
- *  B: Sign up post
- * 1. Login
- *  A: Login get
- *  B: Login post
- * 2. Home (Logged In)
- *  A: Home get (get all friends)
- * 3. Categories
- *  A: Categories get
- * 4. Questions
- *  A:
- * 5.
- * 6.
- ***********************************************/
-
 app.get("/index", function (incoming, outgoing, next) {
     outgoing.render("index");
 });
@@ -830,18 +792,6 @@ app.get("/api/questioncount", function (incoming, outgoing, next) {
         })
         .catch(next);
 });
-
-const emoji = {
-    homie: "https://www.dropbox.com/s/fm8vurruc9h5gtz/homie.png?raw=1",
-    newFriend: "https://www.dropbox.com/s/v0pxvw5bp4ffdan/newFriend.png?raw=1",
-    dear: "https://www.dropbox.com/s/st884b1gigvc350/dear.png?raw=1",
-    family: "https://www.dropbox.com/s/o8phvvtmad1cl3p/family.png?raw=1",
-    colleague: "https://www.dropbox.com/s/iydzojfzl38grdg/colleague.png?raw=1",
-    bestFriend:
-        "https://www.dropbox.com/s/w6e6epwzlcr7pe4/bestfriend.png?raw=1",
-    significantOther:
-        "https://www.dropbox.com/s/9dela5ueptao89q/significantother.png?raw=1",
-};
 
 /**********************************************
  * Get add friend form page
