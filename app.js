@@ -20,7 +20,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const CheckEmailAndPassword = require("./config/auth/CheckEmailAndPassword");
 const cors = require("cors");
 const request = require("request");
-const queryString = require("queryString");
+const queryString = require("querystring");
 const port = 3000;
 let SPOTIFY_STATE = "spotify_auth_state";
 // This makes sure that you get all assets from the public folder
