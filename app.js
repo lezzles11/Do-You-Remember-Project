@@ -318,31 +318,30 @@ app.get("/api/friend", function (incoming, outgoing, next) {
  * D: Get one friend
  * ==================================
  ***********************************************/
-app.get("/api/friend/friendPage/:friend_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let id = incoming.params.friend_id;
-    knex.from(user_friend)
-        .select(
-            user_friend_col1,
-            user_friend_col2,
-            user_friend_col3,
-            user_friend_col4,
-            user_friend_col5,
-            user_friend_col6
-        )
-        .where("id", id)
-        .then((eachFriend) => {
-            console.log("Each friend: ", eachFriend);
-            outgoing.render("getFriend", {
-                user_id: user_id,
-                friend: eachFriend,
-            });
-        })
-        .catch(next);
-});
+app.get(
+    "/api/friend/friendPage/:friend_id",
+    function (incoming, outgoing, next) {
+        let id = incoming.params.friend_id;
+        knex.from(user_friend)
+            .select(
+                user_friend_col1,
+                user_friend_col2,
+                user_friend_col3,
+                user_friend_col4,
+                user_friend_col5,
+                user_friend_col6
+            )
+            .where("id", id)
+            .then((eachFriend) => {
+                console.log("Each friend: ", eachFriend);
+                outgoing.render("getFriend", {
+                    user_id: user_id,
+                    friend: eachFriend,
+                });
+            })
+            .catch(next);
+    }
+);
 /**********************************************
  * E: Edit Friend
  * ==================================
@@ -374,44 +373,42 @@ app.delete("/api/friend/:friend_id", function (incoming, outgoing, next) {
         })
         .catch(next);
 });
-app.get("/deletefriend/:user_id/:friend_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let user_id = incoming.params.user_id;
-    let friend_id = incoming.params.friend_id;
-    console.log("User Id: ", user_id);
-    console.log("Friend Id: ", friend_id);
+app.get(
+    "/deletefriend/:user_id/:friend_id",
+    function (incoming, outgoing, next) {
+        let user_id = incoming.params.user_id;
+        let friend_id = incoming.params.friend_id;
+        console.log("User Id: ", user_id);
+        console.log("Friend Id: ", friend_id);
 
-    knex("user_friend")
-        .where({ id: friend_id })
-        .del()
-        .then((eachFriend) => {
-            console.log("Deleted friend: ", eachFriend);
-            outgoing.redirect(`/home/${user_id}`);
-        })
-        .catch(next);
-});
-app.delete("/deletefriend/:user_id/:friend_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let user_id = incoming.params.user_id;
-    let friend_id = incoming.params.friend_id;
-    console.log("User Id: ", user_id);
-    console.log("Friend Id: ", friend_id);
+        knex("user_friend")
+            .where({ id: friend_id })
+            .del()
+            .then((eachFriend) => {
+                console.log("Deleted friend: ", eachFriend);
+                outgoing.redirect(`/home/${user_id}`);
+            })
+            .catch(next);
+    }
+);
+app.delete(
+    "/deletefriend/:user_id/:friend_id",
+    function (incoming, outgoing, next) {
+        let user_id = incoming.params.user_id;
+        let friend_id = incoming.params.friend_id;
+        console.log("User Id: ", user_id);
+        console.log("Friend Id: ", friend_id);
 
-    knex("user_friend")
-        .where({ id: friend_id })
-        .del()
-        .then((eachFriend) => {
-            console.log("Deleted friend: ", eachFriend);
-            outgoing.redirect(`/home/${user_id}`);
-        })
-        .catch(next);
-});
+        knex("user_friend")
+            .where({ id: friend_id })
+            .del()
+            .then((eachFriend) => {
+                console.log("Deleted friend: ", eachFriend);
+                outgoing.redirect(`/home/${user_id}`);
+            })
+            .catch(next);
+    }
+);
 app.get("/:user_id/addfriend", function (incoming, outgoing, next) {
     console.log("User Id: ", incoming.params.user_id);
     outgoing.render("addFriend", {
@@ -450,20 +447,25 @@ app.get("/api/user_friend_all_questions", function (incoming, outgoing, next) {
  * B: Get all questions that has this user and this friend
  * ==================================
  ***********************************************/
-app.get("/api/user_friend_all_questions/:user_id/:friend_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    knex("user_friend_all_questions")
-        .select("id", "user_id", "user_friend_id", "question_id", "answered")
-        .where("user_id", incoming.params.user_id)
-        .where("user_friend_id", incoming.params.friend_id)
-        .then((eachFriend) => {
-            outgoing.status(200).json(eachFriend);
-        })
-        .catch(next);
-});
+app.get(
+    "/api/user_friend_all_questions/:user_id/:friend_id",
+    function (incoming, outgoing, next) {
+        knex("user_friend_all_questions")
+            .select(
+                "id",
+                "user_id",
+                "user_friend_id",
+                "question_id",
+                "answered"
+            )
+            .where("user_id", incoming.params.user_id)
+            .where("user_friend_id", incoming.params.friend_id)
+            .then((eachFriend) => {
+                outgoing.status(200).json(eachFriend);
+            })
+            .catch(next);
+    }
+);
 /**********************************************
  * C: Friend Answers Question
  * ==================================
@@ -475,19 +477,18 @@ app.get("/api/user_friend_all_questions/:user_id/:friend_id", function (
     "answered": true
 }
  ***********************************************/
-app.post("/api/user_friend_all_questions/add", function (
-    incoming,
-    outgoing,
-    next
-) {
-    console.log(incoming.body);
-    knex("user_friend_all_questions")
-        .insert(incoming.body)
-        .then((eachRow) => {
-            outgoing.status(200).json(eachRow);
-        })
-        .catch(next);
-});
+app.post(
+    "/api/user_friend_all_questions/add",
+    function (incoming, outgoing, next) {
+        console.log(incoming.body);
+        knex("user_friend_all_questions")
+            .insert(incoming.body)
+            .then((eachRow) => {
+                outgoing.status(200).json(eachRow);
+            })
+            .catch(next);
+    }
+);
 /**********************************************
  * D: Get all questions from this particular category
  * ==================================
@@ -537,52 +538,51 @@ app.get("/api/question", function (incoming, outgoing, next) {
  * G: Favorite a question
  * ==================================
  ***********************************************/
-app.post("/favoritequestion/:user_id/:question_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let user_id = incoming.params.user_id;
-    let question_id = incoming.params.question_id;
-    console.log("User id: ", user_id);
-    console.log("Question id: ", question_id);
-    knex("user_fav_question")
-        .select("user_id", "question_id")
-        .where({ user_id: user_id, question_id: question_id })
-        .then((eachObject) => {
-            console.log("Does the object exist?");
-            console.log(eachObject);
-            if (eachObject.length >= 1) {
-                console.log("Question already exists");
-                outgoing.send("question already exists");
-            } else {
-                console.log("Question does not exist yet");
-                knex("user_fav_question")
-                    .count("id")
-                    .first()
-                    .then(function (total) {
-                        let id = Number(total.count) + 1;
-                        console.log("Question Id: ", id);
-                        let userid = parseInt(user_id);
-                        console.log("Number format: ", userid);
-                        let questionid = parseInt(question_id);
-                        console.log("Question Number format: ", questionid);
-                        let newFavQuestionObject = {
-                            id: id,
-                            user_id: userid,
-                            question_id: questionid,
-                        };
-                        console.log(newFavQuestionObject);
-                        knex("user_fav_question")
-                            .insert(newFavQuestionObject)
-                            .then((eachRow) => {
-                                console.log(eachRow);
-                            });
-                    });
-            }
-        })
-        .catch(next);
-});
+app.post(
+    "/favoritequestion/:user_id/:question_id",
+    function (incoming, outgoing, next) {
+        let user_id = incoming.params.user_id;
+        let question_id = incoming.params.question_id;
+        console.log("User id: ", user_id);
+        console.log("Question id: ", question_id);
+        knex("user_fav_question")
+            .select("user_id", "question_id")
+            .where({ user_id: user_id, question_id: question_id })
+            .then((eachObject) => {
+                console.log("Does the object exist?");
+                console.log(eachObject);
+                if (eachObject.length >= 1) {
+                    console.log("Question already exists");
+                    outgoing.send("question already exists");
+                } else {
+                    console.log("Question does not exist yet");
+                    knex("user_fav_question")
+                        .count("id")
+                        .first()
+                        .then(function (total) {
+                            let id = Number(total.count) + 1;
+                            console.log("Question Id: ", id);
+                            let userid = parseInt(user_id);
+                            console.log("Number format: ", userid);
+                            let questionid = parseInt(question_id);
+                            console.log("Question Number format: ", questionid);
+                            let newFavQuestionObject = {
+                                id: id,
+                                user_id: userid,
+                                question_id: questionid,
+                            };
+                            console.log(newFavQuestionObject);
+                            knex("user_fav_question")
+                                .insert(newFavQuestionObject)
+                                .then((eachRow) => {
+                                    console.log(eachRow);
+                                });
+                        });
+                }
+            })
+            .catch(next);
+    }
+);
 /**********************************************
  * Get all favorite questions
  * ==================================
@@ -764,22 +764,21 @@ app.get("/home/:user_id", (incoming, outgoing, next) => {
         .catch(next);
 });
 
-app.get("/api/user_friend_all_questions/:user_id/:friend_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let user_id = incoming.params.user_id;
-    let friend_id = incoming.params.friend_id;
-    knex("user_friend_all_questions")
-        .count("id")
-        .first()
-        .where({ user_id: user_id, user_friend_id: friend_id })
-        .then((total) => {
-            console.log(total.count);
-            outgoing.send(total.count);
-        });
-});
+app.get(
+    "/api/user_friend_all_questions/:user_id/:friend_id",
+    function (incoming, outgoing, next) {
+        let user_id = incoming.params.user_id;
+        let friend_id = incoming.params.friend_id;
+        knex("user_friend_all_questions")
+            .count("id")
+            .first()
+            .where({ user_id: user_id, user_friend_id: friend_id })
+            .then((total) => {
+                console.log(total.count);
+                outgoing.send(total.count);
+            });
+    }
+);
 
 app.get("/api/questioncount", function (incoming, outgoing, next) {
     knex("question")
@@ -928,77 +927,75 @@ app.get("/favorites/:user_id/:friend_id", function (incoming, outgoing, next) {
  *  user_id
  *  question_id
  ***********************************************/
-app.get("/play/:categoryString/:user_id/:friend_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let categoryString = incoming.params.categoryString;
-    let user_id = incoming.params.user_id;
-    let friend_id = incoming.params.friend_id;
-    let firstLetter = categoryString[0].toUpperCase();
-    let sliced = categoryString.slice(1);
-    categoryString = firstLetter.concat(sliced);
-    console.log("Category String: ", categoryString);
-    let categoryQuery = knex
-        .from("category")
-        .select("id")
-        .where("name", categoryString);
-    knex.from("question")
-        .select(question_col1, question_col2, question_col3, question_col4)
-        .where("category_id", categoryQuery)
-        .then((eachQuestion) => {
-            let newObject = eachQuestion;
-            for (let i = 0; i < newObject.length; i++) {
-                newObject[i].user_id = user_id;
-                newObject[i].friend_id = friend_id;
-            }
-            outgoing.status(200).render("question/question", {
-                question: newObject,
-                categoryString: categoryString,
-                user_id: user_id,
-                friend_id: friend_id,
-            });
-        })
-        .catch(next);
-});
+app.get(
+    "/play/:categoryString/:user_id/:friend_id",
+    function (incoming, outgoing, next) {
+        let categoryString = incoming.params.categoryString;
+        let user_id = incoming.params.user_id;
+        let friend_id = incoming.params.friend_id;
+        let firstLetter = categoryString[0].toUpperCase();
+        let sliced = categoryString.slice(1);
+        categoryString = firstLetter.concat(sliced);
+        console.log("Category String: ", categoryString);
+        let categoryQuery = knex
+            .from("category")
+            .select("id")
+            .where("name", categoryString);
+        knex.from("question")
+            .select(question_col1, question_col2, question_col3, question_col4)
+            .where("category_id", categoryQuery)
+            .then((eachQuestion) => {
+                let newObject = eachQuestion;
+                for (let i = 0; i < newObject.length; i++) {
+                    newObject[i].user_id = user_id;
+                    newObject[i].friend_id = friend_id;
+                }
+                outgoing.status(200).render("question/question", {
+                    question: newObject,
+                    categoryString: categoryString,
+                    user_id: user_id,
+                    friend_id: friend_id,
+                });
+            })
+            .catch(next);
+    }
+);
 
 /**********************************************
  * Add this question to answered
  * ==================================
  ***********************************************/
-app.post("/markasdone/:user_id/:friend_id/:question_id", function (
-    incoming,
-    outgoing,
-    next
-) {
-    let user_id = incoming.params.user_id;
-    let friend_id = incoming.params.friend_id;
-    let question_id = incoming.params.question_id;
-    // get data
-    let body = incoming.body;
-    console.log("Data: ", incoming.data);
-    console.log("Body of ", body);
-    knex("user_friend_all_questions")
-        .count("id")
-        .first()
-        .then(function (total) {
-            let numRows = Number(total.count) + 1;
-            let newObject = {
-                id: numRows,
-                user_id: user_id,
-                user_friend_id: friend_id,
-                question_id: question_id,
-                answered: true,
-            };
-            knex("user_friend_all_questions")
-                .insert(newObject)
-                .then((eachRow) => {
-                    console.log("Added: ", eachRow);
-                });
-        });
-    outgoing.send("good");
-});
+app.post(
+    "/markasdone/:user_id/:friend_id/:question_id",
+    function (incoming, outgoing, next) {
+        let user_id = incoming.params.user_id;
+        let friend_id = incoming.params.friend_id;
+        let question_id = incoming.params.question_id;
+        // get data
+        let body = incoming.body;
+        console.log("Data: ", incoming.data);
+        console.log("Body of ", body);
+        knex("user_friend_all_questions")
+            .count("id")
+            .first()
+            .then(function (total) {
+                let numRows = Number(total.count) + 1;
+                let newObject = {
+                    id: numRows,
+                    user_id: user_id,
+                    user_friend_id: friend_id,
+                    question_id: question_id,
+                    answered: true,
+                };
+                knex("user_friend_all_questions")
+                    .insert(newObject)
+                    .then((eachRow) => {
+                        console.log("Added: ", eachRow);
+                    });
+            });
+        outgoing.send("good");
+    }
+);
 
 /**********************************************
  * Getting profile page
